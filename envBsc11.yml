@@ -1,0 +1,9 @@
+name: Bsc11
+# CONFLICTS
+dependencies:
+  - python=3.11
+  - numpy
+  - scipy
+  - scikit-learn
+  - matplotlib
+  - pandas

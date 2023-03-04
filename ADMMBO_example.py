@@ -254,4 +254,7 @@ if __name__=='__main__':
     plt.colorbar()
     
     # plt.figure();plt.imshow(ei.reshape(301,-1).T,origin='lower')
+
+    # Needed for VScode
+    plt.show()
     
