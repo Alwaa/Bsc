@@ -2,6 +2,7 @@
 Project in Constrained Bayesian Optimization
 
 # TODO:
+- costf and constraintf not same behaviour with single input
 - Lock versions of env file when starting results
 
     Windows 64-bit packages of scikit-learn can be accelerated using scikit-learn-intelex.

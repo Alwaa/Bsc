@@ -188,13 +188,9 @@ def admmbo(cost, constraint, M, bounds, grid, x0, f0=None, c0=None,
                 0.5*rho/M*np.sum((x[None]-gpc.base_estimator_.X_train_
                                   +y[None]/rho)**2,axis=1)
         z=gpc.base_estimator_.X_train_[np.argmin(h)]
-        print(x)
-        print(z)
-        print(rho)
+        print(f"{x}\n{z}\n{rho}")
         y += rho * (x - z)
-        print(f'x: {x}')
-        print(f'z: {z}')
-        print(f'y: {y}')
+        print(f'x: {x} \nz: {z} \ny: {y}')
         r = (x - z)**2
         rl=np.sqrt(np.sum(r**2))
         s = - rho * (z - zold)
@@ -208,9 +204,7 @@ def admmbo(cost, constraint, M, bounds, grid, x0, f0=None, c0=None,
             rho *= tau
         elif sl > (mup*rl):
             rho /= tau
-        print(f'rho:{rho}')
-        print(f'r:{rl}')
-        print(f's:{sl}')
+        print(f' rho:{rho} \n r:{rl} \n s:{sl}')
         zold = z.copy()
         if S:
             break
