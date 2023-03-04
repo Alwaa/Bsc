@@ -7,8 +7,11 @@ import numpy as np
 # Bounds and such
 #--------------------------------#
 
-xin = np.linspace(0, 6, 301)
-xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(2, -1).T
+boundtype = "square"
+bounds = (0,6)
+
+
+
 
 #################################
 # Simulation 1 (gardner1)
@@ -39,10 +42,8 @@ def constraint_gardner1(x):
 
 
 # Stored functions
-gardner1 = {"X in" : xin,
-            "XY" : xy,
-            "Cost Function filled in" : cost_gardner1(xy), 
-            "Constraint Function filled in" : constraint_gardner1(xy),
+gardner1 = {"Bound Type" : boundtype,
+            "Bounds" : bounds,
             "Cost Function (x)":  lambda x: cost_gardner1(x),
             "Constraint Function (z)": lambda z: 1-constraint_gardner1(z)}
 
@@ -74,16 +75,15 @@ def constraint_gardner2(x):
 
     return c <= -0.95
 
-gardner2 = {"X in" : xin,
-            "XY" : xy,
-            "Cost Function filled in" : cost_gardner2(xy), 
-            "Constraint Function filled in" : constraint_gardner2(xy),
+gardner2 = {"Bound Type" : boundtype,
+            "Bounds" : bounds,
             "Cost Function (x)":  lambda x: cost_gardner2(x),
-            "Constraint Function (z)": lambda z: 1-constraint_gardner2(z)}
+            "Constraint Function (z)": lambda z: 1 - constraint_gardner2(z)}
 
 
-range_min,range_max = xin[0], xin[-1]
-point_per_axis_start = 20 #7 is original
-xx0=np.linspace(range_min,range_max,point_per_axis_start)[1:-1]
+if __name__ == "__main__":
+    range_min,range_max = bounds[0], bounds[-1]
+    point_per_axis_start = 5 #7 is original
+    xx0=np.linspace(range_min,range_max,point_per_axis_start)[1:-1]
 
-print(xx0)
+    print(xx0)

@@ -1,10 +1,12 @@
-
-
-
 import numpy as np
 from scipy.stats import multivariate_normal
 
+#--------------------------------#
+# Bounds and such
+#--------------------------------#
 
+boundtype = "square"
+bounds = (-1,1)
 
 #################################
 # Example problem
@@ -32,16 +34,14 @@ Mu = (rnd.rand(K,2)-.5)*2
 w = rnd.rand(K)+1
 Sigma = (((0.011)*rnd.rand(K)[:,None,None]+.041)*np.identity(2)[None]) + 0*rnd.randn(K, 2, 2) * 0.025
 
-xin = np.linspace(-1, 1, 301) #uniform 1d input
-xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(2, -1).T #2d input
+# xin = np.linspace(-1, 1, 301) #uniform 1d input
+# xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(2, -1).T #2d input
 phi = np.linspace(-np.pi, np.pi, 100)
 r = (1 + np.sin(6*phi-.1))*0.3+0.2
 
 # Stored functions
-example0 = {"X in" : xin,
-            "XY" : xy,
-            "Cost Function filled in" : costf(xy,w,Mu,Sigma), 
-            "Constraint Function filled in" : constraintf(xy, phi, r),
+example0 = {"Bound Type" : boundtype,
+            "Bounds" : bounds,
             "Cost Function (x)":  lambda x: costf(x,w,Mu,Sigma),
             "Constraint Function (z)": lambda z: 1-constraintf(z,phi,r)}
 
@@ -49,5 +49,6 @@ example0 = {"X in" : xin,
 # XXXXXX problem
 #################################
 
-print(costf(np.array([1.,0.]),w,Mu,Sigma))
-print(constraintf(np.array([1.,0.]),phi,r)[None]) 
+if __name__ == "__main__":
+    print(costf(np.array([1.,0.]),w,Mu,Sigma))
+    print(constraintf(np.array([1.,0.]),phi,r)[None]) 

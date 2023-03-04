@@ -22,14 +22,22 @@ from opt_problems.ADMMBO_paper_problems import gardner1, gardner2
 
 #################################
 # Problem to solve
-problem = gardner2
+problem = example0
+
+nun_samples = 301
+point_per_axis_start = 7 #7 is original
 #################################
 
-xin = problem["X in"]
-xy = problem["XY"]
-func = problem["Cost Function filled in"]
-con = problem["Constraint Function filled in"]
-ff=con*func
+# Fetching problem info
+bounds = problem["Bounds"]
+if problem["Bound Type"] == "square":
+    xin = np.linspace(bounds[0], bounds[1], 301)
+    xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(2, -1).T
+else:
+    raise Exception("Not yet Implemented non-square bounds")
+
+costf = problem["Cost Function (x)"]
+constraintf = problem["Constraint Function (z)"]
 
 class BO:
     def __init__(self,func,x0=None,f0=None,discrete=False):
@@ -208,25 +216,25 @@ def admmbo(cost, constraint, M, bounds, grid, x0, f0=None, c0=None,
     return x,z,gpr,gpc
 
 if __name__=='__main__':
-    cost = problem["Cost Function (x)"]
-    
-    constraint = problem["Constraint Function (z)"]
-    
-    
-    range_min,range_max = xin[0], xin[-1]
-    point_per_axis_start = 20 #7 is original
-    extent_tuple = (range_min,range_max,range_min,range_max)
-
+    extent_tuple = (bounds[0],bounds[1],bounds[0],bounds[1])
     bounds_array = np.array((extent_tuple[:2],extent_tuple[2:])) #For now, fix later
+
+    # For drawing bounds + true cost function
+    # Bound area is then 0 in heatmap
+    func = costf(xy)
+    con = 1 - constraintf(xy)
+    ff = con*func
+
+    ## Starting Points##
     # x0 = (rnd.rand(5,2)-.5)*2
-    xx0=np.linspace(range_min,range_max,point_per_axis_start)[1:-1]
+    xx0=np.linspace(bounds[0],bounds[1],point_per_axis_start)[1:-1]
 
     x0 = np.array(np.meshgrid(xx0,xx0)).reshape(2,-1).T
     M = np.max(np.abs(ff))
     
     grid = np.array(np.meshgrid(xin[::10],xin[::10],indexing='ij')).reshape(2,-1).T
 
-    xo,zo,gpr,gpc=admmbo(cost, constraint, M, bounds_array, grid, x0,alpha=2,beta=2,K=30)
+    xo,zo,gpr,gpc=admmbo(costf, constraintf, M, bounds_array, grid, x0,alpha=2,beta=2,K=30)
     
     import matplotlib.pyplot as plt
     plt.figure()
@@ -240,12 +248,15 @@ if __name__=='__main__':
     cc=gpc.base_estimator_.y_train_
     plt.plot(xc[cc==1],yc[cc==1],'r+')
     plt.plot(xc[cc==0],yc[cc==0],'ro')
+    ## ?? ## #TODO: Check and title
     plt.figure();plt.imshow(gpr.predict(xy).reshape(len(xin),-1).T,
                             extent=(extent_tuple),origin='lower')
     plt.colorbar()
+    ## ?? ## #TODO: Check and title
     plt.figure();plt.imshow(gpc.predict_proba(xy)[:,1].reshape(len(xin),-1).T,
                             extent=(extent_tuple),origin='lower')
     plt.colorbar()
+    ## cost function ## #TODO: Check and title
     plt.figure();plt.imshow(func.reshape(len(xin),-1).T,extent=(extent_tuple),origin='lower')
     plt.colorbar()
     
