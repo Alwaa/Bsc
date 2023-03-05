@@ -22,13 +22,13 @@ from opt_problems.ADMMBO_paper_problems import gardner1, gardner2
 
 #################################
 # Problem to solve
-problem = example0
+problem = gardner1
 
 nun_samples = 301
-point_per_axis_start = 7 #7 is original
+point_per_axis_start = 7 #7 is original, 5 works for small feas area problem
 #################################
 
-# Fetching problem info
+# Fetching problem info #
 bounds = problem["Bounds"]
 if problem["Bound Type"] == "square":
     xin = np.linspace(bounds[0], bounds[1], 301)
@@ -38,8 +38,8 @@ else:
 
 costf = problem["Cost Function (x)"]
 constraintf = problem["Constraint Function (z)"]
-
-class BO:
+# --------------------- #
+class BO: #Unused for now
     def __init__(self,func,x0=None,f0=None,discrete=False):
         self.kernel=gaussian_process.kernels.ConstantKernel() * \
             gaussian_process.kernels.Matern(nu=1.5)
@@ -69,6 +69,7 @@ class BO:
     def eimax(self,x):
         return x[np.argmax(self.EI(x))]
 
+
 def gpr_ei(x,y,z,rho,gpr,ubest):
     x=np.atleast_2d(x)
     mu,std = gpr.predict(np.atleast_2d(x), return_std=True)
@@ -89,7 +90,11 @@ def gpc_ei(x,y,z,rho,M,gpc,hbest):
     return ei
 
 
-
+# bounds = search-space B ; n and m_i missing, insted the initial points are passed in
+# M = penalty of infeasability
+# K = max number of it; rho = penalty parm
+# epsilon = tolerance parameter for stopping rule
+# delta missing, 1 - delta is acceptance for prob that final solution is infeasable, for parameter to use if it does not converge
 def admmbo(cost, constraint, M, bounds, grid, x0, f0=None, c0=None,
            K=15, rho=0.1, alpha=5, beta=5, alpha0=20, beta0=20,
            epsilon=1e-6):
@@ -101,44 +106,53 @@ def admmbo(cost, constraint, M, bounds, grid, x0, f0=None, c0=None,
     K2 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
         gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2)) 
     gpc = gaussian_process.GaussianProcessClassifier(kernel=K2)
+        
+    S = False
+    k = 0 # "k=1 (0 as first index)"
     
+    ## rho adjusting parameters ##
     tau = 2
     mup = 10
-    
-    # y = np.ones(x0.shape[1])
-    # y = np.zeros(x0.shape[1])
+    ## ------------------------ ##
+
+    ## Initializing z,y ## 
+    # in the top corner, per meeting notes
     bounds=bounds.astype('float')
     z = bounds[:,1].copy()
     y = bounds[:,1].copy()
     print(z)
-    #z = np.array((1,1))
+    # z = np.array((1,1))
+    # z = x0[c0==0][np.argmin(f0[c0==0])]
+    # y = np.ones(x0.shape[1])
+    # y = np.zeros(x0.shape[1])
     zold = z.copy()
-    
-    S = False
-    k = 0
+    ## ---------------- ##
 
     if f0 is None:
         f0 = cost(x0)
     if c0 is None:
         c0 = constraint(x0)
-    
-    # z = x0[c0==0][np.argmin(f0[c0==0])]
 
     print(x0,f0)
     print(x0,c0)
 
-    #TODO: Needs both classes present?
+
     gpr.fit(x0,f0)
-    gpc.fit(x0,c0)
+    #TODO: Mthod where only one class can be present
+    # Simply removing limitation to one of each class present did not do anything 
+    gpc.fit(x0,c0)     
+    
     # z=np.mean(gpc.base_estimator_.X_train_[gpc.base_estimator_.y_train_==0],0)
     alphac=alpha0
     betac=beta0
     while k < K and not S:
-        #OPT
+        ### OPT ###
         for t in range(alphac):
+            ## Eq. (10) ##
             u = gpr.y_train_ + \
                 0.5*rho*np.sum((gpr.X_train_-z[None]+y[None]/rho)**2,axis=1)
             ubest = np.min(u)
+            ## -------- ##
             eif = lambda x: -gpr_ei(x,y,z,rho,gpr,ubest)
             mu,std = gpr.predict(grid, return_std=True)
             muu = mu + 0.5*rho*np.sum((grid-z[None]+y[None]/rho)**2,axis=1)
@@ -154,11 +168,13 @@ def admmbo(cost, constraint, M, bounds, grid, x0, f0=None, c0=None,
             # print(x[None],"\n-----\n",gpr.y_train_)
             gpr.fit(np.concatenate((gpr.X_train_,x[None]),axis=0),
                     np.concatenate((gpr.y_train_,[cost(x)]),axis=0))
-        #FEAS
+        ### --- ###
+        ### FEAS ###
         u = gpr.y_train_ + \
                 0.5*rho*np.sum((gpr.X_train_-z[None]+y[None]/rho)**2,axis=1)
         x = gpr.X_train_[np.argmin(u)]
         for t in range(betac):
+            #Line 4 in Alg. 3.3
             h = gpc.base_estimator_.y_train_ + \
                 0.5*rho/M*np.sum((x[None]-gpc.base_estimator_.X_train_
                                   +y[None]/rho)**2,axis=1)
@@ -176,7 +192,7 @@ def admmbo(cost, constraint, M, bounds, grid, x0, f0=None, c0=None,
             ei[idx1] = hh[idx1] * (1.0 - theta[idx1])
             idx2 = hh>1.0
             ei[idx2] = hh[idx2] - theta[idx2]
-            opt=minimize(eif,grid[np.argmax(ei)],bounds=bounds)
+            opt=minimize(eif,grid[np.argmax(ei)],bounds=bounds) #Sklearn minimize
             z = opt.x
             # ei[idx2][ei[idx2]<0.0] = 0.0
             # temp = (hh[idx2]-1)*theta[idx2]
@@ -199,14 +215,17 @@ def admmbo(cost, constraint, M, bounds, grid, x0, f0=None, c0=None,
         sl = np.sqrt(np.sum(s**2))
         # print(r)
         # print(s)
+
         if rl < epsilon and sl < epsilon:
             S = True
         k += 1
+        ## rho adjusting step ##
         if rl > (mup*sl):
             rho *= tau
         elif sl > (mup*rl):
             rho /= tau
         print(f' rho:{rho} \n r:{rl} \n s:{sl}')
+        ## ----------------- ##
         zold = z.copy()
         if S:
             break
@@ -230,13 +249,17 @@ if __name__=='__main__':
     xx0=np.linspace(bounds[0],bounds[1],point_per_axis_start)[1:-1]
 
     x0 = np.array(np.meshgrid(xx0,xx0)).reshape(2,-1).T
-    M = np.max(np.abs(ff))
+
+    M = np.max(np.abs(ff)) # They set it as the unconstrained range of f, while this is the constrained range
+    #                           ADMMBO is not sensitive to M in a wide range of values ref. sec. 5.7
     
+    # Grid with evry 10th point of space
     grid = np.array(np.meshgrid(xin[::10],xin[::10],indexing='ij')).reshape(2,-1).T
 
     xo,zo,gpr,gpc=admmbo(costf, constraintf, M, bounds_array, grid, x0,alpha=2,beta=2,K=30)
     
     import matplotlib.pyplot as plt
+    ### Main Plot ###
     plt.figure()
     plt.imshow(ff.reshape(len(xin),-1).T,extent=(extent_tuple),origin='lower')
     plt.colorbar()
@@ -248,17 +271,21 @@ if __name__=='__main__':
     cc=gpc.base_estimator_.y_train_
     plt.plot(xc[cc==1],yc[cc==1],'r+')
     plt.plot(xc[cc==0],yc[cc==0],'ro')
-    ## ?? ## #TODO: Check and title
+    ### --------- ###
+
+    ### Plots ###
+    ## Cost/Objective Function Estimate ##
     plt.figure();plt.imshow(gpr.predict(xy).reshape(len(xin),-1).T,
                             extent=(extent_tuple),origin='lower')
-    plt.colorbar()
-    ## ?? ## #TODO: Check and title
+    plt.colorbar();plt.title('Cost/Objective Function Estimate')
+    ## Constraint Probability Estimate ##
     plt.figure();plt.imshow(gpc.predict_proba(xy)[:,1].reshape(len(xin),-1).T,
                             extent=(extent_tuple),origin='lower')
-    plt.colorbar()
-    ## cost function ## #TODO: Check and title
+    plt.colorbar();plt.title('Constraint Probability Estimate')
+    ## True Cost/Objective Function ## 
     plt.figure();plt.imshow(func.reshape(len(xin),-1).T,extent=(extent_tuple),origin='lower')
-    plt.colorbar()
+    plt.colorbar();plt.title('True Cost/Objective Function')
+    ### ---- ###
     
     # plt.figure();plt.imshow(ei.reshape(301,-1).T,origin='lower')
 

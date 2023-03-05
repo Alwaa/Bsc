@@ -38,7 +38,8 @@ def constraint_gardner1(x):
 
     c = np.cos(xs)*np.cos(ys) - np.sin(xs)*np.sin(ys)
 
-    return c <= 0.5
+    return c <= -0.5 #TODO: Check paper for positive defenition of its contraint vs how its implemeted(orig 0.5)
+    #? Think its actually a typo in the paper
 
 
 # Stored functions
