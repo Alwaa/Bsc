@@ -165,9 +165,9 @@ def admmbo(cost, constraint, M, bounds, grid, x0, f0=None, c0=None,
 
             # TODO: Output of costf should be same shape as constraintf always?
             # print(x[None],"\n-----\n",[cost(x)])
-            # print(x[None],"\n-----\n",gpr.y_train_)
+            print(x[None],"\n-----\n",gpr.y_train_)
             gpr.fit(np.concatenate((gpr.X_train_,x[None]),axis=0),
-                    np.concatenate((gpr.y_train_,[cost(x)]),axis=0))
+                    np.concatenate((gpr.y_train_,cost(x[None])),axis=0))
         ### --- ###
         ### FEAS ###
         u = gpr.y_train_ + \
@@ -200,8 +200,9 @@ def admmbo(cost, constraint, M, bounds, grid, x0, f0=None, c0=None,
             # ei[idx2] += temp
             # print(ei.max())
             z = grid[np.argmax(ei)]
+
             gpc.fit(np.concatenate((gpc.base_estimator_.X_train_,z[None]), axis=0),
-                    np.concatenate((gpc.base_estimator_.y_train_,constraint(z)),axis=0))
+                    np.concatenate((gpc.base_estimator_.y_train_,constraint(z[None])),axis=0))
         h = gpc.base_estimator_.y_train_ + \
                 0.5*rho/M*np.sum((x[None]-gpc.base_estimator_.X_train_
                                   +y[None]/rho)**2,axis=1)
