@@ -40,7 +40,7 @@ def constraint_gardner1(x):
 gardner1 = {"Bound Type" : boundtype_gardner,
             "Bounds" : bounds_gardner,
             "Cost Function (x)":  lambda x: cost_gardner1(x),
-            "Constraint Function (z)": lambda z: 1-constraint_gardner1(z)}
+            "Constraint Function (z)": [lambda z: 1-constraint_gardner1(z)]}
 
 #################################
 # Simulation 2 (gardner2)
@@ -87,7 +87,7 @@ bounds_gramacy = (0,1)
 def cost_gramacy(x):
     xs = x[:,0]
     ys = x[:,1]
-    
+
     f = xs + ys
 
     return f

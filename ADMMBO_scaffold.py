@@ -70,10 +70,10 @@ class BO: #Unused for now
         return x[np.argmax(self.EI(x))]
 
 
-def gpr_ei(x,y,z,rho,gpr,ubest):
+def gpr_ei(x,ys,zs,rho,gpr,ubest):
     x=np.atleast_2d(x)
     mu,std = gpr.predict(np.atleast_2d(x), return_std=True)
-    muu = mu + 0.5*rho*np.sum((x-z[None]+y[None]/rho)**2,axis=1)
+    muu = mu + 0.5*rho*np.sum((x-zs+ys/rho)**2,axis=1)
     xx = (ubest-muu)/std
     ei = std * (xx * ndtr(xx) + norm.pdf(xx))
     return ei
@@ -95,7 +95,7 @@ def gpc_ei(x,y,z,rho,M,gpc,hbest):
 # K = max number of it; rho = penalty parm
 # epsilon = tolerance parameter for stopping rule
 # delta missing, 1 - delta is acceptance for prob that final solution is infeasable, for parameter to use if it does not converge
-def admmbo(cost, constraint, M, bounds, grid, x0, f0=None, c0=None,
+def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
            K=15, rho=0.1, alpha=5, beta=5, alpha0=20, beta0=20,
            epsilon=1e-6):
     K1 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
@@ -105,42 +105,52 @@ def admmbo(cost, constraint, M, bounds, grid, x0, f0=None, c0=None,
     
     K2 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
         gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2)) 
-    gpc = gaussian_process.GaussianProcessClassifier(kernel=K2)
         
     S = False
     k = 0 # "k=1 (0 as first index)"
+    N = len(constraints) # As in paper
+
+    #Initialicing GP classifiers
+    #? Should have individual kernels based on bounds dimenstion?
+    #TODO: Follow up on Kernel investigation
+    #    TODO: OPT; Method where only one class can be present
+    gpcs = [gaussian_process.GaussianProcessClassifier(kernel=K2) for i in range(N)]
     
-    ## rho adjusting parameters ##
+    ## rho adjusting parameters ## # TODO Investigate further into rho setting
     tau = 2
     mup = 10
     ## ------------------------ ##
 
     ## Initializing z,y ## 
     # in the top corner, per meeting notes
+    # TODO: Check initialization of zs and ys
     bounds=bounds.astype('float')
-    z = bounds[:,1].copy()
-    y = bounds[:,1].copy()
-    print(z)
+    zs = np.array([bounds[:,1].copy() for i in range(N)])
+    ys = np.array([bounds[:,1].copy() for i in range(N)])
+    print(zs)
     # z = np.array((1,1))
     # z = x0[c0==0][np.argmin(f0[c0==0])]
     # y = np.ones(x0.shape[1])
     # y = np.zeros(x0.shape[1])
-    zold = z.copy()
+    zolds = [zs[i].copy() for i in range(N)]
     ## ---------------- ##
 
     if f0 is None:
         f0 = cost(x0)
     if c0 is None:
-        c0 = constraint(x0)
+        c0s = [[]]*N
+        for i in range(N):
+            c0s[i] = constraints[i](x0)
 
     print(x0,f0)
-    print(x0,c0)
-
-
     gpr.fit(x0,f0)
-    #TODO: Mthod where only one class can be present
+    for i in range(N):
+        print(x0,c0s[i])
+        gpcs[i].fit(x0,c0s[i]) 
+
+
     # Simply removing limitation to one of each class present did not do anything 
-    gpc.fit(x0,c0)     
+        
     
     # z=np.mean(gpc.base_estimator_.X_train_[gpc.base_estimator_.y_train_==0],0)
     alphac=alpha0
@@ -150,12 +160,12 @@ def admmbo(cost, constraint, M, bounds, grid, x0, f0=None, c0=None,
         for t in range(alphac):
             ## Eq. (10) ##
             u = gpr.y_train_ + \
-                0.5*rho*np.sum((gpr.X_train_-z[None]+y[None]/rho)**2,axis=1)
+                0.5*rho*np.sum((gpr.X_train_-zs+ys/rho)**2,axis=1) #TODO: Check the sum funciton works propperly with new zs and ys
             ubest = np.min(u)
             ## -------- ##
-            eif = lambda x: -gpr_ei(x,y,z,rho,gpr,ubest)
+            eif = lambda x: -gpr_ei(x,ys,zs,rho,gpr,ubest)
             mu,std = gpr.predict(grid, return_std=True)
-            muu = mu + 0.5*rho*np.sum((grid-z[None]+y[None]/rho)**2,axis=1)
+            muu = mu + 0.5*rho*np.sum((grid-zs+ys/rho)**2,axis=1)  #TODO: Check the sum funciton works propperly
             xx = (ubest-muu)/std
             ei = std * (xx * ndtr(xx) + norm.pdf(xx))
             x = grid[np.argmax(ei)]
@@ -163,59 +173,72 @@ def admmbo(cost, constraint, M, bounds, grid, x0, f0=None, c0=None,
             x = opt.x
             # print(f'eix:{ei.max()}')
 
-            # TODO: Output of costf should be same shape as constraintf always?
-            # print(x[None],"\n-----\n",[cost(x)])
             print(x[None],"\n-----\n",gpr.y_train_)
             gpr.fit(np.concatenate((gpr.X_train_,x[None]),axis=0),
                     np.concatenate((gpr.y_train_,cost(x[None])),axis=0))
         ### --- ###
-        ### FEAS ###
+
+        # TODO: check nececisty of this part
         u = gpr.y_train_ + \
-                0.5*rho*np.sum((gpr.X_train_-z[None]+y[None]/rho)**2,axis=1)
+                0.5*rho*np.sum((gpr.X_train_-zs+ys/rho)**2,axis=1)
         x = gpr.X_train_[np.argmin(u)]
-        for t in range(betac):
-            #Line 4 in Alg. 3.3
-            h = gpc.base_estimator_.y_train_ + \
-                0.5*rho/M*np.sum((x[None]-gpc.base_estimator_.X_train_
-                                  +y[None]/rho)**2,axis=1)
-            hbest = np.min(h)
+
+        ### FEAS ###
+        rs = [[]]*N
+        ss = [[]]*N
+        for i in range(N):
+            for t in range(betac):
+                constraint = constraints[i]
+                gpc = gpcs[i]
+
+                #Line 4 in Alg. 3.3
+                h = gpc.base_estimator_.y_train_ + \
+                    0.5*rho/M*np.sum((x[None]-gpc.base_estimator_.X_train_
+                                    +ys[i][None]/rho)**2,axis=1) #TODO: Chech correctness with ys
+                hbest = np.min(h)
+                
+                eif = lambda z: -gpc_ei(x,ys[i],zs[i],rho,M,gpc,hbest) #TODO: Chech correctness with ys and zs
+                qi = lambda zi: 0.5*rho/M * np.sum((x[None]-zi+ys[i][None]/rho)**2,axis=1) #TODO: Chech correctness with ys
+                hh = hbest - qi(grid)
+                theta = gpc.predict_proba(grid)[:,1]
+
+                ei = np.zeros(grid.shape[0])
+                # idx = hh>0
+                # ei[idx]=(1-theta)*hh[idx]
+                idx1 = (hh>0)&(hh<1)
+                ei[idx1] = hh[idx1] * (1.0 - theta[idx1])
+                idx2 = hh>1.0
+                ei[idx2] = hh[idx2] - theta[idx2]
+                opt=minimize(eif,grid[np.argmax(ei)],bounds=bounds) #Sklearn minimize
+                z = opt.x
+                # ei[idx2][ei[idx2]<0.0] = 0.0
+                # temp = (hh[idx2]-1)*theta[idx2]
+                # temp[temp<0] = 0.0
+                # ei[idx2] += temp
+                # print(ei.max())
+                z = grid[np.argmax(ei)]
+
+                gpc.fit(np.concatenate((gpc.base_estimator_.X_train_,z[None]), axis=0),
+                        np.concatenate((gpc.base_estimator_.y_train_,constraint(z[None])),axis=0))
             
-            eif = lambda z: -gpc_ei(x,y,z,rho,M,gpc,hbest)
-            qi = lambda zi: 0.5*rho/M * np.sum((x[None]-zi+y[None]/rho)**2,axis=1)
-            hh = hbest - qi(grid)
-            theta = gpc.predict_proba(grid)[:,1]
+            h = gpc.base_estimator_.y_train_ + \
+                    0.5*rho/M*np.sum((x[None]-gpc.base_estimator_.X_train_
+                                    +ys[i][None]/rho)**2,axis=1) #TODO: check correctness with ys
+            z = gpc.base_estimator_.X_train_[np.argmin(h)]
 
-            ei = np.zeros(grid.shape[0])
-            # idx = hh>0
-            # ei[idx]=(1-theta)*hh[idx]
-            idx1 = (hh>0)&(hh<1)
-            ei[idx1] = hh[idx1] * (1.0 - theta[idx1])
-            idx2 = hh>1.0
-            ei[idx2] = hh[idx2] - theta[idx2]
-            opt=minimize(eif,grid[np.argmax(ei)],bounds=bounds) #Sklearn minimize
-            z = opt.x
-            # ei[idx2][ei[idx2]<0.0] = 0.0
-            # temp = (hh[idx2]-1)*theta[idx2]
-            # temp[temp<0] = 0.0
-            # ei[idx2] += temp
-            # print(ei.max())
-            z = grid[np.argmax(ei)]
+            zs[i] = z #TODO: refactor when stable
 
-            gpc.fit(np.concatenate((gpc.base_estimator_.X_train_,z[None]), axis=0),
-                    np.concatenate((gpc.base_estimator_.y_train_,constraint(z[None])),axis=0))
-        h = gpc.base_estimator_.y_train_ + \
-                0.5*rho/M*np.sum((x[None]-gpc.base_estimator_.X_train_
-                                  +y[None]/rho)**2,axis=1)
-        z=gpc.base_estimator_.X_train_[np.argmin(h)]
-        print(f"{x}\n{z}\n{rho}")
-        y += rho * (x - z)
-        print(f'x: {x} \nz: {z} \ny: {y}')
-        r = (x - z)**2
-        rl=np.sqrt(np.sum(r**2))
-        s = - rho * (z - zold)
-        sl = np.sqrt(np.sum(s**2))
-        # print(r)
-        # print(s)
+            print(f"{x}\n{zs[i]}\n{rho}")
+            ys[i] += rho * (x - z)
+            print(f'x: {x} \nz: {z} \ny: {ys[i]}')
+            r = (x - zs[i])**2
+            rl=np.sqrt(np.sum(r**2))
+            s = - rho * (z - zolds[i])
+            sl = np.sqrt(np.sum(s**2))
+            # print(r)
+            # print(s)
+
+            zolds[i] = z.copy()
 
         if rl < epsilon and sl < epsilon:
             S = True
@@ -227,7 +250,6 @@ def admmbo(cost, constraint, M, bounds, grid, x0, f0=None, c0=None,
             rho /= tau
         print(f' rho:{rho} \n r:{rl} \n s:{sl}')
         ## ----------------- ##
-        zold = z.copy()
         if S:
             break
         alphac=alpha
@@ -242,7 +264,9 @@ if __name__=='__main__':
     # For drawing bounds + true cost function
     # Bound area is then 0 in heatmap
     func = costf(xy)
-    con = 1 - constraintf(xy)
+    if len(constraintf) != 1:
+        print("NO PLOTTING SUPPORT FOR MULTIPLE CONSTRAINTS")
+    con = 1 - constraintf[0](xy)
     ff = con*func
 
     ## Starting Points##
