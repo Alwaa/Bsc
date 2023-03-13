@@ -65,11 +65,11 @@ def constraint_gardner2(x):
 gardner2 = {"Bound Type" : boundtype_gardner,
             "Bounds" : bounds_gardner,
             "Cost Function (x)":  lambda x: cost_gardner2(x),
-            "Constraint Function (z)": lambda z: 1 - constraint_gardner2(z)}
+            "Constraint Function (z)": [lambda z: 1 - constraint_gardner2(z)]}
 
 
 if __name__ == "__main__":
-    range_min,range_max = bounds[0], bounds[-1]
+    range_min,range_max = bounds_gardner[0], bounds_gardner[-1]
     point_per_axis_start = 5 #7 is original
     xx0=np.linspace(range_min,range_max,point_per_axis_start)[1:-1]
 

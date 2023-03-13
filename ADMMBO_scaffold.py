@@ -24,20 +24,25 @@ from opt_problems.ADMMBO_paper_problems import gardner1, gardner2
 # Problem to solve
 problem = gardner1
 
-nun_samples = 301
+start_sample_type = "grid"
 point_per_axis_start = 7 #7 is original, 5 works for small feas area problem
+
+# For setting the type of grid to use for solving the problem (discreticing space, and then 
+# selectin a less fine grid for less GP calculations)
+num_samples = 301 # in each dimension
+grid_step = 10
 #################################
 
 # Fetching problem info #
 bounds = problem["Bounds"]
 if problem["Bound Type"] == "square":
-    xin = np.linspace(bounds[0], bounds[1], 301)
+    xin = np.linspace(bounds[0], bounds[1], num_samples)
     xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(2, -1).T
 else:
     raise Exception("Not yet Implemented non-square bounds")
 
 costf = problem["Cost Function (x)"]
-constraintf = problem["Constraint Function (z)"]
+constraintf = problem["Constraint Function (z)"] #TODO: rewrite to multiple (s)
 # --------------------- #
 class BO: #Unused for now
     def __init__(self,func,x0=None,f0=None,discrete=False):
@@ -174,6 +179,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
             # print(f'eix:{ei.max()}')
 
             print(x[None],"\n-----\n",gpr.y_train_)
+            print(cost(x[None]),"\n-----\n",gpr.y_train_)
             gpr.fit(np.concatenate((gpr.X_train_,x[None]),axis=0),
                     np.concatenate((gpr.y_train_,cost(x[None])),axis=0))
         ### --- ###
@@ -269,17 +275,20 @@ if __name__=='__main__':
     con = 1 - constraintf[0](xy)
     ff = con*func
 
-    ## Starting Points##
-    # x0 = (rnd.rand(5,2)-.5)*2
-    xx0=np.linspace(bounds[0],bounds[1],point_per_axis_start)[1:-1]
-
-    x0 = np.array(np.meshgrid(xx0,xx0)).reshape(2,-1).T
+    ## Starting Points ##
+    if start_sample_type == "grid":
+        xx0=np.linspace(bounds[0],bounds[1],point_per_axis_start)[1:-1]
+        x0 = np.array(np.meshgrid(xx0,xx0)).reshape(2,-1).T
+    else: 
+        # x0 = (rnd.rand(5,2)-.5)*2
+        raise Exception("Non-grid start samples not yet implemted")
+    ## --------------- ##
 
     M = np.max(np.abs(ff)) # They set it as the unconstrained range of f, while this is the constrained range
-    #                           ADMMBO is not sensitive to M in a wide range of values ref. sec. 5.7
+    #                           ADMMBO is (claimed) not sensitive to M in a wide range of values ref. sec. 5.7
     
-    # Grid with evry 10th point of space
-    grid = np.array(np.meshgrid(xin[::10],xin[::10],indexing='ij')).reshape(2,-1).T
+    # Grid with evry grid_step-th point of space
+    grid = np.array(np.meshgrid(xin[::grid_step],xin[::grid_step],indexing='ij')).reshape(2,-1).T
 
     xo,zo,gpr,gpc=admmbo(costf, constraintf, M, bounds_array, grid, x0,alpha=2,beta=2,K=30)
     
@@ -308,7 +317,8 @@ if __name__=='__main__':
                             extent=(extent_tuple),origin='lower')
     plt.colorbar();plt.title('Constraint Probability Estimate')
     ## True Cost/Objective Function ## 
-    plt.figure();plt.imshow(func.reshape(len(xin),-1).T,extent=(extent_tuple),origin='lower')
+    plt.figure()
+    plt.imshow(func.reshape(len(xin),-1).T,extent=(extent_tuple),origin='lower')
     plt.colorbar();plt.title('True Cost/Objective Function')
     ### ---- ###
     

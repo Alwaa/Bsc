@@ -16,7 +16,8 @@ def costf(x,w,Mu,Sigma):
     
     f = -np.sum([w[i]*multivariate_normal.pdf(x, mean=Mu[i], cov=Sigma[i])
                 for i in range(len(Mu))],axis=0)
-    
+    if np.shape(f) == ():
+        return f[None]
     return f
 
 def constraintf(x,phi,r):
@@ -43,7 +44,7 @@ r = (1 + np.sin(6*phi-.1))*0.3+0.2
 example0 = {"Bound Type" : boundtype,
             "Bounds" : bounds,
             "Cost Function (x)":  lambda x: costf(x,w,Mu,Sigma),
-            "Constraint Function (z)": lambda z: 1-constraintf(z,phi,r)}
+            "Constraint Function (z)": [lambda z: 1-constraintf(z,phi,r)]}
 
 #################################
 # XXXXXX problem
