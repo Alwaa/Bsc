@@ -93,11 +93,11 @@ def cost_gramacy(x):
     return f
 
 def constraint1_gramacy(x):
-
+    raise NotImplementedError("Not yet implemented")
     return c <= 0
 
 def constraint2_gramacy(x):
-
+    raise NotImplementedError("Not yet implemented")
     return c <= 0
 
 constraint_list_gramacy = [
