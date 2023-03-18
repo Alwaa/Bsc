@@ -9,3 +9,9 @@ dependencies:
   - pip
   - pip:
     - cma
+    - pymongo #for PESC with spearmint
+    - -e Spearmint
+
+# Clone Spearmint from https://github.com/HIPS/Spearmint.git
+# Then the conda update will run pip install -e "Spearmint"
+# Clone before the env is made
