@@ -1,4 +1,0 @@
-[submodule "Spearmint"]
-	path = Spearmint
-	url = https://github.com/HIPS/Spearmint.git
-	branch = PESC
