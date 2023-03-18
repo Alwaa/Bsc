@@ -26,3 +26,17 @@ ABNORMAL_TERMINATION_IN_LNSRCH
 conda env update --prefix ./env --file env.yml  --prune
 vs.
 conda env update --file env.yml  --prune
+
+
+IN <MONGODB_PATH>\bin
+AFTER ADDET TO PATH
+AS ADMINISTRATOR
+
+D:\mongodb\bin>mongod --remove
+
+mongod --dbpath=<PATH TO REP>\Bsc\comparisson_algs\PESC_folders\dbfolder --logpath=<PATH TO REP>\Bsc\comparisson_algs\PESC_folders\logfolder\log.txt --install
+
+FUTURIZE with:
+futurize -0 -w Spearmint
+
+Changed kernel_utils.py so it used the slower python version insted of weave
