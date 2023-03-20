@@ -3,6 +3,7 @@ name: PESC
 dependencies:
   - python=2.7
   - numpy
+  - matplotlib
   - pip
   - pip:
     - -e Spearmint
