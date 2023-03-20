@@ -1,6 +1,7 @@
 #Spearmint/*
 outcmaes/
 plot_files/
+**/PESC_folders/**
 
 ########################################
 # Byte-compiled / optimized / DLL files

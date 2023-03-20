@@ -9,6 +9,4 @@ dependencies:
   - pip
   - pip:
     - cma
-    - pymongo #for PESC with spearmint
-    - -e Spearmint #Conda will run pip install -e "Spearmint" to install from submodule
 

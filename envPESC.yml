@@ -1,0 +1,10 @@
+name: PESC
+# CONFLICTS
+dependencies:
+  - python=2.7
+  - numpy
+  - pip
+  - pip:
+    - -e Spearmint
+    - weave
+    - pymongo==2.7
