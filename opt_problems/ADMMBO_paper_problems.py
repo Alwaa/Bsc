@@ -19,20 +19,22 @@ bounds_gardner = (0,6)
 # TODO: Restructure main script to always give same dimension
 # TODO: Rewrtie all with multiple constraints method
 def cost_gardner1(x):
-    xs = x[:,0]
-    ys = x[:,1]
+    xx = x[None] if x.ndim == 1 else x # In case of single value input
+    xs = xx[:,0]
+    ys = xx[:,1]
 
     f = np.cos(2*xs) * np.cos(ys) + np.sin(xs)
 
     return f
 
 def constraint_gardner1(x):
-    xs = x[:,0]
-    ys = x[:,1]
+    xx = x[None] if x.ndim == 1 else x # In case of single value input
+    xs = xx[:,0]
+    ys = xx[:,1]
 
-    c = np.cos(xs)*np.cos(ys) - np.sin(xs)*np.sin(ys)
+    c = np.cos(xs)*np.cos(ys) - np.sin(xs)*np.sin(ys) + 0.5
 
-    return c <= -0.5 #TODO: Check paper for positive defenition of its contraint vs how its implemeted(orig 0.5)
+    return c <= 0 #TODO: Check paper for positive defenition of its contraint vs how its implemeted(orig 0.5)
     #? Think its actually a typo in the paper
 
 
@@ -58,9 +60,9 @@ def constraint_gardner2(x):
     xs = x[:,0]
     ys = x[:,1]
 
-    c = np.sin(xs)*np.sin(ys)
+    c = np.sin(xs)*np.sin(ys) + 0.95
 
-    return c <= -0.95
+    return c <= 0
 
 gardner2 = {"Bound Type" : boundtype_gardner,
             "Bounds" : bounds_gardner,

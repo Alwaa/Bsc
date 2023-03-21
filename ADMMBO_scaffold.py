@@ -23,6 +23,7 @@ from opt_problems.ADMMBO_paper_problems import gardner1, gardner2
 #################################
 # Problem to solve
 problem = gardner1
+K_in = 10 #example0 K = 30
 
 start_sample_type = "grid"
 point_per_axis_start = 7 #7 is original, 5 works for small feas area problem
@@ -145,7 +146,8 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     if c0 is None:
         c0s = [[]]*N
         for i in range(N):
-            c0s[i] = constraints[i](x0)
+            constraint = lambda inp: 1 - ( constraints[i](inp) <= 0 )#Boolean constraint
+            c0s[i] = constraint(x0)
 
     print(x0,f0)
     gpr.fit(x0,f0)
@@ -178,8 +180,8 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
             x = opt.x
             # print(f'eix:{ei.max()}')
 
-            print(x[None],"\n-----\n",gpr.y_train_)
-            print(cost(x[None]),"\n-----\n",gpr.y_train_)
+            #print(x[None],"\n-----\n",gpr.y_train_)
+            #print(cost(x[None]),"\n-----\n",gpr.y_train_)
             gpr.fit(np.concatenate((gpr.X_train_,x[None]),axis=0),
                     np.concatenate((gpr.y_train_,cost(x[None])),axis=0))
         ### --- ###
@@ -194,7 +196,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
         ss = [[]]*N
         for i in range(N):
             for t in range(betac):
-                constraint = constraints[i]
+                constraint = lambda inp: 1 - ( constraints[i](inp) <= 0 )#Boolean constraint
                 gpc = gpcs[i]
 
                 #Line 4 in Alg. 3.3
@@ -272,7 +274,7 @@ if __name__=='__main__':
     func = costf(xy)
     if len(constraintf) != 1:
         print("NO PLOTTING SUPPORT FOR MULTIPLE CONSTRAINTS")
-    con = 1 - constraintf[0](xy)
+    con = ( constraintf[0](xy) <= 0 )#Boolean constraint
     ff = con*func
 
     ## Starting Points ##
@@ -290,21 +292,47 @@ if __name__=='__main__':
     # Grid with evry grid_step-th point of space
     grid = np.array(np.meshgrid(xin[::grid_step],xin[::grid_step],indexing='ij')).reshape(2,-1).T
 
-    xo,zo,gpr,gpc=admmbo(costf, constraintf, M, bounds_array, grid, x0,alpha=2,beta=2,K=30)
+    xo,zo,gpr,gpc=admmbo(costf, constraintf, M, bounds_array, grid, x0,alpha=2,beta=2,K=K_in)
+
+    xsr = gpr.X_train_
+    obj = gpr.y_train_
+    xsc = gpc.base_estimator_.X_train_
+    cc = gpc.base_estimator_.y_train_
+
+
+    new_obj = np.concatenate((obj,np.zeros(len(cc)))).reshape(-1,1)
+    new_cc = np.concatenate((np.ones(len(obj)),cc)).reshape(-1,1)
+    obj_out = np.concatenate((new_obj,new_cc),axis = 1) ## SImple combined obj and constraied after eachother
+
+    objmaks = np.concatenate((np.full(len(obj),True),np.full(len(cc),False))).reshape(-1,1)
+    constmaks = np.concatenate((np.full(len(obj),False),np.full(len(cc),True))).reshape(-1,1)
+    eval_type = np.concatenate((objmaks,constmaks),axis = 1)
+
+    xs_out = np.concatenate((xsr,xsc))
+    ## TODO:! Move into better flow
+    from plotting import vizualize_toy
+    vizualize_toy(
+        xs_out,
+        obj_out,
+        problem,
+        eval_type = eval_type,
+        decoupled = True
+    )
+
+    #print(xsc.shape, cc.shape)
+    #print(xsr,obj)
     
     import matplotlib.pyplot as plt
     ### Main Plot ###
     plt.figure()
     plt.imshow(ff.reshape(len(xin),-1).T,extent=(extent_tuple),origin='lower')
     plt.colorbar()
-    plt.plot(gpr.X_train_[:,0],gpr.X_train_[:,1],'kx')
-    for i in range(gpr.X_train_.shape[0]):
-        plt.text(gpr.X_train_[i,0],gpr.X_train_[i,1],f'{i}')
-    xc=gpc.base_estimator_.X_train_[:,0]
-    yc=gpc.base_estimator_.X_train_[:,1]
-    cc=gpc.base_estimator_.y_train_
-    plt.plot(xc[cc==1],yc[cc==1],'r+')
-    plt.plot(xc[cc==0],yc[cc==0],'ro')
+    plt.plot(xsr[:,0],xsr[:,1],'kx')
+    for i in range(xsr.shape[0]):
+        plt.text(xsr[i,0],xsr[i,1],f'{i}')
+
+    plt.plot(xsc[:,0][cc==1],xsc[:,1][cc==1],'r+') #Where classification was attempted but is incorrect
+    plt.plot(xsc[:,0][cc==0],xsc[:,1][cc==0],'ro') #Where it is correct
     ### --------- ###
 
     ### Plots ###

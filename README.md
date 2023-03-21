@@ -2,8 +2,14 @@
 Project in Constrained Bayesian Optimization
 
 # TODO:
-- costf and constraintf not same behaviour with single input
+- PESC gets Nan error sometimes, simply entering command again resumes job?
+    - Make a try-catch loop in running script?
+- How to decouple PESC??
+- Check output of PESC for decoupled problems
 - Lock versions of env file when starting results
+
+# DONE? (Check)
+- costf and constraintf not same behaviour with single input
 
 conda update -n base -c defaults conda
 
@@ -27,8 +33,10 @@ conda env update --prefix ./env --file env.yml  --prune
 vs.
 conda env update --file env.yml  --prune
 
+
+## For PESC
 Add mongoDB ver 2.smth from archive in website
-I Installed it on ????
+I Installed it on Parent of Bsc directory for simplicity
 
 IN <MONGODB_PATH>\bin
 AFTER ADDET TO PATH
@@ -41,8 +49,10 @@ mongod --dbpath=<PATH TO REP>\Bsc\comparisson_algs\PESC_folders\dbfolder --logpa
 PESC env works with c code commeted out in the kernel_utils file of the PESC Spearmint files
 
 
-Might try again to add a modern c compiler
+- Changed kernel_utils.py so it used the slower python version insted of weave
+- Changed print function in tasks/input_space.py line 272 function
+    - All 4 in the input_params functiontion into normal print statements 
+#### POtential
+Might try again to fix plotting behaviour and maybe add a modern python c compiler
 FUTURIZE with:
 futurize -0 -w Spearmint
-
-Changed kernel_utils.py so it used the slower python version insted of weave

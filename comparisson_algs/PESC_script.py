@@ -58,3 +58,5 @@ def PESC_main(problem_folder_rel = "Spearmint/examples/toy"):
 
     print(xs_out, "\n", objs_out)
     print(f"\nTime for:\n 1st {-start_t + out1_t:.2f}\n 2nd {-out1_t + out2_t:.2f} \n 3nd {-out2_t + time():.2f}")
+    all_objs = True
+    return xs_out, objs_out, all_objs

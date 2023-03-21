@@ -21,13 +21,11 @@ def costf(x,w,Mu,Sigma):
     return f
 
 def constraintf(x,phi,r):
-    if x.ndim == 1:
-        xx=x[None]
-    else:
-        xx=x
+    xx = x[None] if x.ndim == 1 else x # In case of single value input
+
     phie = np.arctan2(xx[...,1],xx[...,0])
     re = np.sqrt(np.sum(xx**2, axis=-1))
-    return re < np.interp(phie,phi,r)
+    return re - np.interp(phie,phi,r) #<= 0
 
 rnd = np.random.RandomState(42)
 K = 42
@@ -44,7 +42,7 @@ r = (1 + np.sin(6*phi-.1))*0.3+0.2
 example0 = {"Bound Type" : boundtype,
             "Bounds" : bounds,
             "Cost Function (x)":  lambda x: costf(x,w,Mu,Sigma),
-            "Constraint Function (z)": [lambda z: 1-constraintf(z,phi,r)]}
+            "Constraint Function (z)": [lambda z: constraintf(z,phi,r)]} #[lambda z: 1-constraintf(z,phi,r)]}
 
 #################################
 # XXXXXX problem
