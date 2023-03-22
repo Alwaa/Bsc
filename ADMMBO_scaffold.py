@@ -125,7 +125,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
         mu,std = gpr.predict(x, return_std=True)
         sq_norm_term = np.sum((x[:,None,:]-zs+ys/rho)**2,axis = 2)
         muu = mu + 0.5*rho*np.mean(sq_norm_term, axis = 1) #muu is not scaled so std of f(x) should be eqv to std of p(uk(x)|Uk)
-        #xx = (ubest-muu)/std 
+        #xx = (ubest-muu)/std #Original formulation
         xx = -(muu-ubest)/std #?Why negative here??
         ei = std * (xx * ndtr(xx) + norm.pdf(xx))
         return ei
