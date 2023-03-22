@@ -12,7 +12,7 @@ from sklearn import gaussian_process
 # from GPyOpt import BayesianOptimization
 from scipy.special import ndtr
 from scipy.stats import norm
-
+import copy
 
 
 rnd = np.random.RandomState(42)
@@ -45,57 +45,12 @@ else:
 costf = problem["Cost Function (x)"]
 constraintf = problem["Constraint Function (z)"] #TODO: rewrite to multiple (s)
 # --------------------- #
-class BO: #Unused for now
-    def __init__(self,func,x0=None,f0=None,discrete=False):
-        self.kernel=gaussian_process.kernels.ConstantKernel() * \
-            gaussian_process.kernels.Matern(nu=1.5)
-        
-        self.gp = gaussian_process.GaussianProcessRegressor(kernel=self.kernel)
-        self.func=func
-        self.x = []
-        self.x.extend(x0)
-        if self.f0 is None:
-            self.f=[self.func(x) for x in x0]
-        else:
-            self.f.extend(f0)
-        self.gp.fit(self.x,self.f)
-    
-    def update(self,x,f=None):
-        self.x.append(x)
-        if f is None:
-            self.f.append(self.func(x))
-        self.gp.fit(self.x,self.f)
-    
-    def EI(self,x):
-        mu,std = self.gp.predict(x)
-        xx = (mu - self.cmax)/std
-        ei = std * (xx * ndtr(xx) + norm.pdf(xx))
-        return ei
-    
-    def eimax(self,x):
-        return x[np.argmax(self.EI(x))]
 
 
-def gpr_ei(x,ys,zs,rho,gpr,ubest):
-    x=np.atleast_2d(x)
-    mu,std = gpr.predict(np.atleast_2d(x), return_std=True)
-    muu = mu + 0.5*rho*np.sum((x-zs+ys/rho)**2,axis=1)
-    xx = (ubest-muu)/std
-    ei = std * (xx * ndtr(xx) + norm.pdf(xx))
-    return ei
 
-def gpc_ei(x,y,z,rho,M,gpc,hbest):
-    z=np.atleast_2d(z)
-    hh = hbest - 0.5*rho/M * np.sum((x[None]-z+y[None]/rho)**2,axis=1)
-    theta = gpc.predict_proba(z)[:,1]
-    ei = np.zeros(z.shape[0])
-    idx1 = (hh>0) & (hh<1)
-    ei[idx1] = hh[idx1] * (1.0 - theta[idx1])
-    idx2 = hh > 1.0
-    ei[idx2] = hh[idx2] - theta[idx2]
-    return ei
-
-
+## For debugging
+gp_logger = []
+rho_list = []
 # bounds = search-space B ; n and m_i missing, insted the initial points are passed in
 # M = penalty of infeasability
 # K = max number of it; rho = penalty parm
@@ -105,12 +60,13 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
            K=15, rho=0.1, alpha=5, beta=5, alpha0=20, beta0=20,
            epsilon=1e-6):
     K1 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
-            gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2)) #+\
+             gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2)) #+\
                 # gaussian_process.kernels.WhiteKernel()
     gpr = gaussian_process.GaussianProcessRegressor(kernel=K1)
     
     K2 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
-        gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2)) 
+        gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2)) #TODO: sjekk bound for corner behaviour
+    
         
     S = False
     k = 0 # "k=1 (0 as first index)"
@@ -123,8 +79,11 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     gpcs = [gaussian_process.GaussianProcessClassifier(kernel=K2) for i in range(N)]
     
     ## rho adjusting parameters ## # TODO Investigate further into rho setting
+    adjust_rho = True
+    rho = 1 # IT WAS RHO
     tau = 2
-    mup = 10
+    mup = 20
+    rho_list.append(rho)
     ## ------------------------ ##
 
     ## Initializing z,y ## 
@@ -156,8 +115,31 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
         gpcs[i].fit(x0,c0s[i]) 
 
 
-    # Simply removing limitation to one of each class present did not do anything 
-        
+    def u_func(x_in): ## Eq. (10)
+        sq_norm = np.sum((x_in[:,None,:]-zs+ys/rho)**2,axis = 2) # Squared 2 norm for each xs/ys dimension
+        u = fx + 0.5*rho*np.mean(sq_norm,axis=1) #?DONE?: Check the sum funciton works propperly with new zs and ys
+        return u
+    
+    def gpr_ei(x_in,ys,zs,rho,gpr,ubest):
+        x=np.atleast_2d(x_in)
+        mu,std = gpr.predict(x, return_std=True)
+        sq_norm_term = np.sum((x[:,None,:]-zs+ys/rho)**2,axis = 2)
+        muu = mu + 0.5*rho*np.mean(sq_norm_term, axis = 1) #muu is not scaled so std of f(x) should be eqv to std of p(uk(x)|Uk)
+        #xx = (ubest-muu)/std 
+        xx = -(muu-ubest)/std #?Why negative here??
+        ei = std * (xx * ndtr(xx) + norm.pdf(xx))
+        return ei
+
+    def gpc_ei(x,y,z,rho,M,gpc,hbest):
+        z=np.atleast_2d(z)
+        hh = hbest - 0.5*rho/M * np.sum((x[None]-z+y[None]/rho)**2,axis=1)
+        theta = gpc.predict_proba(z)[:,1]
+        ei = np.zeros(z.shape[0])
+        idx1 = (hh>0) & (hh<1)
+        ei[idx1] = hh[idx1] * (1.0 - theta[idx1])
+        idx2 = hh > 1.0
+        ei[idx2] = hh[idx2] - theta[idx2]
+        return ei
     
     # z=np.mean(gpc.base_estimator_.X_train_[gpc.base_estimator_.y_train_==0],0)
     alphac=alpha0
@@ -165,20 +147,20 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     while k < K and not S:
         ### OPT ###
         for t in range(alphac):
-            ## Eq. (10) ##
-            u = gpr.y_train_ + \
-                0.5*rho*np.sum((gpr.X_train_-zs+ys/rho)**2,axis=1) #TODO: Check the sum funciton works propperly with new zs and ys
-            ubest = np.min(u)
-            ## -------- ##
-            eif = lambda x: -gpr_ei(x,ys,zs,rho,gpr,ubest)
-            mu,std = gpr.predict(grid, return_std=True)
-            muu = mu + 0.5*rho*np.sum((grid-zs+ys/rho)**2,axis=1)  #TODO: Check the sum funciton works propperly
-            xx = (ubest-muu)/std
-            ei = std * (xx * ndtr(xx) + norm.pdf(xx))
+            fx = gpr.y_train_ # f(x) for each value untill now
+            X = gpr.X_train_ # xs until now
+
+            ubest = np.min(u_func(X))
+
+            ei = gpr_ei(grid,ys,zs,rho,gpr,ubest)
             x = grid[np.argmax(ei)]
-            opt = minimize(eif, x, bounds=bounds)
+            eif = lambda x_in: -gpr_ei(x_in,ys,zs,rho,gpr,ubest)
+            opt = minimize(eif, x, bounds=bounds) # Minize negative expected improvement
+            old_x = copy.copy(x)
             x = opt.x
             # print(f'eix:{ei.max()}')
+            gp_logger.append([grid,0,0,x,-eif(x),old_x,-eif(old_x),
+                              copy.deepcopy(ei),copy.deepcopy(gpr.X_train_),copy.deepcopy(gpr.y_train_)])
 
             #print(x[None],"\n-----\n",gpr.y_train_)
             #print(cost(x[None]),"\n-----\n",gpr.y_train_)
@@ -252,11 +234,13 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
             S = True
         k += 1
         ## rho adjusting step ##
-        if rl > (mup*sl):
+        if rl > (mup*sl) and adjust_rho:
             rho *= tau
-        elif sl > (mup*rl):
+        elif sl > (mup*rl) and adjust_rho:
             rho /= tau
         print(f' rho:{rho} \n r:{rl} \n s:{sl}')
+
+        rho_list.append(rho)
         ## ----------------- ##
         if S:
             break
@@ -286,8 +270,8 @@ if __name__=='__main__':
         raise Exception("Non-grid start samples not yet implemted")
     ## --------------- ##
 
-    M = np.max(np.abs(ff)) # They set it as the unconstrained range of f, while this is the constrained range
-    #                           ADMMBO is (claimed) not sensitive to M in a wide range of values ref. sec. 5.7
+    M = np.max(ff) - np.min(ff) # They set it as the unconstrained range of f, while this is the constrained range
+                         # ADMMBO is (claimed) not sensitive to M in a wide range of values ref. sec. 5.7 (only to smaller values)
     
     # Grid with evry grid_step-th point of space
     grid = np.array(np.meshgrid(xin[::grid_step],xin[::grid_step],indexing='ij')).reshape(2,-1).T
@@ -323,18 +307,50 @@ if __name__=='__main__':
     #print(xsr,obj)
     
     import matplotlib.pyplot as plt
-    ### Main Plot ###
-    plt.figure()
-    plt.imshow(ff.reshape(len(xin),-1).T,extent=(extent_tuple),origin='lower')
-    plt.colorbar()
-    plt.plot(xsr[:,0],xsr[:,1],'kx')
-    for i in range(xsr.shape[0]):
-        plt.text(xsr[i,0],xsr[i,1],f'{i}')
+    # ### Main Plot ###
+    # plt.figure()
+    # plt.imshow(ff.reshape(len(xin),-1).T,extent=(extent_tuple),origin='lower')
+    # plt.colorbar()
+    # plt.plot(xsr[:,0],xsr[:,1],'kx')
+    # for i in range(xsr.shape[0]):
+    #     plt.text(xsr[i,0],xsr[i,1],f'{i}')
 
-    plt.plot(xsc[:,0][cc==1],xsc[:,1][cc==1],'r+') #Where classification was attempted but is incorrect
-    plt.plot(xsc[:,0][cc==0],xsc[:,1][cc==0],'ro') #Where it is correct
-    ### --------- ###
+    # plt.plot(xsc[:,0][cc==1],xsc[:,1][cc==1],'r+') #Where classification was attempted but is incorrect
+    # plt.plot(xsc[:,0][cc==0],xsc[:,1][cc==0],'ro') #Where it is correct
+    # ### --------- ###
+    ### Debugging ###..
+    K1 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
+            gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2)) #+\
+    fig_list = []
+    for i, round in enumerate(gp_logger):
+        sample_n = len(round[-1])
+        if i%10 == 0:
+            fig = plt.figure(figsize=(24,8));fig_list.append(fig)
+            gs = fig.add_gridspec(2, 5)
+            axs = gs.subplots();flat_axs = axs.flat
+            fig.suptitle(f"EI for [{i}-{i+10}]")
+        print(sample_n)
+        print(f"x sampled: {round[3]}")
+        print(f"{round[5]}: {round[6]}")
+        print(f"{round[3]}: {round[4]}")
+        # gpr_cop = gaussian_process.GaussianProcessRegressor(kernel=K1)
+        # gpr_cop.fit(round[-2],round[-1])
+        # plt.figure();plt.imshow(gpr_cop.predict(xy).reshape(len(xin),-1),
+        #                         extent=(extent_tuple),origin='lower')
+        # ;plt.title(f'Objective Function Estimate [{i}] {round[3]}')
+        # plt.show(block = True)
+        ei = round[-3]
+        mp = flat_axs[i%10].imshow(ei.reshape(int(np.sqrt(len(ei))),int(np.sqrt(len(ei)))).T,
+                                extent=(extent_tuple),origin='lower')
+        flat_axs[i%10].plot(round[3][0],round[3][1],"rx")
+        plt.colorbar(mp, ax = flat_axs[i%10],location='bottom')#;flat_axs[i%10].label_outer()
+    for f in fig_list:
+        f.tight_layout()
 
+    plt.figure();plt.plot(rho_list)
+    print(f"M = {M}")
+    plt.show(block = True)
+        
     ### Plots ###
     ## Cost/Objective Function Estimate ##
     plt.figure();plt.imshow(gpr.predict(xy).reshape(len(xin),-1).T,
