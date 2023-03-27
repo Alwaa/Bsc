@@ -43,7 +43,7 @@ else:
     raise Exception("Not yet Implemented non-square bounds")
 
 costf = problem["Cost Function (x)"]
-constraintf = problem["Constraint Function (z)"] #TODO: rewrite to multiple (s)
+constraintf = problem["Constraint Function (z)"] #TODO: finish rewrite to multiple (s)
 # --------------------- #
 
 
@@ -80,9 +80,9 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     
     ## rho adjusting parameters ## # TODO Investigate further into rho setting
     adjust_rho = True
-    rho = 1 # IT WAS RHO
+    rho = 1 # IT WAS RHO #BUT still wierd that it hugs a bad corner
     tau = 2
-    mup = 20
+    mup = 10
     rho_list.append(rho)
     ## ------------------------ ##
 
@@ -115,23 +115,29 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
         gpcs[i].fit(x0,c0s[i]) 
 
 
-    def u_func(x_in): ## Eq. (10)
-        sq_norm = np.sum((x_in[:,None,:]-zs+ys/rho)**2,axis = 2) # Squared 2 norm for each xs/ys dimension
-        u = fx + 0.5*rho*np.mean(sq_norm,axis=1) #?DONE?: Check the sum funciton works propperly with new zs and ys
-        return u
+    def u_post_pluss(x_in,zs_in,ys_in,rho_in): ## Eq. (10) after the f(x) + .....
+        sq_norm = np.sum((x_in[:,None,:]-zs_in+ys_in/rho_in)**2,axis = 2) # Squared 2 norm for each xs/ys dimension
+        u_post = 0.5*rho_in*np.mean(sq_norm,axis=1) #?DONE?: Check the sum funciton works propperly with new zs and ys
+        return u_post
     
-    def gpr_ei(x_in,ys,zs,rho,gpr,ubest):
+    def gpr_ei(x_in,zs,ys,rho,gpr,ubest):
         x=np.atleast_2d(x_in)
         mu,std = gpr.predict(x, return_std=True)
-        sq_norm_term = np.sum((x[:,None,:]-zs+ys/rho)**2,axis = 2)
-        muu = mu + 0.5*rho*np.mean(sq_norm_term, axis = 1) #muu is not scaled so std of f(x) should be eqv to std of p(uk(x)|Uk)
+        muu = mu + u_post_pluss(x,zs,ys,rho)
         #xx = (ubest-muu)/std #Original formulation
         xx = -(muu-ubest)/std #?Why negative here??
         ei = std * (xx * ndtr(xx) + norm.pdf(xx))
         return ei
+    
+    def h_post_minus(x_in,z_in,y_in,rho_in,M_in):
+        x,z,y = np.atleast_2d(x_in),np.atleast_2d(z_in),np.atleast_2d(y_in)
+        sq_norm = np.sum((x-z+y/rho_in)**2,axis = 1)
+        h_post = 0.5*rho_in/M_in * sq_norm
+        return h_post
 
-    def gpc_ei(x,y,z,rho,M,gpc,hbest):
+    def gpc_ei(x,z,y,rho,M,gpc,hbest):
         z=np.atleast_2d(z)
+        hh2 = hbest - h_post_minus(x,z,y,rho,M)
         hh = hbest - 0.5*rho/M * np.sum((x[None]-z+y[None]/rho)**2,axis=1)
         theta = gpc.predict_proba(z)[:,1]
         ei = np.zeros(z.shape[0])
@@ -142,6 +148,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
         return ei
     
     # z=np.mean(gpc.base_estimator_.X_train_[gpc.base_estimator_.y_train_==0],0)
+    ## First iteration has higher bidget as per discussion
     alphac=alpha0
     betac=beta0
     while k < K and not S:
@@ -150,11 +157,11 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
             fx = gpr.y_train_ # f(x) for each value untill now
             X = gpr.X_train_ # xs until now
 
-            ubest = np.min(u_func(X))
+            ubest = np.min(fx + u_post_pluss(X,zs,ys,rho)) # Eq. (10)
 
-            ei = gpr_ei(grid,ys,zs,rho,gpr,ubest)
+            ei = gpr_ei(grid,zs,ys,rho,gpr,ubest)
             x = grid[np.argmax(ei)]
-            eif = lambda x_in: -gpr_ei(x_in,ys,zs,rho,gpr,ubest)
+            eif = lambda x_in: -gpr_ei(x_in,zs,ys,rho,gpr,ubest)
             opt = minimize(eif, x, bounds=bounds) # Minize negative expected improvement
             old_x = copy.copy(x)
             x = opt.x
@@ -168,9 +175,9 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
                     np.concatenate((gpr.y_train_,cost(x[None])),axis=0))
         ### --- ###
 
-        # TODO: check nececisty of this part
-        u = gpr.y_train_ + \
-                0.5*rho*np.sum((gpr.X_train_-zs+ys/rho)**2,axis=1)
+        #original_u = gpr.y_train_ + 0.5*rho*np.sum((gpr.X_train_-zs+ys/rho)**2,axis=1)
+        # TODO: check and mark part of algorithm 
+        u = gpr.y_train_ + u_post_pluss(gpr.X_train_,zs,ys,rho)
         x = gpr.X_train_[np.argmin(u)]
 
         ### FEAS ###
@@ -187,7 +194,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
                                     +ys[i][None]/rho)**2,axis=1) #TODO: Chech correctness with ys
                 hbest = np.min(h)
                 
-                eif = lambda z: -gpc_ei(x,ys[i],zs[i],rho,M,gpc,hbest) #TODO: Chech correctness with ys and zs
+                eif = lambda z: -gpc_ei(x,z,ys[i],rho,M,gpc,hbest) #TODO: Chech correctness with ys and zs
                 qi = lambda zi: 0.5*rho/M * np.sum((x[None]-zi+ys[i][None]/rho)**2,axis=1) #TODO: Chech correctness with ys
                 hh = hbest - qi(grid)
                 theta = gpc.predict_proba(grid)[:,1]
@@ -239,7 +246,6 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
         elif sl > (mup*rl) and adjust_rho:
             rho /= tau
         print(f' rho:{rho} \n r:{rl} \n s:{sl}')
-
         rho_list.append(rho)
         ## ----------------- ##
         if S:
