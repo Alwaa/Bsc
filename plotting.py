@@ -19,7 +19,7 @@ def vizualize_toy(xs: NDArray[np.float64],
         raise Exception("Not yet Implemented non-square bounds")
     
     costf = problem["Cost Function (x)"]
-    constraintf = problem["Constraint Function (z)"] #TODO: rewrite to multiple (s)
+    constraintf = problem["Constraint Functions (z)"] #TODO: rewrite to multiple (s)
     ## ---------------------- ##
     if len(constraintf) != 1:
         raise NotImplementedError("NO PLOTTING SUPPORT FOR MULTIPLE CONSTRAINTS")

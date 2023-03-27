@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 def cma_es(problem):
     es = cma.CMAEvolutionStrategy(8 * [0], 0.5)
     costf = problem["Cost Function (x)"]
-    constraintf = problem["Constraint Function (z)"]
+    constraintf = problem["Constraint Functions (z)"]
     ## Differently formated input than my current ADDMBO impl
     ## actually closer to original that can take both?
     def constraints(x):

@@ -9,6 +9,8 @@ import numpy as np
 
 boundtype_gardner = "square"
 bounds_gardner = (0,6)
+if boundtype_gardner == "square":
+    bounds_gardner = bounds_gardner + bounds_gardner
 
 
 #################################
@@ -42,7 +44,7 @@ def constraint_gardner1(x):
 gardner1 = {"Bound Type" : boundtype_gardner,
             "Bounds" : bounds_gardner,
             "Cost Function (x)":  lambda x: cost_gardner1(x),
-            "Constraint Function (z)": [lambda z: 1-constraint_gardner1(z)]}
+            "Constraint Functions (z)": [lambda z: 1-constraint_gardner1(z)]}
 
 #################################
 # Simulation 2 (gardner2)
@@ -67,7 +69,7 @@ def constraint_gardner2(x):
 gardner2 = {"Bound Type" : boundtype_gardner,
             "Bounds" : bounds_gardner,
             "Cost Function (x)":  lambda x: cost_gardner2(x),
-            "Constraint Function (z)": [lambda z: 1 - constraint_gardner2(z)]}
+            "Constraint Functions (z)": [lambda z: 1 - constraint_gardner2(z)]}
 
 
 if __name__ == "__main__":
@@ -138,5 +140,5 @@ def constraint_XXXXX(x):
 gardner2 = {"Bound Type" : boundtype_XXXX,
             "Bounds" : bounds_XXXX,
             "Cost Function (x)":  lambda x: cost_XXXX(x),
-            "Constraint Function (z)": lambda z: 1 - constraint_XXXX(z)}
+            "Constraint Functions (z)": lambda z: 1 - constraint_XXXX(z)}
 """

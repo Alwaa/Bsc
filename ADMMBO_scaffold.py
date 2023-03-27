@@ -43,7 +43,7 @@ else:
     raise Exception("Not yet Implemented non-square bounds")
 
 costf = problem["Cost Function (x)"]
-constraintf = problem["Constraint Function (z)"] #TODO: finish rewrite to multiple (s)
+constraintf = problem["Constraint Functions (z)"] #TODO: in code refactor for multiple problems
 # --------------------- #
 
 
