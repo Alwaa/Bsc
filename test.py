@@ -9,7 +9,7 @@ problem = gardner1
 #COBYLA(problem)
 #PESC_create_problem(gardner1, "test3")
 
-PESC_run_experiment("test3")
+# PESC_run_experiment("test3")
 xs, objs, all_objective_values = PESC_main(name = "test3")
 
 vizualize_toy(xs,objs,problem,decoupled=False)

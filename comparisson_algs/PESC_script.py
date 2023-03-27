@@ -50,14 +50,21 @@ def PESC_main(name):
         tasks_res = [s.split() for s in fields[num_vars:num_vars+num_tasks]]
 
         for j in range(len(var_res)):
-            #assert var_res[j][0].decode("utf-8") == var_names[-j-1], f"Variable names outputted in different order than reverse of config\n\n{var_res[j][0].decode('utf-8')}\n{var_names[-j-1]}"
+            if var_res[j][0].decode("utf-8") == var_names[-j-1]:
+                xs_out[i-1,j] = float(var_res[-j-1][-1].decode("utf-8"))
+            else:
+                xs_out[i-1,j] = float(var_res[j][-1].decode("utf-8"))
+                f"Variable names outputted in different order than reverse of config\n\n{var_res[j][0].decode('utf-8')}\n{var_names[-j-1]}"
             print(var_res[-j-1][-1].decode("utf-8"))
-            xs_out[i-1,j] = float(var_res[-j-1][-1].decode("utf-8"))
         for j in range(len(tasks_res)):
-            #assert tasks_res[j][0].decode("utf-8")[:-1] == task_names[-j-1], f"Task names outputted in different order than reverse of config\n\n{tasks_res[j][0].decode('utf-8')}\n{task_names[-j-1]}"
-            objs_out[i-1,j] = float(tasks_res[-j-1][-1][1:-1].decode("utf-8"))
+            if tasks_res[j][0].decode("utf-8")[:-1] == task_names[-j-1]:
+                objs_out[i-1,j] = float(tasks_res[-j-1][-1][1:-1].decode("utf-8"))
+            else:
+                objs_out[i-1,j] = float(tasks_res[-j-1][-1][1:-1].decode("utf-8"))
+                print(f"Task names outputted in different order than reverse of config\n\n{tasks_res[j][0].decode('utf-8')}\n{task_names[-j-1]}")
 
-
+    objs_out[:,1:] *= -1 #Flipping constraint for now!!!! 
+    
     print(xs_out, "\n", objs_out)
     print(f"\nTime for:\n 1st {-start_t + out1_t:.2f}\n 2nd {-out1_t + out2_t:.2f} \n 3nd {-out2_t + time():.2f}")
     all_objs = True
@@ -117,6 +124,9 @@ def PESC_create_problem(problem_in, name):
     
     with open(p_folder + "/problem.py", 'w') as f:
         f.write(file)
+    inp = ""
+    while inp != "yes":
+        inp = input("\n NB! \nHave you changed the problem.py file with the function and constraints?: ")
     
         
 # DEBUGGING
