@@ -27,8 +27,9 @@ def vizualize_toy(xs: NDArray[np.float64],
 
     extent_tuple = (bounds[0],bounds[1],bounds[0],bounds[1])
 
+    check_validity = lambda xx: constraintf[0](xx) <= 0 #Boolean constraint #Upheld if over 0 ??
     func = costf(xy)
-    con = ( constraintf[0](xy) <= 0 )#Boolean constraint
+    con = ( constraintf[0](xy) <= 0 )
     ff = con*func
 
 
@@ -43,6 +44,7 @@ def vizualize_toy(xs: NDArray[np.float64],
         xs_obj = xs[o1mask]
         xs_class = xs[class_mask]
         cc = cc[class_mask]
+        o1_class = [o1mask]
         o1_vals = objs[:,0][o1mask]
     else:
         xs_obj = xs
@@ -63,14 +65,17 @@ def vizualize_toy(xs: NDArray[np.float64],
 
     #Objfunction plot
     plt.figure()
-    plt.plot(o1_vals,"kx")
-    curr_min = o1_vals[0]
-    rolling_min = np.ones(len(o1_vals))
-    for i in range(len(o1_vals)):
-        if curr_min > o1_vals[i]:
-            curr_min = o1_vals[i]
+    sampl_it = np.arange(len(o1_vals))
+    valid_it, o1_valid = sampl_it[check_validity(xs_obj)], o1_vals[check_validity(xs_obj)]
+    plt.plot(sampl_it, o1_vals,"kx")
+    plt.plot(valid_it, o1_valid,"mo")
+    curr_min = o1_valid[0]
+    rolling_min = np.ones(len(o1_valid))
+    for i in range(len(o1_valid)):
+        if curr_min > o1_valid[i]:
+            curr_min = o1_valid[i]
         rolling_min[i] = curr_min
-    plt.plot(rolling_min,"r--")
+    plt.plot(valid_it,rolling_min,"r--") #TODO: Fix indexing of valid line to drop off abruplty (per it.)
 
 
     

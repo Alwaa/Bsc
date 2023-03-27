@@ -289,7 +289,8 @@ if __name__=='__main__':
     xsc = gpc.base_estimator_.X_train_
     cc = gpc.base_estimator_.y_train_
 
-
+    print("Diff of xs")
+    print(xsr-xsc)
     new_obj = np.concatenate((obj,np.zeros(len(cc)))).reshape(-1,1)
     new_cc = np.concatenate((np.ones(len(obj)),cc)).reshape(-1,1)
     obj_out = np.concatenate((new_obj,new_cc),axis = 1) ## SImple combined obj and constraied after eachother
@@ -335,10 +336,12 @@ if __name__=='__main__':
             gs = fig.add_gridspec(2, 5)
             axs = gs.subplots();flat_axs = axs.flat
             fig.suptitle(f"EI for [{i}-{i+10}]")
-        print(sample_n)
-        print(f"x sampled: {round[3]}")
-        print(f"{round[5]}: {round[6]}")
-        print(f"{round[3]}: {round[4]}")
+
+        # print(sample_n)
+        # print(f"x sampled: {round[3]}")
+        # print(f"{round[5]}: {round[6]}")
+        # print(f"{round[3]}: {round[4]}")
+
         # gpr_cop = gaussian_process.GaussianProcessRegressor(kernel=K1)
         # gpr_cop.fit(round[-2],round[-1])
         # plt.figure();plt.imshow(gpr_cop.predict(xy).reshape(len(xin),-1),
@@ -372,8 +375,6 @@ if __name__=='__main__':
     plt.colorbar();plt.title('True Cost/Objective Function')
     ### ---- ###
     
-    # plt.figure();plt.imshow(ei.reshape(301,-1).T,origin='lower')
-
     # Needed for VScode
     plt.show()
     
