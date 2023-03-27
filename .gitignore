@@ -2,6 +2,18 @@
 outcmaes/
 plot_files/
 **/PESC_folders/**
+# Spearming ignores
+*.pyc
+*.log
+*.out
+*.blg
+*.aux
+*.bib
+#*#
+*.DS_Store
+*.pdf
+*.py~
+
 
 ########################################
 # Byte-compiled / optimized / DLL files
