@@ -356,7 +356,7 @@ if __name__=='__main__':
     for f in fig_list:
         f.tight_layout()
 
-    plt.figure();plt.plot(rho_list)
+    plt.figure();plt.plot(rho_list);plt.title('Rho')
     print(f"M = {M}")
     plt.show(block = True)
         

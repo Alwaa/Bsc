@@ -9,14 +9,15 @@ from numpy import r_
 #es.result_pretty()
 
 def cma_es(problem):
-    own_logger = []
+    own_logger_X = []
+    own_logger_fit = []
     costf = problem["Cost Function (x)"]
     constraintf = problem["Constraint Functions (z)"]
     ## Differently formated input than my current ADDMBO impl
     ## actually closer to original that can take both?
     def constraints(x):
         #return constraintf[0](x[None])
-        return [constraintf[i](x[None])[0] -0.5 for i in range(len(constraintf))] #I think this is the correct format??
+        return [0.5 - constraintf[i](x[None])[0] for i in range(len(constraintf))] #I think this is the correct format??
     def fun(x):
         #print("TEST\n",x,"\n\n")
         #print(costf(x[None]))
@@ -41,7 +42,8 @@ def cma_es(problem):
     while not es.stop():
         X, fit = es.ask_and_eval(cfun)  # sample len(X) candidate solutions
         es.tell(X, fit)
-        own_logger.append((X,fit)) # I can get in the middle and log if i want
+        own_logger_X.extend(X)
+        own_logger_fit.extend(fit) # I can get in the middle and log if i want
         cfun.update(es)
         es.logger.add()  # for later plotting
         es.disp()
@@ -78,8 +80,15 @@ def cma_es(problem):
     if False: #print options in prettier format (can input string for suboptions)
         for k,v in cma.CMAOptions().items():
             print(k, v)
-    print(own_logger)
-    return cfun
+    import numpy as np
+    
+    own_logger_X.append(x)
+    x_out = np.array(own_logger_X)
+    
+    constr_out = np.array([constraintf[i](x_out) for i in range(len(constraintf))]).T
+    objs_out = np.concatenate((costf(x_out).reshape(-1,1), constr_out),axis = 1)
+    all_objs = True
+    return x_out, objs_out, all_objs
     #### TODO: Clean up a bit, then maybe try the other CMA-ES python IMPL since it has nicer plotting
     
 if __name__ == "__main__":
