@@ -6,7 +6,7 @@ from time import time
 
 
 
-def PESC_main(name):
+def pesc_main(name):
     folder_rel="comparisson_algs/PESC_folders/" + name
     start_t = time()
     ## For testing
@@ -70,7 +70,7 @@ def PESC_main(name):
     all_objs = True
     return xs_out, objs_out, all_objs
 
-def PESC_run_experiment(name = "test" ):
+def pesc_run_experiment(name = "test" ):
     folder_rel = "comparisson_algs/PESC_folders/" + name
     out_pros_result = subprocess.run(["conda", "run", "-n", "PESC", "python", 
                                "Spearmint/spearmint/cleanup.py", folder_rel],shell = True, capture_output=True)
@@ -78,7 +78,7 @@ def PESC_run_experiment(name = "test" ):
                                "Spearmint/spearmint/main.py", folder_rel],shell = True, capture_output=True)
     print(out_pros_result)
 
-def PESC_create_problem(problem_in, name):
+def pesc_create_problem(problem_in, name):
     max_finished_jobs = 40 #default budjet
     p_folder = "comparisson_algs/PESC_folders/" + name
     p_exists = os.path.exists(p_folder)
@@ -132,4 +132,4 @@ def PESC_create_problem(problem_in, name):
 # DEBUGGING
 if __name__ == "__main__":
     from opt_problems.ADMMBO_paper_problems import gardner1
-    PESC_create_problem(gardner1, "test")
+    pesc_create_problem(gardner1, "test")

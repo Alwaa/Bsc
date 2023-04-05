@@ -13,7 +13,7 @@ def scipy_bounds(problem_bounds):
 
     return bounds
 
-def cobyla_run(problem):
+def cobyla_run(problem, x0, obj_tol = 0.1, maxiter = 100):
     costf = problem["Cost Function (x)"]
     constraintf = problem["Constraint Functions (z)"]
     con = lambda x: constraintf[0](x[None])
@@ -47,25 +47,36 @@ def cobyla_run(problem):
     #     print("\n", constraint_list[i]["fun"](xxx), constraints[i]["fun"](xxx))
     #     print(bounds[i])
     
-    def callbackF(Xi):
-        print(Xi)
+    def callbackF(Xi, list_in): # For storing values of x traversed in the algorithm
+        list_in.append(Xi)
         return False
+        
+    trace = []
+    callBF = lambda x: callbackF(x,trace)
+    opt = scipy.optimize.minimize(fun, x0, callback = callBF, constraints = constraint_list, 
+                                  method="COBYLA", tol = obj_tol, options = {"maxiter":maxiter}) #,tol = 0.1 #catol does not work???
+    xs_out = np.array(trace)
+    
+    #Also a lot of infeasable solutions in eikson paper
+    x = opt.x
+    print(opt.message)
+    print(x,fun(x))
+    
+    constr_out = np.array([constraintf[i](xs_out) for i in range(len(constraintf))]).T
+    objs_out = np.concatenate((costf(xs_out).reshape(-1,1), constr_out),axis = 1)
+    all_objs = True
+    print(xs_out)
+    print(objs_out)
 
-    for i in range(10):
-        rnd = np.random.RandomState(42 + i)
-        x = ((rnd.rand(2)*(bounds[1]-bounds[0])))+bounds[0]
-        print("-----\n",x)
-
-        opt = scipy.optimize.minimize(fun, x, constraints = constraint_list, method="COBYLA", tol = 0.1, options = {"maxiter":100}, callback= callbackF) #,tol = 0.1 #catol does not work???
-        #Also a lot of infeasable solutions in eikson paper
-        x = opt.x
-        print(opt.message)
-        print(x,fun(x))
-        print(con(x)[0])
-        print(opt.values())
+    return xs_out, objs_out, all_objs
 
 
 if __name__ == "__main__":
     from opt_problems.ADMMBO_paper_problems import gardner1
     
-    cobyla_run(gardner1)
+    for i in range(10):
+        bounds = gardner1["Bounds"]
+        rnd = np.random.RandomState(42 + i)
+        x0 = ((rnd.rand(2)*(bounds[1]-bounds[0])))+bounds[0]
+        print("-----\n",x0)
+        cobyla_run(gardner1, x0)
