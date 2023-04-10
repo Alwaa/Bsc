@@ -20,13 +20,14 @@ rnd = np.random.RandomState(42)
 from opt_problems.example_problems import example0
 from opt_problems.ADMMBO_paper_problems import gardner1, gardner2
 
+from utils.sampling import grid_sampling
+
 #################################
 # Problem to solve
 problem = gardner1
 K_in = 10 #example0 K = 30
 
-start_sample_type = "grid"
-point_per_axis_start = 7 #7 is original, 5 works for small feas area problem
+x0 = grid_sampling(problem, num_per_dim = 5) # 5 is original, 3 works
 
 # For setting the type of grid to use for solving the problem (discreticing space, and then 
 # selectin a less fine grid for less GP calculations)
@@ -256,8 +257,8 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     return x,z,gpr,gpc
 
 if __name__=='__main__':
-    extent_tuple = (bounds[0],bounds[1],bounds[0],bounds[1])
-    bounds_array = np.array((extent_tuple[:2],extent_tuple[2:])) #For now, fix later
+    extent_tuple = bounds #bounds are defined as (lb1,ub1,...,lb#,ub#)
+    bounds_array = np.array(bounds).reshape(-1,2)
 
     # For drawing bounds + true cost function
     # Bound area is then 0 in heatmap
@@ -267,22 +268,14 @@ if __name__=='__main__':
     con = ( constraintf[0](xy) <= 0 )#Boolean constraint
     ff = con*func
 
-    ## Starting Points ##
-    if start_sample_type == "grid":
-        xx0=np.linspace(bounds[0],bounds[1],point_per_axis_start)[1:-1]
-        x0 = np.array(np.meshgrid(xx0,xx0)).reshape(2,-1).T
-    else: 
-        # x0 = (rnd.rand(5,2)-.5)*2
-        raise Exception("Non-grid start samples not yet implemted")
-    ## --------------- ##
-
     M = np.max(ff) - np.min(ff) # They set it as the unconstrained range of f, while this is the constrained range
                          # ADMMBO is (claimed) not sensitive to M in a wide range of values ref. sec. 5.7 (only to smaller values)
     
     # Grid with evry grid_step-th point of space
     grid = np.array(np.meshgrid(xin[::grid_step],xin[::grid_step],indexing='ij')).reshape(2,-1).T
 
-    xo,zo,gpr,gpc=admmbo(costf, constraintf, M, bounds_array, grid, x0,alpha=2,beta=2,K=K_in)
+    #Running ADMMBO
+    xo,zo,gpr,gpc=admmbo(costf, constraintf, M, bounds_array, grid, x0, alpha=2,beta=2, K=K_in)
 
     xsr = gpr.X_train_
     obj = gpr.y_train_
