@@ -78,8 +78,8 @@ def pesc_run_experiment(name = "test" ):
                                "Spearmint/spearmint/main.py", folder_rel],shell = True, capture_output=True)
     print(out_pros_result)
 
-def pesc_create_problem(problem_in, name):
-    max_finished_jobs = 40 #default budjet
+def pesc_create_problem(problem_in, name, max_iter = 40):
+    max_finished_jobs = max_iter #budjet
     p_folder = "comparisson_algs/PESC_folders/" + name
     p_exists = os.path.exists(p_folder)
     if p_exists:

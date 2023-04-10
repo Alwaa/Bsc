@@ -109,7 +109,7 @@ constraint_list_gramacy = [
     lambda z: 1 - constraint2_gramacy(z)
     ]
 
-gardner2 = {"Bound Type" : boundtype_gramacy,
+lamwillox2 = {"Bound Type" : boundtype_gramacy,
             "Bounds" : bounds_gramacy,
             "Cost Function (x)":  lambda x: cost_gramacy(x),
             "Constraint Functions (z)": constraint_list_gramacy}
@@ -137,7 +137,7 @@ def cost_XXXXX(x):
 def constraint_XXXXX(x):
     return c <= 0
 
-gardner2 = {"Bound Type" : boundtype_XXXX,
+NAME = {"Bound Type" : boundtype_XXXX,
             "Bounds" : bounds_XXXX,
             "Cost Function (x)":  lambda x: cost_XXXX(x),
             "Constraint Functions (z)": lambda z: 1 - constraint_XXXX(z)}

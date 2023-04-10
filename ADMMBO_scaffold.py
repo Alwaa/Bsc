@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Oct  6 16:10:42 2022
-
-@author: khm
-"""
-
 import numpy as np
 from scipy.optimize import minimize
 from sklearn import gaussian_process
@@ -14,44 +8,6 @@ from scipy.special import ndtr
 from scipy.stats import norm
 import copy
 
-
-rnd = np.random.RandomState(42)
-
-from opt_problems.example_problems import example0
-from opt_problems.ADMMBO_paper_problems import gardner1, gardner2
-
-from utils.sampling import grid_sampling
-
-#################################
-# Problem to solve
-problem = gardner1
-K_in = 10 #example0 K = 30
-
-x0 = grid_sampling(problem, num_per_dim = 5) # 5 is original, 3 works
-
-# For setting the type of grid to use for solving the problem (discreticing space, and then 
-# selectin a less fine grid for less GP calculations)
-num_samples = 301 # in each dimension
-grid_step = 10
-#################################
-
-# Fetching problem info #
-bounds = problem["Bounds"]
-if problem["Bound Type"] == "square":
-    xin = np.linspace(bounds[0], bounds[1], num_samples)
-    xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(2, -1).T
-else:
-    raise Exception("Not yet Implemented non-square bounds")
-
-costf = problem["Cost Function (x)"]
-constraintf = problem["Constraint Functions (z)"] #TODO: in code refactor for multiple problems
-# --------------------- #
-
-
-
-## For debugging
-gp_logger = []
-rho_list = []
 # bounds = search-space B ; n and m_i missing, insted the initial points are passed in
 # M = penalty of infeasability
 # K = max number of it; rho = penalty parm
@@ -60,6 +16,12 @@ rho_list = []
 def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
            K=15, rho=0.1, alpha=5, beta=5, alpha0=20, beta0=20,
            epsilon=1e-6):
+
+    ## For debugging
+    gp_logger = []
+    rho_list = []
+    
+    ### Defining Kernels ###
     K1 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
              gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2)) #+\
                 # gaussian_process.kernels.WhiteKernel()
@@ -67,6 +29,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     
     K2 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
         gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2)) #TODO: sjekk bound for corner behaviour
+    ### ---------------- ###
     
         
     S = False
@@ -254,9 +217,31 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
         alphac=alpha
         betac=beta
         
-    return x,z,gpr,gpc
+    return x,z,gpr,gpc, gp_logger, rho_list
 
-if __name__=='__main__':
+def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False): #TODO: implement default max_iter to budjet
+    #################################
+    K_in = 30 #example0 K = 30
+
+
+    # For setting the type of grid to use for solving the problem (discreticing space, and then 
+    # selectin a less fine grid for less GP calculations)
+    num_samples = 301 # in each dimension
+    grid_step = 10
+    #################################
+
+# Fetching problem info #
+    bounds = problem["Bounds"]
+    if problem["Bound Type"] == "square":
+        xin = np.linspace(bounds[0], bounds[1], num_samples)
+        xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(2, -1).T
+    else:
+        raise Exception("Not yet Implemented non-square bounds")
+
+    costf = problem["Cost Function (x)"]
+    constraintf = problem["Constraint Functions (z)"] #TODO: in code refactor for multiple problems
+# --------------------- #
+
     extent_tuple = bounds #bounds are defined as (lb1,ub1,...,lb#,ub#)
     bounds_array = np.array(bounds).reshape(-1,2)
 
@@ -264,7 +249,7 @@ if __name__=='__main__':
     # Bound area is then 0 in heatmap
     func = costf(xy)
     if len(constraintf) != 1:
-        print("NO PLOTTING SUPPORT FOR MULTIPLE CONSTRAINTS")
+        print("NO PLOTTING SUPPORT FOR MULTIPLE CONSTRAINTS ... YET")
     con = ( constraintf[0](xy) <= 0 )#Boolean constraint
     ff = con*func
 
@@ -275,8 +260,10 @@ if __name__=='__main__':
     grid = np.array(np.meshgrid(xin[::grid_step],xin[::grid_step],indexing='ij')).reshape(2,-1).T
 
     #Running ADMMBO
-    xo,zo,gpr,gpc=admmbo(costf, constraintf, M, bounds_array, grid, x0, alpha=2,beta=2, K=K_in)
+    xo,zo,gpr,gpc, gp_logger, rho_list = admmbo(costf, constraintf, M, bounds_array, grid, x0, 
+                                                alpha=2,beta=2, K=K_in, alpha0 = 2, beta0 = 2)
 
+    #Formatting output #TODO: Format so order of queries is correct
     xsr = gpr.X_train_
     obj = gpr.y_train_
     xsc = gpc.base_estimator_.X_train_
@@ -302,23 +289,18 @@ if __name__=='__main__':
         eval_type = eval_type,
         decoupled = True
     )
+    
 
+    if not debugging:
+        return xs_out, obj_out, eval_type
+    
+    ### Debugging ###
+    
+    import matplotlib.pyplot as plt
+    
     #print(xsc.shape, cc.shape)
     #print(xsr,obj)
     
-    import matplotlib.pyplot as plt
-    # ### Main Plot ###
-    # plt.figure()
-    # plt.imshow(ff.reshape(len(xin),-1).T,extent=(extent_tuple),origin='lower')
-    # plt.colorbar()
-    # plt.plot(xsr[:,0],xsr[:,1],'kx')
-    # for i in range(xsr.shape[0]):
-    #     plt.text(xsr[i,0],xsr[i,1],f'{i}')
-
-    # plt.plot(xsc[:,0][cc==1],xsc[:,1][cc==1],'r+') #Where classification was attempted but is incorrect
-    # plt.plot(xsc[:,0][cc==0],xsc[:,1][cc==0],'ro') #Where it is correct
-    # ### --------- ###
-    ### Debugging ###..
     K1 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
             gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2)) #+\
     fig_list = []
@@ -371,3 +353,14 @@ if __name__=='__main__':
     # Needed for VScode
     plt.show()
     
+    return xs_out, obj_out, eval_type
+
+if __name__ == "__main__":
+    from opt_problems.example_problems import example0
+    from opt_problems.ADMMBO_paper_problems import gardner1, gardner2
+    from utils.sampling import grid_sampling
+
+    problem = gardner2
+    x0 = grid_sampling(problem, num_per_dim = 5) # 5 is original, 3 works
+    x0 = np.array([[1.5,4.5],[2.5,3.5]])
+    admmbo_run(problem, x0)
