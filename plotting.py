@@ -6,9 +6,9 @@ NUM_OF_OBJECTIVE_FUNCTIONS = 1 #Multi-objective optimization is not covered. One
 
 def vizualize_toy(xs: NDArray[np.float64],
                   objs: NDArray[np.float64], #objective values
+                  eval_type: NDArray[np.bool8] | bool,
                   problem,
-                  eval_type: NDArray[np.bool8] = [],
-                  decoupled: bool = True):
+                  decoupled: bool = False):
     num_samples = 301
     ## Fetching problem info ##
     bounds = problem["Bounds"]
@@ -32,7 +32,14 @@ def vizualize_toy(xs: NDArray[np.float64],
     con = ( constraintf[0](xy) <= 0 )
     ff = con*func
 
+    #TODO: Merge both decoupled and not into same flow by creating a full eval_type mask?
+    if len(eval_type) == 0:
+        decoupled = False
+    else:
+        decoupled = True
 
+    print("DECOUPLED = ", decoupled)
+    
     if decoupled:
         assert len(eval_type) != 0, "Need mask of evaluation type"
         assert eval_type.shape == objs.shape, "Eval type mask should batch one to one the obj"
@@ -55,7 +62,7 @@ def vizualize_toy(xs: NDArray[np.float64],
     plt.figure()
     plt.imshow(ff.reshape(len(xin),-1).T,extent=(extent_tuple),origin='lower')
     plt.colorbar()
-    plt.plot(xs_obj[:,0],xs_obj[:,1],'kx')
+    plt.plot(xs_obj[:,0],xs_obj[:,1],'kx') #WWhere objective function was evaluated
     for i in range(xs_obj.shape[0]):
         plt.text(xs_obj[i,0],xs_obj[i,1],f'{i}')
 
@@ -69,13 +76,14 @@ def vizualize_toy(xs: NDArray[np.float64],
     valid_it, o1_valid = sampl_it[check_validity(xs_obj)], o1_vals[check_validity(xs_obj)]
     plt.plot(sampl_it, o1_vals,"kx")
     plt.plot(valid_it, o1_valid,"mo")
-    curr_min = o1_valid[0]
-    rolling_min = np.ones(len(o1_valid))
-    for i in range(len(o1_valid)):
-        if curr_min > o1_valid[i]:
-            curr_min = o1_valid[i]
-        rolling_min[i] = curr_min
-    plt.plot(valid_it,rolling_min,"r--") #TODO: Fix indexing of valid line to drop off abruplty (per it.)
+    if len(o1_valid) > 0:
+        curr_min = o1_valid[0]
+        rolling_min = np.ones(len(o1_valid))
+        for i in range(len(o1_valid)):
+            if curr_min > o1_valid[i]:
+                curr_min = o1_valid[i]
+            rolling_min[i] = curr_min
+        plt.plot(valid_it,rolling_min,"r--") #TODO: Fix indexing of valid line to drop off abruplty (per it.)
 
 
     

@@ -67,8 +67,8 @@ def pesc_main(name):
     
     print(xs_out, "\n", objs_out)
     print(f"\nTime for:\n 1st {-start_t + out1_t:.2f}\n 2nd {-out1_t + out2_t:.2f} \n 3nd {-out2_t + time():.2f}")
-    all_objs = True
-    return xs_out, objs_out, all_objs
+    indiv_eval = []
+    return xs_out, objs_out, indiv_eval
 
 def pesc_run_experiment(name = "test" ):
     folder_rel = "comparisson_algs/PESC_folders/" + name

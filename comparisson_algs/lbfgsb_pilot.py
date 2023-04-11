@@ -2,7 +2,7 @@ import scipy
 import scipy.optimize as opt
 import numpy as np
 
-def cobyla_run(problem, x0, obj_tol = 0.1, maxiter = 100):
+def bfgs_run(problem, x0, obj_tol = 0.1, maxiter = 100):
     assert x0.ndim == 1, "can't start with multiple 0 points??"
     
     costf = problem["Cost Function (x)"]
@@ -28,13 +28,14 @@ def cobyla_run(problem, x0, obj_tol = 0.1, maxiter = 100):
     trace = []
     callBF = lambda x: callbackF(x,trace)
     res = scipy.optimize.minimize(fun, x0, callback = callBF, constraints = constraint_list, 
-                                  method="COBYLA", tol = obj_tol, options = {"maxiter":maxiter}) #,tol = 0.1 #catol does not work???
+                                  method="BFGS", tol = obj_tol, options = {"maxiter":maxiter}) #,tol = 0.1 #catol does not work???
     xs_out = np.array(trace)
     
     #Also a lot of infeasable solutions in eikson paper
     x = res.x
     print(res.message)
-    print(x,fun(x))
+    print(x,fun(x),"---")
+    print([constraint_list[i]["fun"](x) for i in range(len(constraint_list))])
     print(res.keys())
     
     constr_out = np.array([constraintf[i](xs_out) for i in range(len(constraintf))]).T
@@ -55,4 +56,4 @@ if __name__ == "__main__":
         rnd = np.random.RandomState(42 + i)
         x0 = ((rnd.rand(2)*(bounds[1]-bounds[0])))+bounds[0]
         print("-----\n",x0)
-        cobyla_run(gardner1, x0)
+        bfgs_run(gardner1, x0)

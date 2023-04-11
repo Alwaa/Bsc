@@ -8,7 +8,7 @@ from numpy import r_
 #es.optimize(cma.ff.rosen)
 #es.result_pretty()
 
-def cma_es(problem):
+def cma_es(problem, x0):
     own_logger_X = []
     own_logger_fit = []
     costf = problem["Cost Function (x)"]
@@ -34,7 +34,6 @@ def cma_es(problem):
             "maxfevals" : 100}
 
     cfun = cma.ConstrainedFitnessAL(fun, constraints)
-    x0 = 2 * [2]  # initial solution
     sigma0 = 1    # initial standard deviation to sample new solutions
 
     #x, es = cma.fmin2(cfun, x0, sigma0, {'tolstagnation': 0}, callback=cfun.update)
@@ -87,11 +86,14 @@ def cma_es(problem):
     
     constr_out = np.array([constraintf[i](x_out) for i in range(len(constraintf))]).T
     objs_out = np.concatenate((costf(x_out).reshape(-1,1), constr_out),axis = 1)
-    all_objs = True
-    return x_out, objs_out, all_objs
+    indiv_eval = []
+    return x_out, objs_out, indiv_eval
     #### TODO: Clean up a bit, then maybe try the other CMA-ES python IMPL since it has nicer plotting
     
 if __name__ == "__main__":
     from opt_problems.ADMMBO_paper_problems import gardner1
+    from plotting import vizualize_toy
     print(gardner1)
-    cma_es(gardner1)
+    x0 = 2 * [2]  # initial solution
+    a,b,c = cma_es(gardner1, x0)
+    vizualize_toy(a,b,gardner1)

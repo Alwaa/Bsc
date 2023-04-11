@@ -44,7 +44,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     
     ## rho adjusting parameters ## # TODO Investigate further into rho setting
     adjust_rho = True
-    rho = 1 # IT WAS RHO #BUT still wierd that it hugs a bad corner
+    #rho = 1 # IT WAS RHO #BUT still wierd that it hugs a bad corner
     tau = 2
     mup = 10
     rho_list.append(rho)
@@ -221,7 +221,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
 
 def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False): #TODO: implement default max_iter to budjet
     #################################
-    K_in = 30 #example0 K = 30
+    K_in = 60 #example0 K = 30
 
 
     # For setting the type of grid to use for solving the problem (discreticing space, and then 
@@ -261,7 +261,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False)
 
     #Running ADMMBO
     xo,zo,gpr,gpc, gp_logger, rho_list = admmbo(costf, constraintf, M, bounds_array, grid, x0, 
-                                                alpha=2,beta=2, K=K_in, alpha0 = 2, beta0 = 2)
+                                                alpha=2,beta=2, K=K_in, alpha0 = 2, beta0 = 2, rho = 1)
 
     #Formatting output #TODO: Format so order of queries is correct
     xsr = gpr.X_train_
@@ -269,8 +269,9 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False)
     xsc = gpc.base_estimator_.X_train_
     cc = gpc.base_estimator_.y_train_
 
-    print("Diff of xs")
-    print(xsr-xsc)
+    if xsr.shape == xsc.shape:
+        print("Diff of xs")
+        print(xsr-xsc)
     new_obj = np.concatenate((obj,np.zeros(len(cc)))).reshape(-1,1)
     new_cc = np.concatenate((np.ones(len(obj)),cc)).reshape(-1,1)
     obj_out = np.concatenate((new_obj,new_cc),axis = 1) ## SImple combined obj and constraied after eachother
@@ -280,15 +281,17 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False)
     eval_type = np.concatenate((objmaks,constmaks),axis = 1)
 
     xs_out = np.concatenate((xsr,xsc))
+    
     ## TODO:! Move into better flow
-    from plotting import vizualize_toy
-    vizualize_toy(
-        xs_out,
-        obj_out,
-        problem,
-        eval_type = eval_type,
-        decoupled = True
-    )
+    
+    # from plotting import vizualize_toy
+    # vizualize_toy(
+    #     xs_out,
+    #     obj_out,
+    #     eval_type,
+    #     problem,
+    #     decoupled = True
+    # )
     
 
     if not debugging:
