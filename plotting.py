@@ -90,5 +90,23 @@ def vizualize_toy(xs: NDArray[np.float64],
     # Needed for VScode
     plt.show()
 
+def vizualize_toy_problem(problem, points_per_dim = 300):
+    xin = np.linspace(bounds[0], bounds[1], points_per_dim)
+    if problem["Bound Type"] == "square":
+        xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(2, -1).T
+    else:
+        raise Exception("Not yet Implemented non-square bounds")
+    
+    bounds = problem["Bounds"]
+    ubs = bounds[1::2]
+    lbs = bounds[0::2]
+    
+    xins = [np.linspace(lbs[i],ubs[i],points_per_dim) for i in range(len(ubs))] #TODO: Make into per 2 axis plots
+    
+    ##insert original code-ish here
+    
+    #TODO: Add global and (maybe) local (maybe) optima to plot. Both constrained and unconstrained
 
+    
+    pass
 
