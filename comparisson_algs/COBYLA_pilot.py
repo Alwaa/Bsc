@@ -2,7 +2,7 @@ import scipy
 import scipy.optimize as opt
 import numpy as np
 
-def cobyla_run(problem, x0, obj_tol = 0.1, maxiter = 100):
+def cobyla_run(problem, x0, obj_tol = 0.1, maxiter = 100, multi = False):
     assert x0.ndim == 1, "can't start with multiple 0 points??"
     
     costf = problem["Cost Function (x)"]
@@ -23,6 +23,9 @@ def cobyla_run(problem, x0, obj_tol = 0.1, maxiter = 100):
 
     def callbackF(Xi, list_in): # For storing values of x traversed in the algorithm
         list_in.append(Xi)
+        for i in range(len(bounds)):
+            if constraint_list[i]["fun"](Xi) < 0:
+                return True #Failed, and sampled outside of bounds #TODO: THIS DOES NOT END THE ITERATIONS???
         return False
         
     trace = []
@@ -31,20 +34,35 @@ def cobyla_run(problem, x0, obj_tol = 0.1, maxiter = 100):
                                   method="COBYLA", tol = obj_tol, options = {"maxiter":maxiter}) #,tol = 0.1 #catol does not work???
     xs_out = np.array(trace)
     
+    constr_out = np.array([constraintf[i](xs_out) for i in range(len(constraintf))]).T
+    objs_out = np.concatenate((costf(xs_out).reshape(-1,1), constr_out),axis = 1)
+    indiv_eval = []
+
+    if multi:
+        return xs_out, objs_out, indiv_eval
+
     #Also a lot of infeasable solutions in eikson paper
     x = res.x
     print(res.message)
     print(x,fun(x))
     print(res.keys())
-    
-    constr_out = np.array([constraintf[i](xs_out) for i in range(len(constraintf))]).T
-    objs_out = np.concatenate((costf(xs_out).reshape(-1,1), constr_out),axis = 1)
-    indiv_eval = []
-
     return xs_out, objs_out, indiv_eval
 
 def multi_cobyla(problem, x0s, obj_tol= 0.1, maxiter_per = None, maxiter_total = 100, divide = True):
-    pass
+    it = 0
+    budget_left = maxiter_total
+    xs_list, objs_list = [], []
+    while budget_left > 0 and it < len(x0s):
+        xs_out, objs_out, indiv_eval = cobyla_run(problem,x0s[it], maxiter=budget_left, multi=True)
+        it += 1
+        budget_left -= len(xs_out)
+        xs_list.append(xs_out)
+        objs_list.append(objs_out)
+        
+    tot_xs = np.concatenate(xs_list, axis = 0)
+    tot_objs = np.concatenate(objs_list, axis = 0)
+    
+    return tot_xs, tot_objs, []
 
 
 if __name__ == "__main__":

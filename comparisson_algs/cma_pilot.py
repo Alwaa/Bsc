@@ -31,7 +31,7 @@ def cma_es(problem, x0):
         bounds = [problem["Bounds"][0],problem["Bounds"][1]]
     print(bounds)
     opts = {"bounds" : bounds, 
-            "maxfevals" : 100}
+            "maxfevals" : 60}
 
     cfun = cma.ConstrainedFitnessAL(fun, constraints)
     sigma0 = 1    # initial standard deviation to sample new solutions

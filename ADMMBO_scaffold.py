@@ -56,7 +56,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     bounds=bounds.astype('float')
     zs = np.array([bounds[:,1].copy() for i in range(N)])
     ys = np.array([bounds[:,1].copy() for i in range(N)])
-    print(zs)
+    #print(zs)
     # z = np.array((1,1))
     # z = x0[c0==0][np.argmin(f0[c0==0])]
     # y = np.ones(x0.shape[1])
@@ -72,10 +72,10 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
             constraint = lambda inp: 1 - ( constraints[i](inp) <= 0 )#Boolean constraint
             c0s[i] = constraint(x0)
 
-    print(x0,f0)
+    #print(x0,f0)
     gpr.fit(x0,f0)
     for i in range(N):
-        print(x0,c0s[i])
+        #print(x0,c0s[i])
         gpcs[i].fit(x0,c0s[i]) 
 
 
@@ -189,9 +189,9 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
 
             zs[i] = z #TODO: refactor when stable
 
-            print(f"{x}\n{zs[i]}\n{rho}")
             ys[i] += rho * (x - z)
-            print(f'x: {x} \nz: {z} \ny: {ys[i]}')
+            # print(f"{x}\n{zs[i]}\n{rho}")
+            # print(f'x: {x} \nz: {z} \ny: {ys[i]}')
             r = (x - zs[i])**2
             rl=np.sqrt(np.sum(r**2))
             s = - rho * (z - zolds[i])
