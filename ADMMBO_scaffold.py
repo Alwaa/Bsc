@@ -269,9 +269,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False)
     xsc = gpc.base_estimator_.X_train_
     cc = gpc.base_estimator_.y_train_
 
-    if xsr.shape == xsc.shape:
-        print("Diff of xs")
-        print(xsr-xsc)
+
     new_obj = np.concatenate((obj,np.zeros(len(cc)))).reshape(-1,1)
     new_cc = np.concatenate((np.ones(len(obj)),cc)).reshape(-1,1)
     obj_out = np.concatenate((new_obj,new_cc),axis = 1) ## SImple combined obj and constraied after eachother
@@ -303,6 +301,10 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False)
     
     #print(xsc.shape, cc.shape)
     #print(xsr,obj)
+    
+    if xsr.shape == xsc.shape:
+        print("Diff of xs")
+        print(xsr-xsc)
     
     K1 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
             gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2)) #+\

@@ -28,10 +28,10 @@ def cobyla_run(problem, x0, obj_tol = 0.1, maxiter = 100, multi = False):
                 return True #Failed, and sampled outside of bounds #TODO: THIS DOES NOT END THE ITERATIONS???
         return False
         
-    trace = []
+    trace = [x0] #TODO: Check that this also samples x0 at the start, as well as cma-es
     callBF = lambda x: callbackF(x,trace)
     res = scipy.optimize.minimize(fun, x0, callback = callBF, constraints = constraint_list, 
-                                  method="COBYLA", tol = obj_tol, options = {"maxiter":maxiter}) #,tol = 0.1 #catol does not work???
+                                  method="COBYLA", tol = obj_tol, options = {"maxiter":maxiter, "catol":0}) #,tol = 0.1 #catol does not work???
     xs_out = np.array(trace)
     
     constr_out = np.array([constraintf[i](xs_out) for i in range(len(constraintf))]).T

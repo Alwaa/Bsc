@@ -37,7 +37,8 @@ def cma_es(problem, x0):
     sigma0 = 1    # initial standard deviation to sample new solutions
 
     #x, es = cma.fmin2(cfun, x0, sigma0, {'tolstagnation': 0}, callback=cfun.update)
-    es = cma.CMAEvolutionStrategy(x0, sigma0, opts)
+    es = cma.CMAEvolutionStrategy(x0, sigma0, opts) #TODO: Double check that it also samples the first point
+    own_logger_X.append(x0)
     while not es.stop():
         X, fit = es.ask_and_eval(cfun)  # sample len(X) candidate solutions
         es.tell(X, fit)

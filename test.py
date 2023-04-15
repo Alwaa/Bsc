@@ -31,6 +31,9 @@ name = "test3"
 
 x0s = np.array([[1.5,4.5],[1,2]])
 x0 = x0s[0]
+
+#TODO: Check if seed is needed in each algorithm for reproducability
+
 alg_res = [
     multi_cobyla(problem, x0s),
     #pesc_main(name = name),
