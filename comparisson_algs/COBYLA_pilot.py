@@ -1,6 +1,10 @@
 import scipy
 import scipy.optimize as opt
 import numpy as np
+import warnings
+
+class OutOfBounds(Warning): #A thanks to answer https://stackoverflow.com/a/70739166/21573210 for the way to stop the iterating!
+    pass
 
 def cobyla_run(problem, x0, obj_tol = 0.1, maxiter = 100, multi = False):
     assert x0.ndim == 1, "can't start with multiple 0 points??"
@@ -21,17 +25,19 @@ def cobyla_run(problem, x0, obj_tol = 0.1, maxiter = 100, multi = False):
     constraint_list = [{"type": "ineq","fun": lambda x, idx = i:( (1-2*(idx%2))*x[(idx//2)] )+ bounds[idx]} for i in range(len(bounds))] ## found some stupid shit about lambdas in list comprehenssion here... covered nicely in https://stackoverflow.com/a/34021333/21573210
     constraint_list.extend([{"type": "ineq","fun": lambda x: 0.5 - ( constraintf[j](x[None]) )[0] } for j in range(len(constraintf))])
 
-    def callbackF(Xi, list_in): # For storing values of x traversed in the algorithm
+    def callbackF(Xi, list_in): # For storing values of x traversed in the algorithm and stopping if out of bounds
         list_in.append(Xi)
         for i in range(len(bounds)):
             if constraint_list[i]["fun"](Xi) < 0:
-                return True #Failed, and sampled outside of bounds #TODO: THIS DOES NOT END THE ITERATIONS???
+                warnings.warn("Terminating optimization: Sampled out of bounds point!!",
+                          OutOfBounds)
+                return True #Failed, and sampled outside of bounds #This should have ended the iterations?? Above solution does
         return False
         
     trace = [x0] #TODO: Check that this also samples x0 at the start, as well as cma-es
     callBF = lambda x: callbackF(x,trace)
     res = scipy.optimize.minimize(fun, x0, callback = callBF, constraints = constraint_list, 
-                                  method="COBYLA", tol = obj_tol, options = {"maxiter":maxiter, "catol":0}) #,tol = 0.1 #catol does not work???
+                                  method="SLSQP", tol = obj_tol, options = {"maxiter":maxiter, "catol":0}) #,tol = 0.1 #catol does not work???
     xs_out = np.array(trace)
     
     constr_out = np.array([constraintf[i](xs_out) for i in range(len(constraintf))]).T
