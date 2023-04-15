@@ -8,10 +8,7 @@ import numpy as np
 #--------------------------------#
 
 boundtype_gardner = "square"
-bounds_gardner = (0,6)
-if boundtype_gardner == "square":
-    bounds_gardner = bounds_gardner + bounds_gardner
-
+bounds_gardner = (0,6,0,6)
 
 #################################
 # Simulation 1 (gardner1)
@@ -86,7 +83,7 @@ if __name__ == "__main__":
 
 # Bounds and such
 boundtype_gramacy = "square"
-bounds_gramacy = (0,1)
+bounds_gramacy = (0,1,0,1)
 
 def cost_gramacy(x):
     xs = x[:,0]
@@ -97,11 +94,17 @@ def cost_gramacy(x):
     return f
 
 def constraint1_gramacy(x):
-    raise NotImplementedError("Not yet implemented")
+    xs = x[:,0]
+    ys = x[:,1]
+    c = 0.5*np.sin(2*np.pi*(2*ys - xs**2)) - xs - 2*ys + 1.5
     return c <= 0
 
 def constraint2_gramacy(x):
-    raise NotImplementedError("Not yet implemented")
+    xs = x[:,0]
+    ys = x[:,1]
+    
+    c = xs**2 + ys**2 -1.5
+    
     return c <= 0
 
 constraint_list_gramacy = [
@@ -109,7 +112,7 @@ constraint_list_gramacy = [
     lambda z: 1 - constraint2_gramacy(z)
     ]
 
-lamwillox2 = {"Bound Type" : boundtype_gramacy,
+gramacy = {"Bound Type" : boundtype_gramacy,
             "Bounds" : bounds_gramacy,
             "Cost Function (x)":  lambda x: cost_gramacy(x),
             "Constraint Functions (z)": constraint_list_gramacy}
@@ -126,16 +129,25 @@ lamwillox2 = {"Bound Type" : boundtype_gramacy,
 #################################
 """
 # Bounds and such
-boundtype_gramacy = "square"
-bounds_gramacy = (0,1)
+boundtype_XXXX = "square"
+bounds_XXXX = (0,1)
 
 # Cost function
 def cost_XXXXX(x):
     return f
 
 # Constraint function
-def constraint_XXXXX(x):
+def constraint1_XXXXX(x):
     return c <= 0
+
+def constraint2_XXXXX(x):
+    return c <= 0
+    
+    
+constraint_list_XXXX = [
+    lambda z: 1 - constraint1_XXXX(z),
+    lambda z: 1 - constraint2_XXXX(z)
+    ]
 
 NAME = {"Bound Type" : boundtype_XXXX,
             "Bounds" : bounds_XXXX,

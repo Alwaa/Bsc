@@ -222,7 +222,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
 
 def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False, start_all = True): #TODO: implement default max_iter to budjet
     #################################
-    K_in = 60 #example0 K = 30
+    K_in = 50 #example0 K = 30
 
 
     # For setting the type of grid to use for solving the problem (discreticing space, and then 
@@ -253,6 +253,16 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
             np.array([constraintf[i](xy) <= 0  for i in range(len(constraintf))]),
             axis = 0) #Boolean constraints
     ff = con*func
+    
+    if not start_all: #Go through all points untill you have one of each constraint both upheld and violated...
+        for i in range(2,len(x0)):
+            cons_start = np.array([constraintf[c](x0[:i]) <= 0  for c in range(len(constraintf))])
+            cons_per = np.sum(cons_start, axis = 1)
+            more_than_none = np.all((0 < cons_per))
+            less_than_all = np.all((i > cons_per))
+            if less_than_all and more_than_none:
+                x0 = x0[:i]
+                break
 
     #TODO: Try changing to either fixed value or func?
     M = np.max(ff) - np.min(ff) # They set it as the unconstrained range of f, while this is the constrained range
@@ -263,7 +273,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
 
     #Running ADMMBO
     xo,zo,gpr,gpc, gp_logger, rho_list = admmbo(costf, constraintf, M, bounds_array, grid, x0, 
-                                                alpha=2,beta=2, K=K_in, alpha0 = 2, beta0 = 2, rho = 1)
+                                                alpha=2,beta=2, K=K_in, alpha0 = 2, beta0 = 2, rho = 10, epsilon=0)
 
     ## Formatting output ## #TODO: Format so order of queries is correct
     xsr = gpr.X_train_
@@ -352,7 +362,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
 
 if __name__ == "__main__":
     from opt_problems.example_problems import example0
-    from opt_problems.ADMMBO_paper_problems import gardner1, gardner2
+    from opt_problems.paper_problems import gardner1, gardner2
     from utils.sampling import grid_sampling
 
     problem = gardner2

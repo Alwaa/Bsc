@@ -5,7 +5,7 @@ from comparisson_algs.cma_pilot import cma_es
 from comparisson_algs.cobyla_pilot import cobyla_run, multi_cobyla
 from comparisson_algs.pesc_script import pesc_main, pesc_run_experiment, pesc_create_problem
 from utils.plotting import vizualize_toy
-from opt_problems.paper_problems import gardner1, gardner2
+from opt_problems.paper_problems import gardner1, gardner2, gramacy
 from utils.sampling import monte_carlo_sampling, grid_sampling
 
 # For testting
@@ -14,23 +14,23 @@ xs, objs, indiv_evals = None, None, None
 
 #xs, objs, indiv_evals = cobyla_run(problem, x0)
 
-# pesc_create_problem(gardner1, "test3")
-# pesc_run_experiment("test3")
-# xs, objs, all_objective_values = pesc_main(name = "test3")
 
-problem = gardner1
-name = "test3"
+problem = gramacy
+name = "gramacy-dectest1"
 
-x0s = np.array([[1.5,4.5],[1,2]])
+#pesc_create_problem(gramacy, name, decoupled=True)
+pesc_run_experiment(name)
+
+x0s = monte_carlo_sampling(problem, num = 20, seed = 12) #np.array([[1.5,4.5],[1,2]])
 x0 = x0s[0]
 
 #TODO: Check if seed is needed in each algorithm for reproducability
 
 alg_res = [
-    multi_cobyla(problem, x0s),
-    #pesc_main(name = name),
+    #multi_cobyla(problem, x0s),
+    pesc_main(name = name),
     #cma_es(problem, x0),
-    admmbo_run(problem, x0s)
+    admmbo_run(problem, x0s, start_all = False)
 ]
 if xs != None:
     vizualize_toy(xs, objs, indiv_evals, problem)

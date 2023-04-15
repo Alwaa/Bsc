@@ -23,15 +23,16 @@ def vizualize_toy(xs: NDArray[np.float64],
     ## ---------------------- ##
     cc = np.all(
         objs[:,1:],
-        axis=1).flatten() #axis 1 since it is per point not per constraint as is it below 
+        axis=1)#axis 1 since it is per point not per constraint as is it below 
     
+    #print(objs[:,1:],cc)
     #########'
     ######### All or any???? Check for ADMMBO part also
     #########
 
     extent_tuple = (bounds[0],bounds[1],bounds[0],bounds[1])
 
-    check_validity = lambda xx: constraintf[0](xx) <= 0 #Boolean constraint #Upheld if over 0 ??
+    
     func = costf(xy)
     con = np.all(
             np.array([constraintf[i](xy) <= 0  for i in range(len(constraintf))]),
@@ -52,7 +53,7 @@ def vizualize_toy(xs: NDArray[np.float64],
         assert NUM_OF_OBJECTIVE_FUNCTIONS == 1, "Not implemented"
 
         o1mask = eval_type[:,0]
-        class_mask = eval_type[:,1] # TODO: Should be a union of all clasifiers
+        class_mask = np.any(eval_type[:,1:],axis=1)
 
         xs_obj = xs[o1mask]
         xs_class = xs[class_mask]
@@ -63,6 +64,14 @@ def vizualize_toy(xs: NDArray[np.float64],
         xs_obj = xs
         xs_class = xs
         o1_vals = objs[:,0]
+        
+        
+    def check_validity(xx):
+        cons = np.array([constraintf[i](xx) <= 0 for i in range(len(constraintf))])#Boolean constraint #Upheld if over 0 ??
+        return np.all(cons,axis=0)
+    
+    cc = np.logical_not(check_validity(xs_class)) #TODO: check output of obj_matrix
+
     
     ### Main Plot ###
     plt.figure()
