@@ -5,7 +5,7 @@ from comparisson_algs.cma_pilot import cma_es
 from comparisson_algs.cobyla_pilot import cobyla_run, multi_cobyla
 from comparisson_algs.pesc_script import pesc_main, pesc_run_experiment, pesc_create_problem
 from utils.plotting import vizualize_toy
-from opt_problems.ADMMBO_paper_problems import gardner1, gardner2
+from opt_problems.paper_problems import gardner1, gardner2
 from utils.sampling import monte_carlo_sampling, grid_sampling
 
 # For testting

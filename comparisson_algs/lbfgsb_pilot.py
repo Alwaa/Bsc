@@ -49,7 +49,7 @@ def multi_cobyla(problem, x0s, obj_tol= 0.1, maxiter_per = None, maxiter_total =
 
 
 if __name__ == "__main__":
-    from opt_problems.ADMMBO_paper_problems import gardner1
+    from opt_problems.paper_problems import gardner1
     
     for i in range(10):
         bounds = gardner1["Bounds"]

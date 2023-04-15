@@ -23,7 +23,11 @@ def vizualize_toy(xs: NDArray[np.float64],
     ## ---------------------- ##
     cc = np.all(
         objs[:,1:],
-        axis=1).flatten() #axis 1 since it is per point not per constraint as is it below
+        axis=1).flatten() #axis 1 since it is per point not per constraint as is it below 
+    
+    #########'
+    ######### All or any???? Check for ADMMBO part also
+    #########
 
     extent_tuple = (bounds[0],bounds[1],bounds[0],bounds[1])
 

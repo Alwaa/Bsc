@@ -18,7 +18,7 @@ def direct_run(problem):
     
 
 if __name__ == "__main__":
-    from opt_problems.ADMMBO_paper_problems import gardner1
+    from opt_problems.paper_problems import gardner1
     
     direct_run(gardner1)
     

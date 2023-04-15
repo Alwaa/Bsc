@@ -18,7 +18,7 @@ from scipy.stats import norm
 rnd = np.random.RandomState(42)
 
 from opt_problems.example_problems import example0
-from opt_problems.ADMMBO_paper_problems import gardner1, gardner2
+from opt_problems.paper_problems import gardner1, gardner2
 
 #################################
 # Problem to solve

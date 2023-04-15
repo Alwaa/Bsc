@@ -92,7 +92,7 @@ def cma_es(problem, x0):
     #### TODO: Clean up a bit, then maybe try the other CMA-ES python IMPL since it has nicer plotting
     
 if __name__ == "__main__":
-    from opt_problems.ADMMBO_paper_problems import gardner1
+    from opt_problems.paper_problems import gardner1
     from utils.plotting import vizualize_toy
     print(gardner1)
     x0 = 2 * [2]  # initial solution

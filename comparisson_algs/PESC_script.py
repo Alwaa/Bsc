@@ -131,5 +131,5 @@ def pesc_create_problem(problem_in, name, max_iter = 40):
         
 # DEBUGGING
 if __name__ == "__main__":
-    from opt_problems.ADMMBO_paper_problems import gardner1
+    from opt_problems.paper_problems import gardner1
     pesc_create_problem(gardner1, "test")
