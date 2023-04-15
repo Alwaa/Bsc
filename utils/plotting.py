@@ -21,15 +21,17 @@ def vizualize_toy(xs: NDArray[np.float64],
     costf = problem["Cost Function (x)"]
     constraintf = problem["Constraint Functions (z)"] #TODO: rewrite to multiple (s)
     ## ---------------------- ##
-    if len(constraintf) != 1:
-        raise NotImplementedError("NO PLOTTING SUPPORT FOR MULTIPLE CONSTRAINTS")
-    cc = objs[:,1].flatten()
+    cc = np.all(
+        objs[:,1:],
+        axis=1).flatten() #axis 1 since it is per point not per constraint as is it below
 
     extent_tuple = (bounds[0],bounds[1],bounds[0],bounds[1])
 
     check_validity = lambda xx: constraintf[0](xx) <= 0 #Boolean constraint #Upheld if over 0 ??
     func = costf(xy)
-    con = ( constraintf[0](xy) <= 0 )
+    con = np.all(
+            np.array([constraintf[i](xy) <= 0  for i in range(len(constraintf))]),
+            axis=0) #Boolean constraints
     ff = con*func
 
     #TODO: Merge both decoupled and not into same flow by creating a full eval_type mask?

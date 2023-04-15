@@ -73,8 +73,8 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
             c0s[i] = constraint(x0)
 
     #print(x0,f0)
-    gpr.fit(x0,f0)
-    for i in range(N):
+    gpr.fit(x0,f0) #Initializing the GP regression
+    for i in range(N): #Initializing the GP classifiers
         #print(x0,c0s[i])
         gpcs[i].fit(x0,c0s[i]) 
 
@@ -209,7 +209,8 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
             rho *= tau
         elif sl > (mup*rl) and adjust_rho:
             rho /= tau
-        print(f' rho:{rho} \n r:{rl} \n s:{sl}')
+        
+        #print(f' rho:{rho} \n r:{rl} \n s:{sl}')
         rho_list.append(rho)
         ## ----------------- ##
         if S:
@@ -219,7 +220,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
         
     return x,z,gpr,gpc, gp_logger, rho_list
 
-def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False): #TODO: implement default max_iter to budjet
+def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False, start_all = True): #TODO: implement default max_iter to budjet
     #################################
     K_in = 60 #example0 K = 30
 
@@ -248,11 +249,12 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False)
     # For drawing bounds + true cost function
     # Bound area is then 0 in heatmap
     func = costf(xy)
-    if len(constraintf) != 1:
-        print("NO PLOTTING SUPPORT FOR MULTIPLE CONSTRAINTS ... YET")
-    con = ( constraintf[0](xy) <= 0 )#Boolean constraint
+    con = np.all(
+            np.array([constraintf[i](xy) <= 0  for i in range(len(constraintf))]),
+            axis = 0) #Boolean constraints
     ff = con*func
 
+    #TODO: Try changing to either fixed value or func?
     M = np.max(ff) - np.min(ff) # They set it as the unconstrained range of f, while this is the constrained range
                          # ADMMBO is (claimed) not sensitive to M in a wide range of values ref. sec. 5.7 (only to smaller values)
     
@@ -263,12 +265,11 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False)
     xo,zo,gpr,gpc, gp_logger, rho_list = admmbo(costf, constraintf, M, bounds_array, grid, x0, 
                                                 alpha=2,beta=2, K=K_in, alpha0 = 2, beta0 = 2, rho = 1)
 
-    #Formatting output #TODO: Format so order of queries is correct
+    ## Formatting output ## #TODO: Format so order of queries is correct
     xsr = gpr.X_train_
     obj = gpr.y_train_
     xsc = gpc.base_estimator_.X_train_
     cc = gpc.base_estimator_.y_train_
-
 
     new_obj = np.concatenate((obj,np.zeros(len(cc)))).reshape(-1,1)
     new_cc = np.concatenate((np.ones(len(obj)),cc)).reshape(-1,1)
@@ -279,18 +280,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False)
     eval_type = np.concatenate((objmaks,constmaks),axis = 1)
 
     xs_out = np.concatenate((xsr,xsc))
-    
-    ## TODO:! Move into better flow
-    
-    # from plotting import vizualize_toy
-    # vizualize_toy(
-    #     xs_out,
-    #     obj_out,
-    #     eval_type,
-    #     problem,
-    #     decoupled = True
-    # )
-    
+    ## ------------------ ##
 
     if not debugging:
         return xs_out, obj_out, eval_type
