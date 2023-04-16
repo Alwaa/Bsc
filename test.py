@@ -7,6 +7,7 @@ from comparisson_algs.pesc_script import pesc_main, pesc_run_experiment, pesc_cr
 from utils.plotting import vizualize_toy
 from opt_problems.paper_problems import gardner1, gardner2, gramacy
 from utils.sampling import monte_carlo_sampling, grid_sampling
+from utils.storing import create_exp_folder, save_exps
 
 # For testting
 xs, objs, indiv_evals = None, None, None
@@ -17,10 +18,9 @@ xs, objs, indiv_evals = None, None, None
 
 problem = gramacy
 name = "gramacy-dectest1"
-
 #pesc_create_problem(gramacy, name, decoupled=True)
-pesc_run_experiment(name)
-
+# pesc_run_experiment(name)
+#
 x0s = monte_carlo_sampling(problem, num = 20, seed = 12) #np.array([[1.5,4.5],[1,2]])
 x0 = x0s[0]
 
@@ -36,7 +36,9 @@ if xs != None:
     vizualize_toy(xs, objs, indiv_evals, problem)
 
 # print(len(alg_res),alg_res[0])
-
-for res in alg_res:
+e_folder = create_exp_folder("test")
+names = ["pesc", "admmbo"]
+for n, res in enumerate(alg_res):
     xs, objs, indiv_evals = res
     vizualize_toy(xs,objs, indiv_evals ,problem)
+    save_exps([res], names[n], e_folder=e_folder)
