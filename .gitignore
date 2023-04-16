@@ -1,5 +1,5 @@
 Experiments/*
-
+!Experiments
 #Spearmint/*
 outcmaes/
 plot_files/
