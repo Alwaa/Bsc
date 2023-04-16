@@ -1,5 +1,5 @@
 Experiments/*
-!Experiments
+!Experiments #TODO: Want an empty Experiments folder in repo
 #Spearmint/*
 outcmaes/
 plot_files/

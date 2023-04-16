@@ -48,7 +48,6 @@ def vizualize_toy(xs: NDArray[np.float64],
     print("DECOUPLED = ", decoupled)
     
     if decoupled:
-        assert len(eval_type) != 0, "Need mask of evaluation type"
         assert eval_type.shape == objs.shape, "Eval type mask should batch one to one the obj"
         assert NUM_OF_OBJECTIVE_FUNCTIONS == 1, "Not implemented"
 
@@ -58,7 +57,6 @@ def vizualize_toy(xs: NDArray[np.float64],
         xs_obj = xs[o1mask]
         xs_class = xs[class_mask]
         cc = cc[class_mask]
-        o1_class = [o1mask]
         o1_vals = objs[:,0][o1mask]
     else:
         xs_obj = xs
@@ -125,3 +123,58 @@ def vizualize_toy_problem(problem, points_per_dim = 300):
     
     pass
 
+
+def expretiment_plot(exp_list,
+                        problem,
+                        ):
+    ## Fetching problem info ##
+    bounds = problem["Bounds"]
+    
+    costf = problem["Cost Function (x)"]
+    constraintf = problem["Constraint Functions (z)"] #TODO: rewrite to multiple (s)
+    ## ---------------------- ##
+    def check_validity(xx):
+        cons_list = [constraintf[i](xx) <= 0 for i in range(len(constraintf))]
+        cons = np.array(cons_list)#Boolean constraint #Upheld if over 0 ??
+        return np.all(cons,axis=0)
+    
+    num_exp = len(exp_list)
+    
+    for xs, objs, eval_type in exp_list:
+        if len(eval_type) != 0: #Decoupled
+            assert eval_type.shape == objs.shape, "Eval type mask should batch one to one the obj"
+            assert NUM_OF_OBJECTIVE_FUNCTIONS == 1, "Not implemented"
+
+            o1mask = eval_type[:,0]
+            class_mask = np.any(eval_type[:,1:],axis=1)
+            xs_class = xs[class_mask]
+        else:
+            o1mask = np.fill(len(xs),True)
+            xs_class = xs
+
+        xs_obj = xs[o1mask]
+        o1_vals = objs[:,0][o1mask]
+
+        #Objfunction rolling min
+        sampl_it = np.arange(len(o1_vals))
+        total_it = np.arange(len(xs))
+        o1_valid =  o1_vals[check_validity(xs_obj)]
+        valid_it = sampl_it[check_validity(xs_obj)]
+        tot_valid_it = total_it[
+            np.logical_and(check_validity(xs), o1mask)
+                                ]
+        tot_roll_min = np.full(len(total_it), np.nan)
+        smpl_roll_min = np.full(len(sampl_it), np.nan)
+        print(tot_valid_it,tot_roll_min)
+        
+        if len(o1_valid) > 0:
+            curr_min = o1_valid[0]
+            for i in range(len(o1_valid)):
+                if curr_min > o1_valid[i]:
+                    curr_min = o1_valid[i]
+                rolling_min[i] = curr_min
+
+
+    
+    # Needed for VScode
+    plt.show()

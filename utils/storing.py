@@ -37,7 +37,7 @@ def save_exps(list_of_res, alg_name, e_folder, info = {}):
     for exp_num in range(num_exp):
         outfile = alg_folder + f"/z{exp_num:03d}"
         xs,objs,indivs = list_of_res[exp_num]
-        np.savez(outfile, xs, objs, indivs)
+        np.savez(outfile, xs=xs, objs=objs, indivs=indivs)
 
 def load_exp(alg_name, e_folder):
     
@@ -49,15 +49,21 @@ def load_exp(alg_name, e_folder):
     f.close()
     
     num_exp = json_dict["number"]
+    list_of_res = []
     
     for e_num in range(num_exp):
-        infile = alg_folder + f"/z{e_num:03d}"
+        infile = alg_folder + f"/z{e_num:03d}.npz"
         data = np.load(infile)
-        print(data)
+        xs = data["xs"]
+        objs = data["objs"]
+        indivs = data["indivs"]
+        arrays = (xs, objs, indivs)
+        
+        list_of_res.append(arrays)
      
     
     
-    #return list_of_res
+    return list_of_res
 
 
     
