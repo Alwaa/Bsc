@@ -222,7 +222,8 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
 
 def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False, start_all = True): #TODO: implement default max_iter to budjet
     #################################
-    K_in = 50 #example0 K = 30
+    K_in = max_iter//2 #50 #example0 K = 30
+    #TODO:rewtite to caculate based on alpha and beta
 
 
     # For setting the type of grid to use for solving the problem (discreticing space, and then 
@@ -273,7 +274,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
 
     #Running ADMMBO
     xo,zo,gpr,gpc, gp_logger, rho_list = admmbo(costf, constraintf, M, bounds_array, grid, x0, 
-                                                alpha=2,beta=2, K=K_in, alpha0 = 2, beta0 = 2, rho = 10, epsilon=0)
+                                                alpha=2,beta=2, K=K_in, alpha0 = 2, beta0 = 2, rho = 1, epsilon=0)
 
     ## Formatting output ## #TODO: Format so order of queries is correct
     xsr = gpr.X_train_

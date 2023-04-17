@@ -9,7 +9,7 @@ import numpy as np
 #es.optimize(cma.ff.rosen)
 #es.result_pretty()
 
-def cma_es(problem, x0):
+def cma_es(problem, x0, max_iter = 120):
     own_logger_X = []
     own_logger_fit = []
     costf = problem["Cost Function (x)"]
@@ -17,27 +17,20 @@ def cma_es(problem, x0):
     ## Differently formated input than my current ADDMBO impl
     ## actually closer to original that can take both?
     def constraints(x):
-        #return constraintf[0](x[None])
         return [0.5 - constraintf[i](x[None])[0] for i in range(len(constraintf))] #I think this is the correct format??
     def fun(x):
-        #print("TEST\n",x,"\n\n")
-        #print(costf(x[None]))
         return costf(x[None])[0]
 
     #tolx = 0.01
-    #tolfun
-    #maxfevals
-    #bounds = [for_all,for_all] or [[1,2,3],for all]
     if problem["Bound Type"] == "square":
-        bounds = [problem["Bounds"][0],problem["Bounds"][1]]
-    print(bounds)
+        bounds = [problem["Bounds"][0],problem["Bounds"][1]] #TODO: rewrite into general form
+    #print(bounds)
     opts = {"bounds" : bounds, 
-            "maxfevals" : 120}
+            "maxfevals" : max_iter}
 
     cfun = cma.ConstrainedFitnessAL(fun, constraints)
     sigma0 = 1    # initial standard deviation to sample new solutions
 
-    #x, es = cma.fmin2(cfun, x0, sigma0, {'tolstagnation': 0}, callback=cfun.update)
     es = cma.CMAEvolutionStrategy(x0, sigma0, opts) #TODO: Double check that it also samples the first point
     own_logger_X.append(x0)
     while not es.stop():
@@ -49,9 +42,8 @@ def cma_es(problem, x0):
         es.logger.add()  # for later plotting
         es.disp()
     x = es.result.xfavorite  # the original x-value may be meaningless
-    print("\n-------\n", x)
-    print(constraints(x))  # show constraint violation values
-    constraints(x)
+    #print("\n-------\n", x)
+    #print(constraints(x))  # show constraint violation values
 
     #### Solution could be not feasable #####
     c = es.countiter
@@ -61,9 +53,10 @@ def cma_es(problem, x0):
     if x is None:
         pass
     else:
-        print("find_feasible took {} iterations".format(es.countiter - c))
-        print("\n-------\n", x)
-        constraints(x)  # is now <= 0
+        #print("find_feasible took {} iterations".format(es.countiter - c))
+        #TODO:Add padding of points equivalent to new points sampled and then add the feasable point
+        #print("\n-------\n", x)
+        #constraints(x)  # is now <= 0
         #### ------------------------------ #####
 
         es.result_pretty()
@@ -75,10 +68,9 @@ def cma_es(problem, x0):
         #cma.disp(None, np.r_[0:int(1e9):10, -1]) # every 10-th and last
         #cma.disp(name = 'outcma/xrecentbest', idx = np.r_[0:int(1e9):10, -1])
 
-        print("\n\n",x)
-        print(fun(x),"\n\n")
-        
-        print(len(cfun.archives[1].archive))
+        # print("\n\n",x)
+        # print(fun(x),"\n\n")
+        # print(len(cfun.archives[1].archive))
         
         # assume some data are available from previous runs
         cma.disp(None, r_[0:int(1e9),-1])
@@ -94,12 +86,12 @@ def cma_es(problem, x0):
     objs_out = np.concatenate((costf(x_out).reshape(-1,1), constr_out),axis = 1)
     indiv_eval = []
     return x_out, objs_out, indiv_eval
-    #### TODO: Clean up a bit, then maybe try the other CMA-ES python IMPL since it has nicer plotting
+    #### TODO: Clean up a bit
     
 if __name__ == "__main__":
     from opt_problems.paper_problems import gardner1
     from utils.plotting import vizualize_toy
     print(gardner1)
-    x0 = 2 * [2]  # initial solution
+    x0 = 2 * [2]  # initial sample 
     a,b,c = cma_es(gardner1, x0)
-    vizualize_toy(a,b,gardner1)
+    vizualize_toy(a,b, c,gardner1)

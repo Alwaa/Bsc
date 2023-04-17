@@ -49,9 +49,9 @@ def cobyla_run(problem, x0, obj_tol = 0.1, maxiter = 100, multi = False):
 
     #Also a lot of infeasable solutions in eikson paper
     x = res.x
-    print(res.message)
-    print(x,fun(x))
-    print(res.keys())
+    # print(res.message)
+    # print(x,fun(x))
+    # print(res.keys())
     return xs_out, objs_out, indiv_eval
 
 def multi_cobyla(problem, x0s, obj_tol= 0.1, maxiter_per = None, maxiter_total = 100, divide = True):

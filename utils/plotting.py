@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from numpy.typing import NDArray
+import copy
 
 NUM_OF_OBJECTIVE_FUNCTIONS = 1 #Multi-objective optimization is not covered. One should conbine and weigh the multiple objectives into one in thoscases
 
@@ -185,11 +186,14 @@ def expretiment_plot(exp_list,
     
     #Prob overkill and not needed
     for i in range(len(roll_min_list)):
-        if len(roll_min_list[i]) > max_roll_min_len:
+        if len(roll_min_list[i]) < max_roll_min_len:
             roll_min_list[i] = np.concatenate(
-                (roll_min_list[i],np.full(len(roll_min_list[i]),np.nan))
+                (roll_min_list[i],np.full(max_roll_min_len - len(roll_min_list[i]) ,np.nan))
             )
-            
+        elif len(roll_min_list[i] > max_roll_min_len): 
+            roll_min_list[i] = copy.deepcopy(roll_min_list[i][:max_roll_min_len])
+    
+    #TODO: Investigate ficing last part of plot ticking up...
     
     arr_roll_mins = np.array(roll_min_list)
     stds = np.nanstd(arr_roll_mins, axis=0)
