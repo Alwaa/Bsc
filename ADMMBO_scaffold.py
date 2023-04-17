@@ -222,7 +222,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
 
 def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False, start_all = True): #TODO: implement default max_iter to budjet
     #################################
-    K_in = max_iter//2 #50 #example0 K = 30
+    K_in = max_iter//4 #50 #example0 K = 30
     #TODO:rewtite to caculate based on alpha and beta
 
 
@@ -272,7 +272,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     # Grid with evry grid_step-th point of space
     grid = np.array(np.meshgrid(xin[::grid_step],xin[::grid_step],indexing='ij')).reshape(2,-1).T
 
-    #Running ADMMBO
+    #Running ADMMBO #TODO: Set dictionary to tweek settings from experimetns script
     xo,zo,gpr,gpc, gp_logger, rho_list = admmbo(costf, constraintf, M, bounds_array, grid, x0, 
                                                 alpha=2,beta=2, K=K_in, alpha0 = 2, beta0 = 2, rho = 1, epsilon=0)
 
