@@ -19,7 +19,7 @@ xs, objs, indiv_evals = None, None, None
 problem = gramacy
 name = "gramacy-dectest1"
 #pesc_create_problem(gramacy, name, decoupled=True)
-# pesc_run_experiment(name)
+#pesc_run_experiment(name)
 #
 x0s = monte_carlo_sampling(problem, num = 20, seed = 12) #np.array([[1.5,4.5],[1,2]])
 x0 = x0s[0]
@@ -28,16 +28,21 @@ x0 = x0s[0]
 
 alg_res = [
     #multi_cobyla(problem, x0s),
-    pesc_main(name = name),
-    #cma_es(problem, x0),
-    admmbo_run(problem, x0s, start_all = False)
+    #pesc_main(name = name),
+    cma_es(problem, x0),
+    #admmbo_run(problem, x0s, start_all = False)
 ]
 if xs != None:
     vizualize_toy(xs, objs, indiv_evals, problem)
 
 # print(len(alg_res),alg_res[0])
 e_folder = create_exp_folder("test")
-names = ["pesc", "admmbo"]
+names = ["cma"]
+if len(names) != len(alg_res):
+    names = []
+    for i in len(alg_res):
+        inp = input(f"{i}-th alg name is: ")
+        names.append(inp)
 for n, res in enumerate(alg_res):
     xs, objs, indiv_evals = res
     vizualize_toy(xs,objs, indiv_evals ,problem)

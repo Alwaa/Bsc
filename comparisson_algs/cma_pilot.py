@@ -1,6 +1,7 @@
 import cma
 import matplotlib.pyplot as plt
 from numpy import r_
+import numpy as np
 
 # notebooks and the (messy) documentation used for reference
 
@@ -31,7 +32,7 @@ def cma_es(problem, x0):
         bounds = [problem["Bounds"][0],problem["Bounds"][1]]
     print(bounds)
     opts = {"bounds" : bounds, 
-            "maxfevals" : 60}
+            "maxfevals" : 120}
 
     cfun = cma.ConstrainedFitnessAL(fun, constraints)
     sigma0 = 1    # initial standard deviation to sample new solutions
@@ -54,35 +55,39 @@ def cma_es(problem, x0):
 
     #### Solution could be not feasable #####
     c = es.countiter
+    new_max_evals = int(opts["maxfevals"]*1.2)
+    es.opts.set({"maxfevals" : new_max_evals})
     x = cfun.find_feasible(es)
-    print("find_feasible took {} iterations".format(es.countiter - c))
-    print("\n-------\n", x)
-    constraints(x)  # is now <= 0
-    #### ------------------------------ #####
+    if x is None:
+        pass
+    else:
+        print("find_feasible took {} iterations".format(es.countiter - c))
+        print("\n-------\n", x)
+        constraints(x)  # is now <= 0
+        #### ------------------------------ #####
 
-    es.result_pretty()
+        es.result_pretty()
 
-    # cma.plot()
-    # cma.s.figshow()
-    # plt.show(block=True) ## Stops VS Code from closing it
+        # cma.plot()
+        # cma.s.figshow()
+        # plt.show(block=True) ## Stops VS Code from closing it
 
-    #cma.disp(None, np.r_[0:int(1e9):10, -1]) # every 10-th and last
-    #cma.disp(name = 'outcma/xrecentbest', idx = np.r_[0:int(1e9):10, -1])
+        #cma.disp(None, np.r_[0:int(1e9):10, -1]) # every 10-th and last
+        #cma.disp(name = 'outcma/xrecentbest', idx = np.r_[0:int(1e9):10, -1])
 
-    print("\n\n",x)
-    print(fun(x),"\n\n")
-    
-    print(len(cfun.archives[1].archive))
-    
-    # assume some data are available from previous runs
-    cma.disp(None, r_[0:int(1e9),-1])
-    #print(cma.CMAOptions("verb"))
-    if False: #print options in prettier format (can input string for suboptions)
-        for k,v in cma.CMAOptions().items():
-            print(k, v)
-    import numpy as np
-    
-    own_logger_X.append(x)
+        print("\n\n",x)
+        print(fun(x),"\n\n")
+        
+        print(len(cfun.archives[1].archive))
+        
+        # assume some data are available from previous runs
+        cma.disp(None, r_[0:int(1e9),-1])
+        #print(cma.CMAOptions("verb"))
+        if False: #print options in prettier format (can input string for suboptions)
+            for k,v in cma.CMAOptions().items():
+                print(k, v)
+        
+        own_logger_X.append(x)
     x_out = np.array(own_logger_X)
     
     constr_out = np.array([constraintf[i](x_out) for i in range(len(constraintf))]).T

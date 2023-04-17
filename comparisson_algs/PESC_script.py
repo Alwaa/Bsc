@@ -129,7 +129,7 @@ def pesc_create_problem(problem_in, name, max_iter = 80, decoupled = False):
     f_line = "\n    \n    f = ???"
     c_ln = [f"c{i} = ???" for i in range(con_num)]
     c_lines = "\n    ".join(c_ln)
-    c_rs = [f"'c{i}' : np.array([float(c{i}[0][0] <= 0)-1])" for i in range(con_num)]
+    c_rs = [f"'c{i}' : np.array([float(c{i}[0][0] <= 0)])" for i in range(con_num)]
     
     if not decoupled:
         r_s = "\n    \n    return " + "{'f':f[0], " + ",".join(c_rs) + "}"

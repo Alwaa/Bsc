@@ -40,10 +40,7 @@ def vizualize_toy(xs: NDArray[np.float64],
     ff = con*func
 
     #TODO: Merge both decoupled and not into same flow by creating a full eval_type mask?
-    if len(eval_type) == 0:
-        decoupled = False
-    else:
-        decoupled = True
+    decoupled = not len(eval_type) == 0
 
     print("DECOUPLED = ", decoupled)
     
@@ -139,9 +136,14 @@ def expretiment_plot(exp_list,
         return np.all(cons,axis=0)
     
     num_exp = len(exp_list)
-    
+    decoupled = not len(exp_list[0][2]) == 0
+
+    roll_min_list = []
+    max_roll_min_len = 0
+    plot_iters = []
     for xs, objs, eval_type in exp_list:
-        if len(eval_type) != 0: #Decoupled
+        print(objs[:,0])
+        if decoupled: 
             assert eval_type.shape == objs.shape, "Eval type mask should batch one to one the obj"
             assert NUM_OF_OBJECTIVE_FUNCTIONS == 1, "Not implemented"
 
@@ -149,7 +151,7 @@ def expretiment_plot(exp_list,
             class_mask = np.any(eval_type[:,1:],axis=1)
             xs_class = xs[class_mask]
         else:
-            o1mask = np.fill(len(xs),True)
+            o1mask = np.full(len(xs),True)
             xs_class = xs
 
         xs_obj = xs[o1mask]
@@ -165,16 +167,33 @@ def expretiment_plot(exp_list,
                                 ]
         tot_roll_min = np.full(len(total_it), np.nan)
         smpl_roll_min = np.full(len(sampl_it), np.nan)
-        print(tot_valid_it,tot_roll_min)
-        
-        if len(o1_valid) > 0:
-            curr_min = o1_valid[0]
-            for i in range(len(o1_valid)):
-                if curr_min > o1_valid[i]:
-                    curr_min = o1_valid[i]
-                rolling_min[i] = curr_min
+        # print(tot_valid_it,exp_list[0][2])
 
+        for it in range(len(o1_valid)):
+            tot_roll_min[tot_valid_it[it]] = o1_valid[it]
 
+        #Rolling min
+        roll_min_len = len(tot_roll_min)
+        for i in range(1,roll_min_len):
+            if tot_roll_min[i-1] < tot_roll_min[i] or np.isnan(tot_roll_min[i]):
+                tot_roll_min[i] = tot_roll_min[i-1]
+
+        roll_min_list.append(tot_roll_min)
+        if max_roll_min_len < roll_min_len:
+            max_roll_min_len = roll_min_len
+            plot_iters = total_it
     
+    #Prob overkill and not needed
+    for i in range(len(roll_min_list)):
+        if len(roll_min_list[i]) > max_roll_min_len:
+            roll_min_list[i] = np.concatenate(
+                (roll_min_list[i],np.full(len(roll_min_list[i]),np.nan))
+            )
+            
+    
+    arr_roll_mins = np.array(roll_min_list)
+    stds = np.nanstd(arr_roll_mins, axis=0)
+    means = np.nanmean(arr_roll_mins, axis=0)
+    plt.errorbar(plot_iters, means,yerr=stds)
     # Needed for VScode
     plt.show()
