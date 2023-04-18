@@ -6,9 +6,7 @@ from scipy.stats import multivariate_normal
 #--------------------------------#
 
 boundtype = "square"
-bounds = (-1,1)
-if boundtype == "square":
-    bounds = bounds + bounds
+bounds = (-1,1,-1,1)
 
 #################################
 # Example problem

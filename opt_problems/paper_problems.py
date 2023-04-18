@@ -123,7 +123,34 @@ gramacy = {"Bound Type" : boundtype_gramacy,
 #################################
 # P3 (lamwillcox3)
 #################################
+# Bounds and such
+boundtype_lw3 = "square"
+bounds_lw3 = (-5,5)*4
 
+# Cost function
+def cost_lw3(x):
+    
+    f = 0.5*np.sum(x**4 - 16*(x**2) + 5*x,axis = 1)
+    
+    return f
+
+# Constraint function
+def constraint1_lw3(x):
+    
+    c = -0.5 + np.sin(x[:,0] + 2*x[:,1]) -np.cos(x[:,2]*np.cos(x[:,3]))
+    
+    return c <= 0
+
+    
+    
+constraint_list_lw3 = [
+    lambda z: 1 - constraint1_lw3(z)
+    ]
+
+lamwillcox3 = {"Bound Type" : boundtype_lw3,
+            "Bounds" : bounds_lw3,
+            "Cost Function (x)":  lambda x: cost_lw3(x),
+            "Constraint Functions (z)": constraint_list_lw3}
 #################################
 # EXAMPLE FORMAT
 #################################
@@ -152,5 +179,5 @@ constraint_list_XXXX = [
 NAME = {"Bound Type" : boundtype_XXXX,
             "Bounds" : bounds_XXXX,
             "Cost Function (x)":  lambda x: cost_XXXX(x),
-            "Constraint Functions (z)": lambda z: 1 - constraint_XXXX(z)}
+            "Constraint Functions (z)": constraint_list_XXXX}
 """

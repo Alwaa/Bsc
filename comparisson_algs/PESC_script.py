@@ -79,7 +79,7 @@ def pesc_run_experiment(name = "test" ):
                                "Spearmint/spearmint/cleanup.py", folder_rel],shell = True, capture_output=True)
     out_pros_result = subprocess.run(["conda", "run", "-n", "PESC", "python", 
                                "Spearmint/spearmint/main.py", folder_rel],shell = True, capture_output=True)
-    print(out_pros_result)
+    #print(out_pros_result)
 
 def pesc_create_problem(problem_in, name, max_iter = 80, decoupled = False):
     max_finished_jobs = max_iter #budjet

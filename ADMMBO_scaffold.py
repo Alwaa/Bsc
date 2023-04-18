@@ -86,6 +86,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     
     def gpr_ei(x_in,zs,ys,rho,gpr,ubest):
         x=np.atleast_2d(x_in)
+        x = np.nan_to_num(x, nan= bounds[0][1]) #TODO: Is there a problem with example0?
         mu,std = gpr.predict(x, return_std=True)
         muu = mu + u_post_pluss(x,zs,ys,rho)
         #xx = (ubest-muu)/std #Original formulation
@@ -135,6 +136,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
 
             #print(x[None],"\n-----\n",gpr.y_train_)
             #print(cost(x[None]),"\n-----\n",gpr.y_train_)
+            x = np.nan_to_num(x, nan= bounds[0][1]) #TODO: Is there also problem with lamwillcox3?
             gpr.fit(np.concatenate((gpr.X_train_,x[None]),axis=0),
                     np.concatenate((gpr.y_train_,cost(x[None])),axis=0))
         ### --- ###
@@ -228,15 +230,16 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
 
     # For setting the type of grid to use for solving the problem (discreticing space, and then 
     # selectin a less fine grid for less GP calculations)
-    num_samples = 301 # in each dimension
+    num_samples = 400 # in each dimension
     grid_step = 10
     #################################
 
 # Fetching problem info #
     bounds = problem["Bounds"]
+    dim_num = len(bounds)//2
     if problem["Bound Type"] == "square":
         xin = np.linspace(bounds[0], bounds[1], num_samples)
-        xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(2, -1).T
+        xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(dim_num, -1).T
     else:
         raise Exception("Not yet Implemented non-square bounds")
 
@@ -270,7 +273,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
                          # ADMMBO is (claimed) not sensitive to M in a wide range of values ref. sec. 5.7 (only to smaller values)
     
     # Grid with evry grid_step-th point of space
-    grid = np.array(np.meshgrid(xin[::grid_step],xin[::grid_step],indexing='ij')).reshape(2,-1).T
+    grid = np.array(np.meshgrid(xin[::grid_step],xin[::grid_step],indexing='ij')).reshape(dim_num,-1).T
 
     #Running ADMMBO #TODO: Set dictionary to tweek settings from experimetns script
     xo,zo,gpr,gpc, gp_logger, rho_list = admmbo(costf, constraintf, M, bounds_array, grid, x0, 

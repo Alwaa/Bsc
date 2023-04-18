@@ -12,17 +12,19 @@ from utils.sampling import monte_carlo_sampling, grid_sampling
 from utils.storing import create_exp_folder, save_exps
 
 
-from opt_problems.paper_problems import gardner1, gardner2, gramacy
+from opt_problems.paper_problems import gardner1, gardner2, gramacy, lamwillcox3
+from opt_problems.example_problems import example0
 
 warnings.filterwarnings('ignore')
 
+running_time = 1*60*60
 
-exp_name = "testing"
-num_trials = 10 
-problem = gramacy
+exp_name = "lw-dec-test"
+num_trials = 170
+problem = lamwillcox3 #gramacy
 name = "gramacy-dectest1" #For PESC
 
-max_iter = 120 #PESC and ADMMBO double for cma and cobyla
+max_iter = 220 #PESC and ADMMBO double for cma and cobyla
 #pesc_create_problem(gramacy, name, decoupled=True, max_iter = max_iter)
 
 alg_res = { 
@@ -34,7 +36,7 @@ alg_res = {
 
 s_time = time()
 for e_num in range(num_trials):
-    x0s = monte_carlo_sampling(problem, num = max_iter, seed = 12 + e_num)
+    x0s = monte_carlo_sampling(problem, num = max_iter, seed = 14 + e_num)
     x0 = x0s[0]
     
     if "pesc" in alg_res.keys():
@@ -50,7 +52,10 @@ for e_num in range(num_trials):
     mins, _ = divmod(time() - s_time, 60)
     hours, mins = divmod(mins, 60)
     print("\n", "-"*40,"\n", f"Finished running iteration {e_num + 1} after {int(hours):02d}h {int(mins):02d}m")
-        
+    if time() - s_time > running_time:
+        print("\n", "-"*40,"\nTerminating runs after set running time\n", "-"*40,"\n",)
+        break
+    
 e_folder = create_exp_folder(exp_name)
 for alg_name, res_list in alg_res.items():
     save_exps(res_list, alg_name, e_folder=e_folder)
