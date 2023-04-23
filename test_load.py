@@ -19,8 +19,9 @@ exps = {
     "COBYLA (Multiple)": load_exp("cobyla",e_folder)
 }
 print(len(exps["ADMMBO"]))
-expretiment_plot(exps,problem) #TODO: Add a precentage of feasable found for each alg
+expretiment_plot(exps,problem)
 
 plt.show()
-a,b,c = exps["ADMMBO"][61]
-vizualize_toy(a,b,c, problem)
+# a,b,c = exps["ADMMBO"][61]
+# vizualize_toy(a,b,c, problem)
+# expretiment_plot({"test" : exps["ADMMBO"][60:62]},problem)

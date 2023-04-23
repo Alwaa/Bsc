@@ -259,10 +259,6 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
 
 def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False, start_all = True): #TODO: implement default max_iter to budjet
     #################################
-    K_in = max_iter//4 #50 #example0 K = 30
-    #TODO:rewtite to caculate based on alpha and beta
-
-
     # For setting the type of grid to use for solving the problem (discreticing space, and then 
     # selectin a less fine grid for less GP calculations)
     num_samples = 400 # in each dimension
@@ -288,8 +284,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     # For drawing bounds + true cost function
     # Bound area is then 0 in heatmap
     func = costf(xy)
-    con = np.all(
-            np.array([constraintf[i](xy) <= 0  for i in range(len(constraintf))]),
+    con = np.all(np.array([constraintf[i](xy) <= 0  for i in range(len(constraintf))]),
             axis = 0) #Boolean constraints
     ff = con*func
     
@@ -302,6 +297,10 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
             if less_than_all and more_than_none:
                 x0 = x0[:i]
                 break
+    
+    K_in = (max_iter-len(x0))//4 #50 #example0 K = 30
+    K_in = max(K_in, 2) #At least 2 iterationis (Would be very unlucky for it to fire)
+    #TODO:rewtite to caculate based on alpha and beta
 
     #TODO: Try changing to either fixed value or func?
     M = np.max(ff) - np.min(ff) # They set it as the unconstrained range of f, while this is the constrained range
@@ -333,7 +332,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     ## ------------------ ##
 
     if not debugging:
-        print(xs_out, obj_out, eval_type)
+        #print(xs_out, obj_out, eval_type)
         return xs_out, obj_out, eval_type
     
     ### Debugging ###

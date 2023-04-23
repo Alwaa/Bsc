@@ -19,8 +19,8 @@ warnings.filterwarnings('ignore')
 
 running_time = 14*60*60
 
-exp_name = "gram-dec-all"
-num_trials = 100
+exp_name = "gram-dec-all" +"redo"
+num_trials = 64
 problem = gramacy #lamwillcox3 #gramacy
 name = "gramacy-dectest1" #For PESC
 
@@ -28,9 +28,9 @@ max_iter = 120 #PESC and ADMMBO double for cma and cobyla
 #pesc_create_problem(gramacy, name, decoupled=True, max_iter = max_iter)
 
 alg_res = { 
-            "cobyla":[],
-            "cma":[],
-            "pesc":[],
+            # "cobyla":[],
+            # "cma":[],
+            # "pesc":[],
             "admmbo": []
 }
 
