@@ -29,21 +29,13 @@ x0 = x0s[0]
 alg_res = [
     #multi_cobyla(problem, x0s),
     #pesc_main(name = name),
-    cma_es(problem, x0),
-    #admmbo_run(problem, x0s, start_all = False)
+    #cma_es(problem, x0),
+    admmbo_run(problem, x0s, start_all = False)
 ]
 if xs != None:
     vizualize_toy(xs, objs, indiv_evals, problem)
 
-# print(len(alg_res),alg_res[0])
-e_folder = create_exp_folder("test")
-names = ["cma"]
-if len(names) != len(alg_res):
-    names = []
-    for i in len(alg_res):
-        inp = input(f"{i}-th alg name is: ")
-        names.append(inp)
 for n, res in enumerate(alg_res):
     xs, objs, indiv_evals = res
     vizualize_toy(xs,objs, indiv_evals ,problem)
-    save_exps([res], names[n], e_folder=e_folder)
+    #save_exps([res], names[n], e_folder=e_folder)

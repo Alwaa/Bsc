@@ -193,13 +193,15 @@ def expretiment_plot(   exps,
                 plot_iters = total_it
         
         #Prob overkill and not needed
+        ## resizing to be same size on all runs ##
         for i in range(len(roll_min_list)):
             if len(roll_min_list[i]) < max_roll_min_len:
                 roll_min_list[i] = np.concatenate(
-                    (roll_min_list[i],np.full(max_roll_min_len - len(roll_min_list[i]) ,np.nan))
+                    (roll_min_list[i],np.full(max_roll_min_len - len(roll_min_list[i]) ,roll_min_list[i][-1])) #pad with last element instead of nan?
                 )
             elif len(roll_min_list[i] > max_roll_min_len): 
                 roll_min_list[i] = copy.deepcopy(roll_min_list[i][:max_roll_min_len])
+        ## ------------------------------------  ##
         
         #TODO: Investigate ficing last part of plot ticking up...
         
@@ -209,12 +211,35 @@ def expretiment_plot(   exps,
         arr_roll_mins = np.array(roll_min_list)
         stds = np.nanstd(arr_roll_mins, axis=0)
         means = np.nanmean(arr_roll_mins, axis=0)
+        
+        plt.figure(1) #Not best practice!
         #plt.errorbar(plot_iters, means,yerr=stds)
         plt.plot(plot_iters,means, color = colors[plot_num], label = alg_name)
         plt.fill_between(plot_iters, means - stds, means + stds,
                     color=colors[plot_num], alpha=0.2)
-    
+
+        ## How many found feasbale ##
+        non_feasible = np.isnan(arr_roll_mins[:,-1])
+        tot_runs = len(non_feasible)
+        feasible = tot_runs - np.sum(non_feasible)
+        feas_prct = 100*feasible/tot_runs
+        print(f"{alg_name} found {feas_prct:.1f}% feasible ({feasible}/{tot_runs})")
+        ## ----------------------- ##
+        
+        arr_feas = copy.deepcopy(arr_roll_mins)
+        arr_feas[np.logical_not(np.isnan(arr_roll_mins))] = 1
+        arr_feas[np.isnan(arr_roll_mins)] = 0        
+        feas_per_it = np.sum(arr_feas, axis = 0)/tot_runs
+        #print(feas_per_it)
+        plt.figure(2) #Not best practice!
+        plt.plot(plot_iters,feas_per_it, color = colors[plot_num], label = alg_name)
+        ## ----------------------- ##
+        
         plot_num += 1
     
+    plt.figure(1) #Not best practice!
     plt.title(title)
+    plt.legend()
+    plt.figure(2) #Not best practice!
+    plt.title("Feasability Rercentage")
     plt.legend()

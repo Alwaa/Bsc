@@ -17,20 +17,20 @@ from opt_problems.example_problems import example0
 
 warnings.filterwarnings('ignore')
 
-running_time = 1*60*60
+running_time = 14*60*60
 
-exp_name = "lw-dec-test"
-num_trials = 170
-problem = lamwillcox3 #gramacy
+exp_name = "gram-dec-all"
+num_trials = 100
+problem = gramacy #lamwillcox3 #gramacy
 name = "gramacy-dectest1" #For PESC
 
-max_iter = 220 #PESC and ADMMBO double for cma and cobyla
+max_iter = 120 #PESC and ADMMBO double for cma and cobyla
 #pesc_create_problem(gramacy, name, decoupled=True, max_iter = max_iter)
 
 alg_res = { 
             "cobyla":[],
             "cma":[],
-#            "pesc":[],
+            "pesc":[],
             "admmbo": []
 }
 

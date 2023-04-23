@@ -15,11 +15,18 @@ import copy
 # delta missing, 1 - delta is acceptance for prob that final solution is infeasable, for parameter to use if it does not converge
 def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
            K=15, rho=0.1, alpha=5, beta=5, alpha0=20, beta0=20,
-           epsilon=1e-6):
+           epsilon=1e-6, format_return = False):
 
     ## For debugging
     gp_logger = []
     rho_list = []
+    ## -------------
+    
+    ## For outputting in unified
+    xs_out = []
+    objs = []
+    ind_evals = []
+    ## -------------------------------
     
     ### Defining Kernels ###
     K1 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
@@ -56,11 +63,6 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     bounds=bounds.astype('float')
     zs = np.array([bounds[:,1].copy() for i in range(N)])
     ys = np.array([bounds[:,1].copy() for i in range(N)])
-    #print(zs)
-    # z = np.array((1,1))
-    # z = x0[c0==0][np.argmin(f0[c0==0])]
-    # y = np.ones(x0.shape[1])
-    # y = np.zeros(x0.shape[1])
     zolds = [zs[i].copy() for i in range(N)]
     ## ---------------- ##
 
@@ -77,6 +79,12 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     for i in range(N): #Initializing the GP classifiers
         #print(x0,c0s[i])
         gpcs[i].fit(x0,c0s[i]) 
+    
+    #Logging first variables
+    xs_out.append(x0)
+    objs_arr =np.concatenate((f0.reshape(-1,1),np.array(c0s).T),axis=1)
+    objs.append(objs_arr)
+    ind_evals.append(np.full(objs_arr.shape,True))
 
 
     def u_post_pluss(x_in,zs_in,ys_in,rho_in): ## Eq. (10) after the f(x) + .....
@@ -134,11 +142,21 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
             gp_logger.append([grid,0,0,x,-eif(x),old_x,-eif(old_x),
                               copy.deepcopy(ei),copy.deepcopy(gpr.X_train_),copy.deepcopy(gpr.y_train_)])
 
-            #print(x[None],"\n-----\n",gpr.y_train_)
-            #print(cost(x[None]),"\n-----\n",gpr.y_train_)
+
             x = np.nan_to_num(x, nan= bounds[0][1]) #TODO: Is there also problem with lamwillcox3?
-            gpr.fit(np.concatenate((gpr.X_train_,x[None]),axis=0),
-                    np.concatenate((gpr.y_train_,cost(x[None])),axis=0))
+            x_eval,cost_eval = x[None],cost(x[None])
+            gpr.fit(np.concatenate((gpr.X_train_,x_eval),axis=0),
+                    np.concatenate((gpr.y_train_,cost_eval),axis=0))
+            
+            ## Logging for unified outuput
+            xs_out.append(x_eval)
+            arr_objs = np.full(N+1,0.)
+            arr_objs[0] = cost_eval[0]
+            objs.append(arr_objs[None])
+            arr_evls = np.full(N+1,False)
+            arr_evls[0] = True
+            ind_evals.append(arr_evls[None])
+            
         ### --- ###
 
         #original_u = gpr.y_train_ + 0.5*rho*np.sum((gpr.X_train_-zs+ys/rho)**2,axis=1)
@@ -180,9 +198,20 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
                 # ei[idx2] += temp
                 # print(ei.max())
                 z = grid[np.argmax(ei)]
-
-                gpc.fit(np.concatenate((gpc.base_estimator_.X_train_,z[None]), axis=0),
-                        np.concatenate((gpc.base_estimator_.y_train_,constraint(z[None])),axis=0))
+                
+                z_eval, const_eval = z[None], constraint(z[None])
+                gpc.fit(np.concatenate((gpc.base_estimator_.X_train_,z_eval), axis=0),
+                        np.concatenate((gpc.base_estimator_.y_train_,const_eval),axis=0))
+                
+                            
+                ## Logging for unified outuput
+                xs_out.append(z_eval)
+                arr_objs = np.full(N+1,0.)
+                arr_objs[i+1] = const_eval[0]
+                objs.append(arr_objs[None])
+                arr_evls = np.full(N+1,False)
+                arr_evls[i+1] = True
+                ind_evals.append(arr_evls[None])
             
             h = gpc.base_estimator_.y_train_ + \
                     0.5*rho/M*np.sum((x[None]-gpc.base_estimator_.X_train_
@@ -220,7 +249,13 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
         alphac=alpha
         betac=beta
         
-    return x,z,gpr,gpc, gp_logger, rho_list
+    if format_return:
+        xs_out = np.concatenate(xs_out,axis = 0)
+        objs = np.concatenate(objs,axis = 0)
+        ind_evals = np.concatenate(ind_evals,axis = 0)
+        return x,z,gpr,gpcs, gp_logger, rho_list, xs_out, objs, ind_evals
+
+    return x,z,gpr,gpcs, gp_logger, rho_list
 
 def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False, start_all = True): #TODO: implement default max_iter to budjet
     #################################
@@ -276,27 +311,29 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     grid = np.array(np.meshgrid(xin[::grid_step],xin[::grid_step],indexing='ij')).reshape(dim_num,-1).T
 
     #Running ADMMBO #TODO: Set dictionary to tweek settings from experimetns script
-    xo,zo,gpr,gpc, gp_logger, rho_list = admmbo(costf, constraintf, M, bounds_array, grid, x0, 
-                                                alpha=2,beta=2, K=K_in, alpha0 = 2, beta0 = 2, rho = 1, epsilon=0)
+    xo,zo,gpr,gpc, gp_logger, rho_list, xs_out, obj_out, eval_type = admmbo(costf, constraintf, M, bounds_array, grid, x0, 
+                                                alpha=2,beta=2, K=K_in, alpha0 = 2, beta0 = 2, rho = 1, epsilon=0,
+                                                format_return=True)
 
-    ## Formatting output ## #TODO: Format so order of queries is correct
-    xsr = gpr.X_train_
-    obj = gpr.y_train_
-    xsc = gpc.base_estimator_.X_train_
-    cc = gpc.base_estimator_.y_train_
+    ## Formatting output ## #DONE: Format so order of queries is correct
+    # xsr = gpr.X_train_
+    # obj = gpr.y_train_
+    # xsc = gpc.base_estimator_.X_train_
+    # cc = gpc.base_estimator_.y_train_
 
-    new_obj = np.concatenate((obj,np.zeros(len(cc)))).reshape(-1,1)
-    new_cc = np.concatenate((np.ones(len(obj)),cc)).reshape(-1,1)
-    obj_out = np.concatenate((new_obj,new_cc),axis = 1) ## SImple combined obj and constraied after eachother
+    # new_obj = np.concatenate((obj,np.zeros(len(cc)))).reshape(-1,1)
+    # new_cc = np.concatenate((np.ones(len(obj)),cc)).reshape(-1,1)
+    # obj_out = np.concatenate((new_obj,new_cc),axis = 1) ## SImple combined obj and constraied after eachother
 
-    objmaks = np.concatenate((np.full(len(obj),True),np.full(len(cc),False))).reshape(-1,1)
-    constmaks = np.concatenate((np.full(len(obj),False),np.full(len(cc),True))).reshape(-1,1)
-    eval_type = np.concatenate((objmaks,constmaks),axis = 1)
+    # objmaks = np.concatenate((np.full(len(obj),True),np.full(len(cc),False))).reshape(-1,1)
+    # constmaks = np.concatenate((np.full(len(obj),False),np.full(len(cc),True))).reshape(-1,1)
+    # eval_type = np.concatenate((objmaks,constmaks),axis = 1)
 
-    xs_out = np.concatenate((xsr,xsc))
+    # xs_out = np.concatenate((xsr,xsc))
     ## ------------------ ##
 
     if not debugging:
+        print(xs_out, obj_out, eval_type)
         return xs_out, obj_out, eval_type
     
     ### Debugging ###

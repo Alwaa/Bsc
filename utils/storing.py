@@ -42,7 +42,7 @@ def save_exps(list_of_res, alg_name, e_folder, info = {}):
 def load_exp(alg_name, e_folder):
     
     alg_folder = e_folder + f"/{alg_name}"
-    assert os.path.exists(alg_folder), "\nFolder not in spesified location!!!\n"
+    assert os.path.exists(alg_folder), f"\n\nFolder not in spesified location!!!\n\n--{alg_name}-- Not Found\n"
     
     f = open(alg_folder + "/exp.json")
     json_dict = json.load(f)
