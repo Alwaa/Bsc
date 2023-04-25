@@ -17,20 +17,20 @@ from opt_problems.example_problems import example0
 
 warnings.filterwarnings('ignore')
 
-running_time = 14*60*60
+running_time = 12*60*60
 
-exp_name = "gram-dec-all" +"redo"
+exp_name = "gard1-all"
 num_trials = 64
-problem = gramacy #lamwillcox3 #gramacy
-name = "gramacy-dectest1" #For PESC
+problem = gardner1 #lamwillcox3 #gramacy
+name = "gard1-test" #For PESC
 
 max_iter = 120 #PESC and ADMMBO double for cma and cobyla
 #pesc_create_problem(gramacy, name, decoupled=True, max_iter = max_iter)
 
 alg_res = { 
-            # "cobyla":[],
-            # "cma":[],
-            # "pesc":[],
+            "cobyla":[],
+            "cma":[],
+            "pesc":[],
             "admmbo": []
 }
 
@@ -40,7 +40,7 @@ for e_num in range(num_trials):
     x0 = x0s[0]
     
     if "pesc" in alg_res.keys():
-        pesc_run_experiment(name)
+        pesc_run_experiment(name, max_iter=120)
         alg_res["pesc"].append(pesc_main(name))
     if "admmbo" in alg_res.keys():
         alg_res["admmbo"].append(admmbo_run(problem, x0s, start_all = False, max_iter=max_iter))

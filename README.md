@@ -52,6 +52,12 @@ PESC env works with c code commeted out in the kernel_utils file of the PESC Spe
 - Changed kernel_utils.py so it used the slower python version insted of weave
 - Changed print function in tasks/input_space.py line 272 function
     - All 4 in the input_params functiontion into normal print statements 
+
+
+### Simnibs
+- Follow download instruction from ...
+- Run the `python setup.py develop` in administrator terminal for windows
+- Intall `pyvista`
 #### POtential
 Might try again to fix plotting behaviour and maybe add a modern python c compiler
 FUTURIZE with:

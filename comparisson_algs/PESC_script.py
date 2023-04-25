@@ -73,15 +73,32 @@ def pesc_main(name):
     #print(xs_out, "\n", objs_out)
     return xs_out, objs_out, indiv_eval
 
-def pesc_run_experiment(name = "test" ):
+def pesc_run_experiment(name = "test", max_iter = None):
     folder_rel = "comparisson_algs/PESC_folders/" + name
+    
+    if not max_iter is None:
+        f = open(folder_rel + "/config.json")
+        config = json.load(f)
+        f.close()
+        old_max_iter = config["max_finished_jobs"]
+        if old_max_iter == max_iter:
+            print(f"Keeping PESC max iters as {old_max_iter}")
+        else:
+            config["max_finished_jobs"] = max_iter
+            print(f"Change PESC max iters from {old_max_iter} to {max_iter}")
+            
+            json_dump = json.dumps(config, indent=4)
+            with open(folder_rel + "/config.json", "w") as outfile:
+                outfile.write(json_dump)
+            
+    
     out_pros_result = subprocess.run(["conda", "run", "-n", "PESC", "python", 
                                "Spearmint/spearmint/cleanup.py", folder_rel],shell = True, capture_output=True)
     out_pros_result = subprocess.run(["conda", "run", "-n", "PESC", "python", 
                                "Spearmint/spearmint/main.py", folder_rel],shell = True, capture_output=True)
     #print(out_pros_result)
 
-def pesc_create_problem(problem_in, name, max_iter = 80, decoupled = False):
+def pesc_create_problem(problem_in, name, max_iter = 80, decoupled = False, noiseless = True):
     max_finished_jobs = max_iter #budjet
     p_folder = "comparisson_algs/PESC_folders/" + name
     p_exists = os.path.exists(p_folder)
@@ -100,10 +117,9 @@ def pesc_create_problem(problem_in, name, max_iter = 80, decoupled = False):
                             "min"  : bounds[i*2],
                             "max"  : bounds[i*2 +1]} for i in range(n_var)}
     
-    
     if decoupled:
-        task_dict = {f"c{i}":{"type": "constraint", "group" : int(i+2),"main_file": f"c{i}"} for i in range(con_num)}
-        task_dict["f"] = {"type":"objective", "group" : 1, "main_file": "f"}
+        task_dict = {"f": {"type":"objective", "group" : 1, "main_file": "f"}}
+        task_dict.update({f"c{i}":{"type": "constraint", "group" : int(i+2),"main_file": f"c{i}"} for i in range(con_num)})
     else:
         task_dict = {f"c{i}":{"type": "constraint"} for i in range(con_num)}
         task_dict["f"] = {"type":"objective"}
@@ -114,9 +130,23 @@ def pesc_create_problem(problem_in, name, max_iter = 80, decoupled = False):
         "experiment-name"   : "PESC-" + name,
         "acquisition"       : "PES",
         "max_finished_jobs" : max_finished_jobs,
-        "variables" : var_dict,
-        "tasks" : task_dict
     }
+    if decoupled:
+        json_info.update({
+                "fit_mean"             : "False",
+                "constraint_delta"     : 1e-4,
+                "stability_jitter"     : 1e-6,
+                "use_multi_delta"      : "False",
+                "recommendations"      : "during",
+        })
+        if noiseless:
+            json_info.update({
+                "likelihood"           : "noiseless",
+        })
+    
+    json_info.update({"variables" : var_dict,
+                        "tasks" : task_dict})
+
     # Serializing json
     json_dump = json.dumps(json_info, indent=4)
     with open(p_folder + "/config.json", "w") as outfile:

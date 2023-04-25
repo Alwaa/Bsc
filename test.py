@@ -16,19 +16,17 @@ xs, objs, indiv_evals = None, None, None
 #xs, objs, indiv_evals = cobyla_run(problem, x0)
 
 
-problem = gramacy
-name = "gramacy-dectest1"
-#pesc_create_problem(gramacy, name, decoupled=True)
-#pesc_run_experiment(name)
+problem = gardner1
+name = "gard1-test"
+pesc_create_problem(problem, name, decoupled=True)
+#pesc_run_experiment(name, max_iter=200)
 #
-x0s = monte_carlo_sampling(problem, num = 20, seed = 12) #np.array([[1.5,4.5],[1,2]])
+x0s = monte_carlo_sampling(problem, num = 100, seed = 12) #np.array([[1.5,4.5],[1,2]])
 x0 = x0s[0]
-
-#TODO: Check if seed is needed in each algorithm for reproducability
 
 alg_res = [
     #multi_cobyla(problem, x0s),
-    #pesc_main(name = name),
+    pesc_main(name = name),
     #cma_es(problem, x0),
     admmbo_run(problem, x0s, start_all = False)
 ]

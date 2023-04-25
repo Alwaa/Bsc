@@ -7,6 +7,18 @@ from sklearn import gaussian_process
 from scipy.special import ndtr
 from scipy.stats import norm
 import copy
+import warnings #For the non converging lnsrch
+
+DEFAULT_OPTIONS = {
+    "K"         :15,
+    "rho"       : 1, #orig. 0.1
+    "epsilon"       : 1e-6, 
+    "alpha"         :5,
+    "beta"         :5,
+    "alpha0"         :10, #orig. 20
+    "beta0"         :10, #orig. 20
+}
+AVAILABLE_OPTIONS = list(DEFAULT_OPTIONS.keys())
 
 # bounds = search-space B ; n and m_i missing, insted the initial points are passed in
 # M = penalty of infeasability
@@ -14,8 +26,17 @@ import copy
 # epsilon = tolerance parameter for stopping rule
 # delta missing, 1 - delta is acceptance for prob that final solution is infeasable, for parameter to use if it does not converge
 def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
-           K=15, rho=0.1, alpha=5, beta=5, alpha0=20, beta0=20,
-           epsilon=1e-6, format_return = False):
+           format_return = False, options = {}):
+    
+    _D = DEFAULT_OPTIONS
+    ## Overriding default options ##
+    for k,v in options.items():
+        if not k in AVAILABLE_OPTIONS:
+            print(f"{k} not applicabple option in ADMMBO")
+        _D[k] = v #New, unused value is assigned as of now if unvalid is inputted
+    K, rho, epsilon = _D["K"], _D["rho"], _D["epsilon"]
+    alpha, alpha0, beta, beta0 = _D["alpha"], _D["alpha0"],  _D["beta"], _D["beta0"]
+    ## -------------------------- ##
 
     ## For debugging
     gp_logger = []
@@ -135,7 +156,14 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
             ei = gpr_ei(grid,zs,ys,rho,gpr,ubest)
             x = grid[np.argmax(ei)]
             eif = lambda x_in: -gpr_ei(x_in,zs,ys,rho,gpr,ubest)
-            opt = minimize(eif, x, bounds=bounds) # Minize negative expected improvement
+            with warnings.catch_warnings(record=True) as caught_warnings:
+                warnings.simplefilter("always")
+                opt = minimize(eif, x, bounds=bounds) # Minize negative expected improvement
+                if not caught_warnings is None:
+                    for warn in caught_warnings:
+                        print(f"++++\nwarn: {warn.message}")
+                        print(warn.category)
+                        print(str(warn))
             old_x = copy.copy(x)
             x = opt.x
             # print(f'eix:{ei.max()}')
@@ -190,7 +218,14 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
                 ei[idx1] = hh[idx1] * (1.0 - theta[idx1])
                 idx2 = hh>1.0
                 ei[idx2] = hh[idx2] - theta[idx2]
-                opt=minimize(eif,grid[np.argmax(ei)],bounds=bounds) #Sklearn minimize
+                with warnings.catch_warnings(record=True) as caught_warnings:
+                    warnings.simplefilter("always")
+                    opt=minimize(eif,grid[np.argmax(ei)],bounds=bounds) #,options={ "maxiter" : 15000000}) #Sklearn minimize
+                    if not caught_warnings is None:
+                        for warn in caught_warnings:
+                            print(f"----\nwarn: {warn.message}")
+                            print(warn.category)
+                            print(str(warn))
                 z = opt.x
                 # ei[idx2][ei[idx2]<0.0] = 0.0
                 # temp = (hh[idx2]-1)*theta[idx2]
@@ -309,10 +344,11 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     # Grid with evry grid_step-th point of space
     grid = np.array(np.meshgrid(xin[::grid_step],xin[::grid_step],indexing='ij')).reshape(dim_num,-1).T
 
-    #Running ADMMBO #TODO: Set dictionary to tweek settings from experimetns script
+    #Running ADMMBO 
+    options_in = {"K": K_in, "rho" : 1, "epsilon" : 1e-8,
+                  "alpha": 2, "alpha0": 2, "beta": 2, "beta0": 2}
     xo,zo,gpr,gpc, gp_logger, rho_list, xs_out, obj_out, eval_type = admmbo(costf, constraintf, M, bounds_array, grid, x0, 
-                                                alpha=2,beta=2, K=K_in, alpha0 = 2, beta0 = 2, rho = 1, epsilon=0,
-                                                format_return=True)
+                                                                            options=options_in, format_return=True)
 
     ## Formatting output ## #DONE: Format so order of queries is correct
     # xsr = gpr.X_train_
@@ -342,9 +378,9 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     #print(xsc.shape, cc.shape)
     #print(xsr,obj)
     
-    if xsr.shape == xsc.shape:
-        print("Diff of xs")
-        print(xsr-xsc)
+    # if xsr.shape == xsc.shape:
+    #     print("Diff of xs")
+    #     print(xsr-xsc)
     
     K1 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
             gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2)) #+\
