@@ -56,9 +56,10 @@ PESC env works with c code commeted out in the kernel_utils file of the PESC Spe
 
 ### Simnibs
 - Follow download instruction from ...
+- download the simnibs_charm branch instead, then conda install the env
 - Run the `python setup.py develop` in administrator terminal for windows
-- Intall `pyvista`
-#### POtential
+- Intall `pyvista` pip install
+#### Potential
 Might try again to fix plotting behaviour and maybe add a modern python c compiler
 FUTURIZE with:
 futurize -0 -w Spearmint

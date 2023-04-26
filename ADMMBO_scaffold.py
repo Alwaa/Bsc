@@ -10,13 +10,13 @@ import copy
 import warnings #For the non converging lnsrch
 
 DEFAULT_OPTIONS = {
-    "K"         :15,
+    "K"         : 15,
     "rho"       : 1, #orig. 0.1
-    "epsilon"       : 1e-6, 
-    "alpha"         :5,
-    "beta"         :5,
-    "alpha0"         :10, #orig. 20
-    "beta0"         :10, #orig. 20
+    "epsilon"   : 1e-6, 
+    "alpha"     : 5,
+    "beta"      : 5,
+    "alpha0"    : 10, #orig. 20
+    "beta0"     : 10, #orig. 20
 }
 AVAILABLE_OPTIONS = list(DEFAULT_OPTIONS.keys())
 
@@ -292,7 +292,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
 
     return x,z,gpr,gpcs, gp_logger, rho_list
 
-def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False, start_all = True): #TODO: implement default max_iter to budjet
+def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False, start_all = True):
     #################################
     # For setting the type of grid to use for solving the problem (discreticing space, and then 
     # selectin a less fine grid for less GP calculations)
@@ -310,7 +310,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
         raise Exception("Not yet Implemented non-square bounds")
 
     costf = problem["Cost Function (x)"]
-    constraintf = problem["Constraint Functions (z)"] #TODO: in code refactor for multiple problems
+    constraintf = problem["Constraint Functions (z)"]
 # --------------------- #
 
     extent_tuple = bounds #bounds are defined as (lb1,ub1,...,lb#,ub#)
@@ -324,14 +324,22 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     ff = con*func
     
     if not start_all: #Go through all points untill you have one of each constraint both upheld and violated...
+        found = False
         for i in range(2,len(x0)):
             cons_start = np.array([constraintf[c](x0[:i]) <= 0  for c in range(len(constraintf))])
             cons_per = np.sum(cons_start, axis = 1)
             more_than_none = np.all((0 < cons_per))
             less_than_all = np.all((i > cons_per))
-            if less_than_all and more_than_none:
+            one_fully = np.any((len(constraintf) == np.sum(cons_start, axis=0))) #TODO:Check that this ensures one is fully upheld
+            if less_than_all and more_than_none and one_fully:
                 x0 = x0[:i]
+                found = True
                 break
+        if not found and not debugging: #Return the initialization points if failed
+            print("ADMMBO monte carlo initialization did not find feasable strating point set")
+            fs_failed = costf(x0).reshape((-1,1))
+            obj_failed = np.concatenate((fs_failed,cons_start),axis=1)
+            return x0, obj_failed, np.full(x0.shape, True)
     
     K_in = (max_iter-len(x0))//4 #50 #example0 K = 30
     K_in = max(K_in, 2) #At least 2 iterationis (Would be very unlucky for it to fire)
