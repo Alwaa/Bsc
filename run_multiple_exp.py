@@ -34,6 +34,9 @@ alg_res = {
             "admmbo": []
 }
 
+admmbo_opts = {"":{},
+               }
+
 s_time = time()
 for e_num in range(num_trials):
     x0s = monte_carlo_sampling(problem, num = max_iter, seed = 14 + e_num)
@@ -42,12 +45,14 @@ for e_num in range(num_trials):
     if "pesc" in alg_res.keys():
         pesc_run_experiment(name, max_iter=120)
         alg_res["pesc"].append(pesc_main(name))
-    if "admmbo" in alg_res.keys():
-        alg_res["admmbo"].append(admmbo_run(problem, x0s, start_all = False, max_iter=max_iter))
     if "cma" in alg_res.keys():
         alg_res["cma"].append(cma_es(problem, x0, max_iter = max_iter*2))
     if "cobyla" in alg_res.keys():
         alg_res["cobyla"].append(multi_cobyla(problem, x0s, maxiter_total=max_iter*2))
+    if "admmbo" in alg_res.keys():
+        for name_addon, opt_dict in admmbo_opts.items():
+            alg_res["admmbo" + name_addon].append(admmbo_run(problem, x0s, start_all = False, 
+                                                             max_iter=max_iter, admmbo_pars=opt_dict))
     
     mins, _ = divmod(time() - s_time, 60)
     hours, mins = divmod(mins, 60)
