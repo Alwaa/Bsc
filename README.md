@@ -43,8 +43,6 @@ IN <MONGODB_PATH>\bin
 AFTER ADDET TO PATH
 AS ADMINISTRATOR
 
-in C:
-
 OWN COMPUTER: D:\mongodb\bin>mongod --remove
 
 OR: .\ if not in path...
@@ -53,6 +51,8 @@ then:
 `net start MongoDB`
 
 MAKE: \comparisson_algs\PESC_folders\dbfolder
+
+(Could not work on lapto, will try to remove everything in dbfolder and try the isntall again)
 
 PESC env works with c code commeted out in the kernel_utils file of the PESC Spearmint files
 
@@ -64,7 +64,7 @@ PESC env works with c code commeted out in the kernel_utils file of the PESC Spe
 
 ### Simnibs
 - Follow download instruction from ...
-- download the simnibs_charm branch instead, then conda install the env
+- download the simnibs_charm branch instead, then conda install the env `conda env create -f environment_win.yml -n simnibs`
 - Run the `python setup.py develop` in administrator terminal for windows
 - Intall `pyvista` pip install
 #### Potential

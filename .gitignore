@@ -4,6 +4,8 @@ Experiments/*
 outcmaes/
 plot_files/
 **/PESC_folders/**
+**/log.txt
+logfolder/
 # Spearming ignores
 *.pyc
 *.log
