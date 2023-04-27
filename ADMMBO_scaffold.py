@@ -338,7 +338,8 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
         if not found and not debugging: #Return the initialization points if failed
             print("ADMMBO monte carlo initialization did not find feasable strating point set")
             fs_failed = costf(x0).reshape((-1,1))
-            obj_failed = np.concatenate((fs_failed,cons_start),axis=1)
+            cons_failed = np.array([constraintf[c](x0)  for c in range(len(constraintf))]).reshape((-1,1))
+            obj_failed = np.concatenate((fs_failed,cons_failed),axis=1)
             return x0, obj_failed, np.full(x0.shape, True)
     
     K_in = (max_iter-len(x0))//4 #50 #example0 K = 30
