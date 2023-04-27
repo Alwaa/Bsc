@@ -9,7 +9,6 @@ Project in Constrained Bayesian Optimization
 - Lock versions of env file when starting results
 
 # DONE? (Check)
-- costf and constraintf not same behaviour with single input
 
 conda update -n base -c defaults conda
 
@@ -35,16 +34,25 @@ conda env update --file env.yml  --prune
 
 
 ## For PESC
-Add mongoDB ver 2.smth from archive in website
-I Installed it on Parent of Bsc directory for simplicity
+Add mongoDB ver 2.6.12 from archive in website (https://www.mongodb.com/download-center/community/releases/archive)
+I installed it on Parent of Bsc directory for simplicity
+
+https://stackoverflow.com/questions/2404742/how-to-install-mongodb-on-windows
 
 IN <MONGODB_PATH>\bin
 AFTER ADDET TO PATH
 AS ADMINISTRATOR
 
-D:\mongodb\bin>mongod --remove
+in C:
 
-mongod --dbpath=<PATH TO REP>\Bsc\comparisson_algs\PESC_folders\dbfolder --logpath=<PATH TO REP>\Bsc\comparisson_algs\PESC_folders\logfolder\log.txt --install
+OWN COMPUTER: D:\mongodb\bin>mongod --remove
+
+OR: .\ if not in path...
+`mongod --dbpath=<PATH TO REP>\Bsc\comparisson_algs\PESC_folders\dbfolder --logpath=<PATH TO REP>\Bsc\comparisson_algs\PESC_folders\logfolder\log.txt --install`
+then:
+`net start MongoDB`
+
+MAKE: \comparisson_algs\PESC_folders\dbfolder
 
 PESC env works with c code commeted out in the kernel_utils file of the PESC Spearmint files
 
