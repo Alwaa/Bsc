@@ -7,7 +7,7 @@
 import subprocess
 import numpy as np
 boundtype_coil = "different"
-bounds_coil = 0
+bounds_coil = (-25, 25, -25, 25, -25, 25, -20, 20, -50, 50, -50, 50)
 
 # Cost function
 def cost_coil(x):
@@ -78,5 +78,6 @@ if __name__ == "__main__":
     cost_time = time()
     print(1-constraint1_coil(tst))
     constr_time = time()
-    print(int(cost_time - start_t), int(constr_time-cost_time))
+    print(int(cost_time - start_t), int(constr_time-cost_time)) #TODO: Check if I can save time by loading just one func at a time
+
     

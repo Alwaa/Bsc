@@ -33,5 +33,4 @@ if __name__ == "__main__":
     tup_in = np.array([float(e) for e in elements])
     
     #cost_fun = tcd_utils.get_costf(coil, skin, affine)
-    #print(constr_func(tup_in))
     print(cost_func((tup_in)))

@@ -34,6 +34,7 @@ affine[2,2]=-1
 
 constr_func, cost_func = tcd_utils.get_costs_sep(coil, skin, affine)
 
+print(tcd_utils.print_bounds(coil))
 print(constr_func((0,0,0,0,0,0)))
 print(cost_func((0,0,0,0,0,0)))
 print(constr_func((-10., -26.7, -10.,    0.,    0.,  -25.1)))
