@@ -1,5 +1,10 @@
 Experiments/*
 !Experiments #TODO: Want an empty Experiments folder in repo
+#
+simhack/*
+!**/coil_cost.py
+!**/coil_constraint.py
+!**/H1_cost_fun.py
 #Spearmint/*
 outcmaes/
 plot_files/

@@ -3,35 +3,57 @@
 # EXAMPLE FORMAT
 #################################
 # Bounds and such
-boundtype_coil = "different"
-bounds_coil = =
+
 import subprocess
+import numpy as np
+boundtype_coil = "different"
+bounds_coil = 0
 
 # Cost function
 def cost_coil(x):
+    if len(np.shape(x)) == 1:
+        xx = np.array([x])
+    else:
+        xx = x
     #Call subprocess for easier impl with pesc?
-    string_out = ??? 
-    out_pros_result = subprocess.run(["conda", "run", "-n", "simnibs", "python", 
-                               ".\cost_coil", string_out],shell = True, capture_output=True)
-    
-    f = ###
+    sampl_num =len(xx)
+    out = np.full(sampl_num,0.)
+    for i in range(sampl_num):
+        xi = xx[i]
+        vals = []
+        for val in xi:
+            vals.append(str(val))
+        string_out = "[" + ",".join(vals) + "]" 
+        out_result = subprocess.check_output(["conda", "run", "-n", "simnibs", "python", 
+                                "simhack\coil_cost.py", string_out])
+        out[i] = float(out_result.split(sep=b"\r\r\n")[0])
+    f = out
     
     return f
 
-"""
-string_out = "["
-for v in xx:
-    string_out += str(v) + ","
-    
-"""
 
 # Constraint function
 def constraint1_coil(x):
     
+    if len(np.shape(x)) == 1:
+        xx = np.array([x])
+    else:
+        xx = x
     #Call subprocess for easier impl with pesc?
-    out_pros_result = subprocess.run(["conda", "run", "-n", "simnibs", "python", 
-                               ".\cost_coil"],shell = True, capture_output=True)
-    c = ###
+    sampl_num =len(xx)
+    out = np.full(sampl_num,0.)
+    for i in range(sampl_num):
+        xi = xx[i]
+        vals = []
+        for val in xi:
+            vals.append(str(val))
+        string_out = "[" + ",".join(vals) + "]" 
+        out_result = subprocess.check_output(["conda", "run", "-n", "simnibs", "python", 
+                                "simhack\coil_constraint.py", string_out])
+        out[i] = (out_result.split(sep=b"\r\r\n")[0] == b'True') ## Should prob do it better
+
+    c = out
+
     return c <= 0
 
     
@@ -43,3 +65,18 @@ NAME = {"Bound Type" : boundtype_coil,
             "Bounds" : bounds_coil,
             "Cost Function (x)":  lambda x: cost_coil(x),
             "Constraint Functions (z)": constraint_list_coil}
+
+if __name__ == "__main__":
+    from time import time
+    tst = np.array([[0.,    0.,    0.,     0.,    0.,     0.],
+                    [-10., -26.7, -10.,    0.,    0.,  -25.1],
+                    [-10., -26.7, -10.,    0.,    0.,  -47.3],])
+
+    print(tst)
+    start_t = time()
+    print(cost_coil(tst))
+    cost_time = time()
+    print(1-constraint1_coil(tst))
+    constr_time = time()
+    print(int(cost_time - start_t), int(constr_time-cost_time))
+    
