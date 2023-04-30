@@ -61,7 +61,7 @@ constraint_list_coil = [
     lambda z: 1 - constraint1_coil(z),
     ]
 
-NAME = {"Bound Type" : boundtype_coil,
+coil = {"Bound Type" : boundtype_coil,
             "Bounds" : bounds_coil,
             "Cost Function (x)":  lambda x: cost_coil(x),
             "Constraint Functions (z)": constraint_list_coil}

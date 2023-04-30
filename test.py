@@ -25,9 +25,9 @@ x0s = monte_carlo_sampling(problem, num = 100, seed = 12) #np.array([[1.5,4.5],[
 x0 = x0s[0]
 
 alg_res = [
-    #multi_cobyla(problem, x0s),
+    multi_cobyla(problem, x0s),
     #pesc_main(name = name),
-    #cma_es(problem, x0),
+    cma_es(problem, x0),
     admmbo_run(problem, x0s, start_all = False)
 ]
 if xs != None:

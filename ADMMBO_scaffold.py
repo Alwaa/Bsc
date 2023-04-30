@@ -387,7 +387,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
         return xs_out, obj_out, eval_type
     
     ### Debugging ###
-    
+    #TODO: FIx debugging now that it isnt xin but xins eh xin = xins[0] for sq bounds or smth
     import matplotlib.pyplot as plt
     
     #print(xsc.shape, cc.shape)
