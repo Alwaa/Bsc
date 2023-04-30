@@ -8,9 +8,14 @@ from opt_problems.paper_problems import gardner1, gardner2, gramacy, lamwillcox3
 from opt_problems.example_problems import example0
 from opt_problems.coil import coil
 
-exclude = ["admmbo00","admmbo01"]
+exclude = [] #["admmbo00","admmbo01"]
 e_folder = fol("coil-test", 0)
 problem = coil
+
+"""
+e_folder = fol("lw3-all", 0)
+problem = lamwillcox3   
+"""
 
 print(e_folder)
 

@@ -26,7 +26,7 @@ problem = coil #gardner1 #lamwillcox3 #gramacy
 name = "coil-test" #For PESC
 
 max_iter = 120 #PESC and ADMMBO double for cma and cobyla
-#pesc_create_problem(gramacy, name, decoupled=True, max_iter = max_iter)
+pesc_create_problem(problem, name, decoupled=True, max_iter = max_iter)
 
 alg_res = { 
             "cobyla":[],
@@ -47,9 +47,9 @@ for e_num in range(num_trials):
         pesc_run_experiment(name, max_iter=120)
         alg_res["pesc"].append(pesc_main(name))
     if "cma" in alg_res.keys():
-        alg_res["cma"].append(cma_es(problem, x0, max_iter = max_iter*2))
+        alg_res["cma"].append(cma_es(problem, x0, max_iter = max_iter))
     if "cobyla" in alg_res.keys():
-        alg_res["cobyla"].append(multi_cobyla(problem, x0s, maxiter_total=max_iter*2))
+        alg_res["cobyla"].append(multi_cobyla(problem, x0s, maxiter_total=max_iter))
     if "admmbo" in alg_res.keys():
         for name_addon, opt_dict in admmbo_opts.items():
             alg_res["admmbo" + name_addon].append(admmbo_run(problem, x0s, start_all = False, 
