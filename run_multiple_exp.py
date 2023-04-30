@@ -26,7 +26,7 @@ problem = coil #gardner1 #lamwillcox3 #gramacy
 name = "coil-test" #For PESC
 
 max_iter = 120 #PESC and ADMMBO double for cma and cobyla
-pesc_create_problem(problem, name, decoupled=True, max_iter = max_iter)
+#pesc_create_problem(problem, name, decoupled=True, max_iter = max_iter)
 
 alg_res = { 
             "cobyla":[],
