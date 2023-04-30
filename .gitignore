@@ -6,6 +6,7 @@ simhack/*
 !**/coil_constraint.py
 !**/H1_cost_fun.py
 !**/tcd_utils.py
+!**/prob_coil.py
 #Spearmint/*
 outcmaes/
 plot_files/

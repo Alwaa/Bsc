@@ -51,7 +51,7 @@ def cma_es(problem, x0, max_iter = 120):
         pass
     else:
         #print("find_feasible took {} iterations".format(es.countiter - c))
-        #TODO:Add padding of points equivalent to new points sampled and then add the feasable point
+        #?DONE line 78-80? TODO:Add padding of points equivalent to new points sampled and then add the feasable point
         #print("\n-------\n", x)
         #constraints(x)  # is now <= 0
         #### ------------------------------ #####
@@ -75,15 +75,18 @@ def cma_es(problem, x0, max_iter = 120):
         if False: #print options in prettier format (can input string for suboptions)
             for k,v in cma.CMAOptions().items():
                 print(k, v)
-        
-        own_logger_X.append(x)
+        feas_its = es.countiter - c
+        for _ in range(feas_its):
+            own_logger_X.append(x)
     x_out = np.array(own_logger_X)
     
     constr_out = np.array([constraintf[i](x_out) for i in range(len(constraintf))]).T
     objs_out = np.concatenate((costf(x_out).reshape(-1,1), constr_out),axis = 1)
     indiv_eval = []
+    print("CMA-DONE")
     return x_out, objs_out, indiv_eval
-    #### TODO: Clean up a bit
+
+
     
 if __name__ == "__main__":
     from opt_problems.paper_problems import gardner1

@@ -66,6 +66,7 @@ coil = {"Bound Type" : boundtype_coil,
             "Cost Function (x)":  lambda x: cost_coil(x),
             "Constraint Functions (z)": constraint_list_coil}
 
+
 if __name__ == "__main__":
     from time import time
     tst = np.array([[0.,    0.,    0.,     0.,    0.,     0.],

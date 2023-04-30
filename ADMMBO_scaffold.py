@@ -116,7 +116,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     def gpr_ei(x_in,zs,ys,rho,gpr,ubest):
         x=np.atleast_2d(x_in)
         x = np.nan_to_num(x, nan= bounds[0][1]) #TODO: Is there a problem with example0?
-        mu,std = gpr.predict(x, return_std=True)
+        mu,std = gpr.predict(x, return_std=True) #TODO:std returns 0? Causes divide by zero
         muu = mu + u_post_pluss(x,zs,ys,rho)
         #xx = (ubest-muu)/std #Original formulation
         xx = -(muu-ubest)/std #?Why negative here??
@@ -176,6 +176,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
             gpr.fit(np.concatenate((gpr.X_train_,x_eval),axis=0),
                     np.concatenate((gpr.y_train_,cost_eval),axis=0))
             
+            print(int(cost_eval),end = "|",flush=True)
             ## Logging for unified outuput
             xs_out.append(x_eval)
             arr_objs = np.full(N+1,0.)
@@ -298,12 +299,17 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     # selectin a less fine grid for less GP calculations)
     num_samples = 400 # in each dimension
     grid_step = 10
+    M = None
     #################################
 
 # Fetching problem info #
     bounds = problem["Bounds"]
     dim_num = len(bounds)//2
-    xins = (np.linspace(bounds[i*2], bounds[1+i*2], num_samples) for i in range(dim_num))
+    if dim_num > 3:
+        num_samples = 100
+        mem_saving = grid_step
+        M = 50
+    xins = (np.linspace(bounds[i*2], bounds[1+i*2], num_samples//mem_saving) for i in range(dim_num))
     #print(*xins)
     xy = np.array(np.meshgrid(*xins, indexing='ij')).reshape(dim_num, -1).T
     # print("XY",xy)
@@ -323,23 +329,32 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
 
     # For drawing bounds + true cost function
     # Bound area is then 0 in heatmap
-    func = costf(xy)
-    con = np.all(np.array([constraintf[i](xy) <= 0  for i in range(len(constraintf))]),
-            axis = 0) #Boolean constraints
-    ff = con*func
+    if M is None:
+        func = costf(xy)
+        con = np.all(np.array([constraintf[i](xy) <= 0  for i in range(len(constraintf))]),
+                axis = 0) #Boolean constraints
+        ff = con*func
+        M = np.max(ff) - np.min(ff) # They set it as the unconstrained range of f, while this is the constrained range
+                            # ADMMBO is (claimed) not sensitive to M in a wide range of values ref. sec. 5.7 (only to smaller values)
     
     if not start_all: #Go through all points untill you have one of each constraint both upheld and violated...
         found = False
-        for i in range(2,len(x0)):
-            cons_start = np.array([constraintf[c](x0[:i]) <= 0  for c in range(len(constraintf))])
+        cons_start = np.array([constraintf[c](x0[:1]) <= 0  for c in range(len(constraintf))])
+        for i in range(1,(len(x0)-1)):
+            print(i,end = "|", flush = True)
+            #OLDcons_start = np.array([constraintf[c](x0[:i]) <= 0  for c in range(len(constraintf))])
+            cons_add = np.array([constraintf[c](x0[i]) <= 0  for c in range(len(constraintf))]) #Saving on evaluations...
+            cons_start = np.concatenate((cons_start,cons_add), axis = 1)
+            #print(cons_start)
             cons_per = np.sum(cons_start, axis = 1)
             more_than_none = np.all((0 < cons_per))
             less_than_all = np.all((i > cons_per))
             one_fully = np.any((len(constraintf) == np.sum(cons_start, axis=0))) #TODO:Check that this ensures one is fully upheld
             if less_than_all and more_than_none and one_fully:
-                x0 = x0[:i]
+                x0 = x0[:(i+1)]
                 found = True
                 break
+        print("")
         if not found and not debugging: #Return the initialization points if failed
             print("ADMMBO monte carlo initialization did not find feasable strating point set")
             fs_failed = costf(x0).reshape((-1,1))
@@ -351,13 +366,10 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     K_in = max(K_in, 2) #At least 2 iterationis (Would be very unlucky for it to fire)
     #TODO:rewtite to caculate based on alpha and beta
 
-    #TODO: Try changing to either fixed value or func?
-    M = np.max(ff) - np.min(ff) # They set it as the unconstrained range of f, while this is the constrained range
-                         # ADMMBO is (claimed) not sensitive to M in a wide range of values ref. sec. 5.7 (only to smaller values)
-    
     # Grid with evry grid_step-th point of space
     # Should now behave well with non square inputs
     xins = (np.linspace(bounds[i*2], bounds[1+i*2], num_samples)[::grid_step] for i in range(dim_num))
+    #TODO: Check if it is same as //grid_step
     grid = np.array(np.meshgrid(*xins,indexing='ij')).reshape(dim_num,-1).T
 
     #Running ADMMBO 
