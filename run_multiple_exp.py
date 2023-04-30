@@ -14,15 +14,16 @@ from utils.storing import create_exp_folder, save_exps
 
 from opt_problems.paper_problems import gardner1, gardner2, gramacy, lamwillcox3
 from opt_problems.example_problems import example0
+from opt_problems.coil import coil
 
 warnings.filterwarnings('ignore')
 
-running_time = 12*60*60
+running_time = 4*60*60
 
 exp_name = "gard1-all"
-num_trials = 64
-problem = gardner1 #lamwillcox3 #gramacy
-name = "gard1-test" #For PESC
+num_trials = 5
+problem = coil #gardner1 #lamwillcox3 #gramacy
+name = "coil-test" #For PESC
 
 max_iter = 120 #PESC and ADMMBO double for cma and cobyla
 #pesc_create_problem(gramacy, name, decoupled=True, max_iter = max_iter)
@@ -30,7 +31,7 @@ max_iter = 120 #PESC and ADMMBO double for cma and cobyla
 alg_res = { 
             "cobyla":[],
             "cma":[],
-            "pesc":[],
+            #"pesc":[],
             "admmbo": []
 }
 

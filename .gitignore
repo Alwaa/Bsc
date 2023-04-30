@@ -1,9 +1,17 @@
 Experiments/*
 !Experiments #TODO: Want an empty Experiments folder in repo
+#
+simhack/*
+!**/coil_cost.py
+!**/coil_constraint.py
+!**/H1_cost_fun.py
+!**/tcd_utils.py
 #Spearmint/*
 outcmaes/
 plot_files/
 **/PESC_folders/**
+**/log.txt
+logfolder/
 # Spearming ignores
 *.pyc
 *.log

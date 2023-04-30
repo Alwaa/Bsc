@@ -21,10 +21,7 @@ def cma_es(problem, x0, max_iter = 120):
     def fun(x):
         return costf(x[None])[0]
 
-    #tolx = 0.01
-    if problem["Bound Type"] == "square":
-        bounds = [problem["Bounds"][0],problem["Bounds"][1]] #TODO: rewrite into general form
-    #print(bounds)
+    bounds = [problem["Bounds"][0::2],problem["Bounds"][1::2]] #I assume this works as per the documentation
     opts = {"bounds" : bounds, 
             "maxfevals" : max_iter}
 

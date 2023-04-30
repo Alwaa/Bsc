@@ -303,11 +303,16 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
 # Fetching problem info #
     bounds = problem["Bounds"]
     dim_num = len(bounds)//2
-    if problem["Bound Type"] == "square":
-        xin = np.linspace(bounds[0], bounds[1], num_samples)
-        xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(dim_num, -1).T
-    else:
-        raise Exception("Not yet Implemented non-square bounds")
+    xins = (np.linspace(bounds[i*2], bounds[1+i*2], num_samples) for i in range(dim_num))
+    #print(*xins)
+    xy = np.array(np.meshgrid(*xins, indexing='ij')).reshape(dim_num, -1).T
+    # print("XY",xy)
+    # if problem["Bound Type"] == "square":
+    #     xin = np.linspace(bounds[0], bounds[1], num_samples)
+    #     xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(dim_num, -1).T
+    #     print("xy",xy)
+    # else:
+    #     pass #Hope it works with multiple dimensions
 
     costf = problem["Cost Function (x)"]
     constraintf = problem["Constraint Functions (z)"]
@@ -351,7 +356,9 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
                          # ADMMBO is (claimed) not sensitive to M in a wide range of values ref. sec. 5.7 (only to smaller values)
     
     # Grid with evry grid_step-th point of space
-    grid = np.array(np.meshgrid(xin[::grid_step],xin[::grid_step],indexing='ij')).reshape(dim_num,-1).T
+    # Should now behave well with non square inputs
+    xins = (np.linspace(bounds[i*2], bounds[1+i*2], num_samples)[::grid_step] for i in range(dim_num))
+    grid = np.array(np.meshgrid(*xins,indexing='ij')).reshape(dim_num,-1).T
 
     #Running ADMMBO 
     options_in = {"K": K_in, "rho" : 1, "epsilon" : 1e-8,
@@ -381,7 +388,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
         return xs_out, obj_out, eval_type
     
     ### Debugging ###
-    
+    #TODO: FIx debugging now that it isnt xin but xins eh xin = xins[0] for sq bounds or smth
     import matplotlib.pyplot as plt
     
     #print(xsc.shape, cc.shape)

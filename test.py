@@ -17,17 +17,17 @@ xs, objs, indiv_evals = None, None, None
 
 
 problem = gardner1
-name = "gard1-test"
+name = "gard1-testing"
 pesc_create_problem(problem, name, decoupled=True)
-#pesc_run_experiment(name, max_iter=200)
+#pesc_run_experiment(name, max_iter=100)
 #
 x0s = monte_carlo_sampling(problem, num = 100, seed = 12) #np.array([[1.5,4.5],[1,2]])
 x0 = x0s[0]
 
 alg_res = [
-    #multi_cobyla(problem, x0s),
-    pesc_main(name = name),
-    #cma_es(problem, x0),
+    multi_cobyla(problem, x0s),
+    #pesc_main(name = name),
+    cma_es(problem, x0),
     admmbo_run(problem, x0s, start_all = False)
 ]
 if xs != None:
