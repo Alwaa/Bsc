@@ -239,7 +239,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
                 gpc.fit(np.concatenate((gpc.base_estimator_.X_train_,z_eval), axis=0),
                         np.concatenate((gpc.base_estimator_.y_train_,const_eval),axis=0))
                 
-                            
+                print(const_eval,end = "|",flush=True)            
                 ## Logging for unified outuput
                 xs_out.append(z_eval)
                 arr_objs = np.full(N+1,0.)
@@ -375,8 +375,9 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     #Running ADMMBO 
     options_in = {"K": K_in, "rho" : 1, "epsilon" : 1e-8,
                   "alpha": 2, "alpha0": 2, "beta": 2, "beta0": 2}
-    options_in = {"K": K_in, "rho" : 0.1, "epsilon" : 1e-8,
-                  "alpha": 20, "alpha0": 20, "beta": 4, "beta0": 4}
+    if max_iter > 200:
+        options_in = {"K": K_in, "rho" : 1, "epsilon" : 1e-8,
+                    "alpha": 4, "alpha0": 20, "beta": 8, "beta0": 40}
     xo,zo,gpr,gpc, gp_logger, rho_list, xs_out, obj_out, eval_type = admmbo(costf, constraintf, M, bounds_array, grid, x0, 
                                                                             options=options_in, format_return=True)
 
