@@ -3,6 +3,7 @@ import matplotlib.colors as mcolors
 import numpy as np
 from numpy.typing import NDArray
 import copy
+import os
 
 NUM_OF_OBJECTIVE_FUNCTIONS = 1 #Multi-objective optimization is not covered. One should conbine and weigh the multiple objectives into one in thoscases
 
@@ -125,112 +126,126 @@ def vizualize_toy_problem(problem, points_per_dim = 300):
 
 def expretiment_plot(   exps,
                         problem,
-                        single = False,
-                        title = "Comparisson plot"):
+                        e_folder,
+                        title = "Comparisson plot",
+                        override = False,
+                        name_from_to = {}):
     ## Fetching problem info ##
-    costf = problem["Cost Function (x)"]
-    constraintf = problem["Constraint Functions (z)"] #TODO: rewrite to multiple (s)
+    constraintf = problem["Constraint Functions (z)"]
     ## ---------------------- ##
     def check_validity(xx):
         cons_list = [constraintf[i](xx) <= 0 for i in range(len(constraintf))]
         cons = np.array(cons_list)#Boolean constraint #Upheld if over 0 ??
         return np.all(cons,axis=0)
     
-
+    p_fol = e_folder + "\plot_cache"
+    if not "plot_cache" in os.listdir(e_folder):
+        os.makedirs(p_fol)
     
-    if single:
-        comps = {"Algorithm": exp_list}
-    else:
-        comps = exps
+    comps = exps
     colors = list(mcolors.TABLEAU_COLORS)
     
     plot_num = 0
     for alg_name, exp_list in comps.items():
         num_exp = len(exp_list)
-        decoupled = not len(exp_list[0][2]) == 0
-        roll_min_list = []
-        max_roll_min_len = 0
-        plot_iters = []
-        for xs, objs, eval_type in exp_list:
-            if decoupled: 
-                assert eval_type.shape == objs.shape, "Eval type mask should batch one to one the obj"
-                assert NUM_OF_OBJECTIVE_FUNCTIONS == 1, "Not implemented"
-
-                o1mask = eval_type[:,0]
-                class_mask = np.any(eval_type[:,1:],axis=1)
-                xs_class = xs[class_mask]
-            else:
-                o1mask = np.full(len(xs),True)
-                xs_class = xs
-
-            xs_obj = xs[o1mask]
-            o1_vals = objs[:,0][o1mask]
-
-            #Objfunction rolling min
-            sampl_it = np.arange(len(o1_vals))
-            total_it = np.arange(len(xs))
-            o1_valid =  o1_vals[check_validity(xs_obj)]
-            valid_it = sampl_it[check_validity(xs_obj)]
-            tot_valid_it = total_it[
-                np.logical_and(check_validity(xs), o1mask)
-                                    ]
-            tot_roll_min = np.full(len(total_it), np.nan)
-            smpl_roll_min = np.full(len(sampl_it), np.nan)
-            # print(tot_valid_it,exp_list[0][2])
-
-            for it in range(len(o1_valid)):
-                tot_roll_min[tot_valid_it[it]] = o1_valid[it]
-
-            #Rolling min
-            roll_min_len = len(tot_roll_min)
-            for i in range(1,roll_min_len):
-                if tot_roll_min[i-1] < tot_roll_min[i] or np.isnan(tot_roll_min[i]):
-                    tot_roll_min[i] = tot_roll_min[i-1]
-
-            roll_min_list.append(tot_roll_min)
-            if max_roll_min_len < roll_min_len:
-                max_roll_min_len = roll_min_len
-                plot_iters = total_it
         
-        #Prob overkill and not needed
-        ## resizing to be same size on all runs ##
-        for i in range(len(roll_min_list)):
-            if len(roll_min_list[i]) < max_roll_min_len:
-                roll_min_list[i] = np.concatenate(
-                    (roll_min_list[i],np.full(max_roll_min_len - len(roll_min_list[i]) ,roll_min_list[i][-1])) #pad with last element instead of nan?
-                )
-            elif len(roll_min_list[i] > max_roll_min_len): 
-                roll_min_list[i] = copy.deepcopy(roll_min_list[i][:max_roll_min_len])
-        ## ------------------------------------  ##
+        file = p_fol + f"/{alg_name}.npz" #For saving and loading
+        if override or not os.path.exists(file):
+            decoupled = not len(exp_list[0][2]) == 0
+            roll_min_list = []
+            max_roll_min_len = 0
+            plot_iters = []
+            for xs, objs, eval_type in exp_list:
+                if decoupled: 
+                    assert eval_type.shape == objs.shape, "Eval type mask should batch one to one the obj"
+                    assert NUM_OF_OBJECTIVE_FUNCTIONS == 1, "Not implemented"
+
+                    o1mask = eval_type[:,0]
+                    class_mask = np.any(eval_type[:,1:],axis=1)
+                    xs_class = xs[class_mask]
+                else:
+                    o1mask = np.full(len(xs),True)
+                    xs_class = xs
+
+                xs_obj = xs[o1mask]
+                o1_vals = objs[:,0][o1mask]
+
+                #Objfunction rolling min
+                sampl_it = np.arange(len(o1_vals))
+                total_it = np.arange(len(xs))
+                o1_valid =  o1_vals[check_validity(xs_obj)]
+                valid_it = sampl_it[check_validity(xs_obj)]
+                tot_valid_it = total_it[
+                    np.logical_and(check_validity(xs), o1mask)
+                                        ]
+                tot_roll_min = np.full(len(total_it), np.nan)
+                smpl_roll_min = np.full(len(sampl_it), np.nan)
+                # print(tot_valid_it,exp_list[0][2])
+
+                for it in range(len(o1_valid)):
+                    tot_roll_min[tot_valid_it[it]] = o1_valid[it]
+
+                #Rolling min
+                roll_min_len = len(tot_roll_min)
+                for i in range(1,roll_min_len):
+                    if tot_roll_min[i-1] < tot_roll_min[i] or np.isnan(tot_roll_min[i]):
+                        tot_roll_min[i] = tot_roll_min[i-1]
+
+                roll_min_list.append(tot_roll_min)
+                if max_roll_min_len < roll_min_len:
+                    max_roll_min_len = roll_min_len
+                    plot_iters = total_it
+            
+            #Prob overkill and not needed
+            ## resizing to be same size on all runs ##
+            for i in range(len(roll_min_list)):
+                if len(roll_min_list[i]) < max_roll_min_len:
+                    roll_min_list[i] = np.concatenate(
+                        (roll_min_list[i],np.full(max_roll_min_len - len(roll_min_list[i]) ,roll_min_list[i][-1])) #pad with last element instead of nan?
+                    )
+                elif len(roll_min_list[i] > max_roll_min_len): 
+                    roll_min_list[i] = copy.deepcopy(roll_min_list[i][:max_roll_min_len])
+            ## ------------------------------------  ##
+            
+            #TODO: Investigate ficing last part of plot ticking up...
+            
+            if not decoupled:
+                plot_iters *= (1 + len(constraintf))
+            
+            arr_roll_mins = np.array(roll_min_list)
+            stds = np.nanstd(arr_roll_mins, axis=0)
+            means = np.nanmean(arr_roll_mins, axis=0)
+            
+
+            ## How many found feasbale ##
+            non_feasible = np.isnan(arr_roll_mins[:,-1])
+            tot_runs = len(non_feasible)
+            feasible = tot_runs - np.sum(non_feasible)
+            feas_prct = 100*feasible/tot_runs        
+            arr_feas = copy.deepcopy(arr_roll_mins)
+            arr_feas[np.logical_not(np.isnan(arr_roll_mins))] = 1
+            arr_feas[np.isnan(arr_roll_mins)] = 0        
+            feas_per_it = np.sum(arr_feas, axis = 0)/tot_runs
+            
+            print(f"{alg_name} found {feas_prct:.1f}% feasible ({feasible}/{tot_runs})")
+            ## ----------------------- ##
+            np.savez(file, pi = plot_iters, m = means, s = stds, f = feas_per_it)
         
-        #TODO: Investigate ficing last part of plot ticking up...
+        else:
+            data = np.load(file)
+            plot_iters, means, stds, feas_per_it = data["pi"], data["m"], data["s"], data["f"]
         
-        if not decoupled:
-            plot_iters *= (1 + len(constraintf))
+        ## Prettyfying names ##
+        for nfrom, nto in name_from_to.items():
+            alg_name = alg_name.replace(nfrom,nto)
         
-        arr_roll_mins = np.array(roll_min_list)
-        stds = np.nanstd(arr_roll_mins, axis=0)
-        means = np.nanmean(arr_roll_mins, axis=0)
         
+        #print(feas_per_it)
         plt.figure(1) #Not best practice!
         #plt.errorbar(plot_iters, means,yerr=stds)
         plt.plot(plot_iters,means, color = colors[plot_num], label = alg_name)
         plt.fill_between(plot_iters, means - stds, means + stds,
                     color=colors[plot_num], alpha=0.2)
-
-        ## How many found feasbale ##
-        non_feasible = np.isnan(arr_roll_mins[:,-1])
-        tot_runs = len(non_feasible)
-        feasible = tot_runs - np.sum(non_feasible)
-        feas_prct = 100*feasible/tot_runs
-        print(f"{alg_name} found {feas_prct:.1f}% feasible ({feasible}/{tot_runs})")
-        ## ----------------------- ##
-        
-        arr_feas = copy.deepcopy(arr_roll_mins)
-        arr_feas[np.logical_not(np.isnan(arr_roll_mins))] = 1
-        arr_feas[np.isnan(arr_roll_mins)] = 0        
-        feas_per_it = np.sum(arr_feas, axis = 0)/tot_runs
-        #print(feas_per_it)
         plt.figure(2) #Not best practice!
         plt.plot(plot_iters,feas_per_it, color = colors[plot_num], label = alg_name)
         ## ----------------------- ##
