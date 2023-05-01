@@ -6,8 +6,8 @@ import numpy as np
 # notebooks and the (messy) documentation used for reference
 
 
-#es.optimize(cma.ff.rosen)
-#es.result_pretty()
+
+
 
 def cma_es(problem, x0, max_iter = 120):
     own_logger_X = []
@@ -37,7 +37,7 @@ def cma_es(problem, x0, max_iter = 120):
         own_logger_fit.extend(fit) # I can get in the middle and log if i want
         cfun.update(es)
         es.logger.add()  # for later plotting
-        es.disp()
+        #es.disp()
     x = es.result.xfavorite  # the original x-value may be meaningless
     #print("\n-------\n", x)
     #print(constraints(x))  # show constraint violation values
@@ -51,30 +51,18 @@ def cma_es(problem, x0, max_iter = 120):
         pass
     else:
         #print("find_feasible took {} iterations".format(es.countiter - c))
-        #?DONE line 78-80? TODO:Add padding of points equivalent to new points sampled and then add the feasable point
-        #print("\n-------\n", x)
-        #constraints(x)  # is now <= 0
+        #?DONE line 67-69? TODO:Add padding of points equivalent to new points sampled and then add the feasable point
         #### ------------------------------ #####
 
         es.result_pretty()
 
-        # cma.plot()
-        # cma.s.figshow()
-        # plt.show(block=True) ## Stops VS Code from closing it
-
-        #cma.disp(None, np.r_[0:int(1e9):10, -1]) # every 10-th and last
-        #cma.disp(name = 'outcma/xrecentbest', idx = np.r_[0:int(1e9):10, -1])
-
-        # print("\n\n",x)
-        # print(fun(x),"\n\n")
-        # print(len(cfun.archives[1].archive))
-        
         # assume some data are available from previous runs
-        cma.disp(None, r_[0:int(1e9),-1])
+        #cma.disp(None, r_[0:int(1e9),-1])
+        
         #print(cma.CMAOptions("verb"))
-        if False: #print options in prettier format (can input string for suboptions)
-            for k,v in cma.CMAOptions().items():
-                print(k, v)
+        ## Print options in prettier format (can input string for suboptions)
+        # for k,v in cma.CMAOptions().items():
+        #     print(k, v)
         feas_its = es.countiter - c
         for _ in range(feas_its):
             own_logger_X.append(x)

@@ -58,7 +58,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     K2 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
         gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2))
     ### ---------------- ###
-    
+    minimize_opts = {'eps': 0.001, 'maxls': 100} #Can't find documentation for maxls
         
     S = False
     k = 0 # "k=1 (0 as first index)"
@@ -158,7 +158,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
             eif = lambda x_in: -gpr_ei(x_in,zs,ys,rho,gpr,ubest)
             with warnings.catch_warnings(record=True) as caught_warnings:
                 warnings.simplefilter("always")
-                opt = minimize(eif, x, bounds=bounds) # Minize negative expected improvement
+                opt = minimize(eif, x, bounds=bounds, options = minimize_opts) # Minize negative expected improvement
                 if not caught_warnings is None:
                     for warn in caught_warnings:
                         print(f"++++\nwarn: {warn.message}")
@@ -221,7 +221,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
                 ei[idx2] = hh[idx2] - theta[idx2]
                 with warnings.catch_warnings(record=True) as caught_warnings:
                     warnings.simplefilter("always")
-                    opt=minimize(eif,grid[np.argmax(ei)],bounds=bounds) #,options={ "maxiter" : 15000000}) #Sklearn minimize
+                    opt=minimize(eif,grid[np.argmax(ei)],bounds=bounds, options = minimize_opts) #,options={ "maxiter" : 15000000}) #Sklearn minimize
                     if not caught_warnings is None:
                         for warn in caught_warnings:
                             print(f"----\nwarn: {warn.message}")
@@ -299,7 +299,8 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     # selectin a less fine grid for less GP calculations)
     num_samples = 400 # in each dimension
     grid_step = 10
-    M = None
+    M = admmbo_pars.pop("M", None)
+    options_in = admmbo_pars
     #################################
 
 # Fetching problem info #
@@ -310,15 +311,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
         mem_saving = grid_step
         M = 10
     xins = (np.linspace(bounds[i*2], bounds[1+i*2], num_samples//mem_saving) for i in range(dim_num))
-    #print(*xins)
     xy = np.array(np.meshgrid(*xins, indexing='ij')).reshape(dim_num, -1).T
-    # print("XY",xy)
-    # if problem["Bound Type"] == "square":
-    #     xin = np.linspace(bounds[0], bounds[1], num_samples)
-    #     xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(dim_num, -1).T
-    #     print("xy",xy)
-    # else:
-    #     pass #Hope it works with multiple dimensions
 
     costf = problem["Cost Function (x)"]
     constraintf = problem["Constraint Functions (z)"]
@@ -373,11 +366,6 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     grid = np.array(np.meshgrid(*xins,indexing='ij')).reshape(dim_num,-1).T
 
     #Running ADMMBO 
-    options_in = {"K": K_in, "rho" : 1, "epsilon" : 1e-8,
-                  "alpha": 2, "alpha0": 2, "beta": 2, "beta0": 2}
-    if max_iter > 200:
-        options_in = {"K": K_in, "rho" : 1, "epsilon" : 1e-8,
-                    "alpha": 4, "alpha0": 20, "beta": 8, "beta0": 40}
     xo,zo,gpr,gpc, gp_logger, rho_list, xs_out, obj_out, eval_type = admmbo(costf, constraintf, M, bounds_array, grid, x0, 
                                                                             options=options_in, format_return=True)
 

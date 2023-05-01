@@ -277,7 +277,12 @@ def exploration_hist(exp_list):
         for xs, _,_  in exp_list:
             all_xs.append(xs)
         xplored = np.concatenate(all_xs, axis = 0)
-        col_number = xplored.shape[0]
+        col_number = xplored.shape[1]
+        plt.figure()
+
         for col in range(col_number):
-            plt.hist(xx[:,col], bins = 40)
+            plt.figure()
+            plt.hist(xplored[:,col], bins = 40, label=f"x{col}")
+            plt.title(f"Distribution of sampling")
+            plt.legend()
            

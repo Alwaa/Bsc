@@ -26,17 +26,20 @@ num_trials = 60
 problem = coil_pure #gardner1 #lamwillcox3 #gramacy
 name = "coil-test" #For PESC
 
-max_iter = 120*10 #PESC and ADMMBO double for cma and cobyla
+max_iter = 120*5 #PESC and ADMMBO double for cma and cobyla
 #pesc_create_problem(problem, name, decoupled=True, max_iter = max_iter)
 
 alg_res = { 
             #"cobyla":[],
-            #"cma":[],
+            "cma":[],
             #"pesc":[],
             "admmbo": []
 }
 
-admmbo_opts = {"":{},
+ops1 = {"M": 10, "rho" : 1, "epsilon" : 1e-8, "alpha": 2, "alpha0": 2, "beta": 2, "beta0": 2}
+ops2 = {"M": 50, "rho" : 0.1, "epsilon" : 1e-8, "alpha": 2, "alpha0": 4, "beta": 4, "beta0": 8}
+
+admmbo_opts = {"":ops2,
                }
 
 s_time = time()
