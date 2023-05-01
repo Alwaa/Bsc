@@ -6,9 +6,9 @@ import numpy as np
 #--------------------------------#
 # Bounds and such
 #--------------------------------#
-
+e = 0 #TODO. Investigate why lower corner gets plotted as feasable
 boundtype_gardner = "square"
-bounds_gardner = (0,6,0,6)
+bounds_gardner = (0+e,6-e,0+e,6-e)
 
 #################################
 # Simulation 1 (gardner1)
