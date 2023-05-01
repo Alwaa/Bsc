@@ -10,7 +10,7 @@ from opt_problems.coil import coil
 from simhack.prob_coil import coil_pure
 
 exclude = ["plot_cache"] #["admmbo00","admmbo01"]
-e_folder = fol("coil-test", 2)
+e_folder = fol("coil-testing", 0)
 problem = coil_pure
 
 

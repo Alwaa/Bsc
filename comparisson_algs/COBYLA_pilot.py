@@ -58,9 +58,10 @@ def multi_cobyla(problem, x0s, obj_tol= 0.1, maxiter_per = None, maxiter_total =
     it = 0
     budget_left = maxiter_total
     xs_list, objs_list = [], []
+    print("COBYLA: ", end = "", flush=True)
     while budget_left > 0 and it < len(x0s):        
         prct_done = 100*(1-(budget_left/maxiter_total))
-        print(f"COBYLA: {prct_done:.2f}%")
+        print(f"{prct_done:.2f}%|", end="", flush = True)
         xs_out, objs_out, indiv_eval = cobyla_run(problem,x0s[it], maxiter=budget_left, multi=True)
         it += 1
         budget_left -= len(xs_out)
