@@ -155,6 +155,7 @@ def expretiment_plot(   exps,
             roll_min_list = []
             max_roll_min_len = 0
             plot_iters = []
+            candidate_points, candidate_objs = [], []
             for xs, objs, eval_type in exp_list:
                 if decoupled: 
                     assert eval_type.shape == objs.shape, "Eval type mask should batch one to one the obj"
@@ -187,10 +188,15 @@ def expretiment_plot(   exps,
 
                 #Rolling min
                 roll_min_len = len(tot_roll_min)
+                a_m = np.argmax(o1_vals)
+                curr_min, cand_x = o1_vals[a_m], xs_obj[a_m]
                 for i in range(1,roll_min_len):
                     if tot_roll_min[i-1] < tot_roll_min[i] or np.isnan(tot_roll_min[i]):
                         tot_roll_min[i] = tot_roll_min[i-1]
+                    if tot_roll_min[i] < curr_min and not np.isnan(tot_roll_min[i]):
+                        cand_x, curr_min = xs[i], tot_roll_min[i]
 
+                candidate_points.append(cand_x);candidate_objs.append(curr_min)
                 roll_min_list.append(tot_roll_min)
                 if max_roll_min_len < roll_min_len:
                     max_roll_min_len = roll_min_len
@@ -229,7 +235,7 @@ def expretiment_plot(   exps,
             
             print(f"{alg_name} found {feas_prct:.1f}% feasible ({feasible}/{tot_runs})")
             ## ----------------------- ##
-            np.savez(file, pi = plot_iters, m = means, s = stds, f = feas_per_it)
+            np.savez(file, pi = plot_iters, m = means, s = stds, f = feas_per_it, xi = np.array(candidate_points), x_o = np.array(candidate_objs))
         
         else:
             data = np.load(file)
@@ -258,3 +264,20 @@ def expretiment_plot(   exps,
     plt.figure(2) #Not best practice!
     plt.title("Feasability Rercentage")
     plt.legend()
+
+def exploration_xs_plot(xx):
+    col_number = xx.shape[0]
+    
+    for col in range(col_number):
+        plt.figure()
+        plt.plot(xx[:,col], label = f"x{col}")
+
+def exploration_hist(exp_list):
+        all_xs = []
+        for xs, _,_  in exp_list:
+            all_xs.append(xs)
+        xplored = np.concatenate(all_xs, axis = 0)
+        col_number = xplored.shape[0]
+        for col in range(col_number):
+            plt.hist(xx[:,col], bins = 40)
+           
