@@ -19,14 +19,14 @@ from simhack.prob_coil import coil_pure
 
 warnings.filterwarnings('ignore')
 
-running_time = 4*60*60
+running_time = 16*60*60
 
-exp_name = "gard1-all"
-num_trials = 3
-problem = coil #gardner1 #lamwillcox3 #gramacy
+exp_name = "coil-test"
+num_trials = 60
+problem = coil_pure #gardner1 #lamwillcox3 #gramacy
 name = "coil-test" #For PESC
 
-max_iter = 120 #PESC and ADMMBO double for cma and cobyla
+max_iter = 120*10 #PESC and ADMMBO double for cma and cobyla
 #pesc_create_problem(problem, name, decoupled=True, max_iter = max_iter)
 
 alg_res = { 

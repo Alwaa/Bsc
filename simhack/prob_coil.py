@@ -3,15 +3,14 @@
 #################################
 # Bounds and such
 
-import subprocess
+
 import numpy as np
 boundtype_coil = "different"
 bounds_coil = (-25, 25, -25, 25, -25, 25, -20, 20, -50, 50, -50, 50)
 
 
-import tcd_utils
-from simnibs.mesh_tools import read_msh
-import sys
+import simhack.tcd_utils as tcd_utils
+from simhack.simnibs.mesh_tools import read_msh
 import numpy as np
 try:
     coil = tcd_utils.read_tcd('H1.tcd')
@@ -59,7 +58,7 @@ def constraint1_coil_pure(x):
     out = np.full(sampl_num,0.)
     for i in range(sampl_num):
         xi = xx[i]
-        out[i] = cost_func(xi)
+        out[i] = constr_func(xi)
 
     c = out
 

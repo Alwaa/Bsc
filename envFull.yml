@@ -23,7 +23,6 @@ dependencies:
   - nibabel=3.2.2
   - pyqt=5.9.2
   - mkl=2021.4.0
-  - sklearn
   - scikit-learn #Windows version alt?
   - matplotlib
   - pip:

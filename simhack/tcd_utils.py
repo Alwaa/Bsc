@@ -6,7 +6,10 @@ Created on Sat Jan 21 15:33:52 2023
 """
 import numpy as np
 import json
-from simnibs.simulation import coil_numpy
+try:
+    from simnibs.simulation import coil_numpy
+except:
+    from simhack.simnibs.simulation import coil_numpy    
 from scipy.spatial.transform import Rotation
 
 

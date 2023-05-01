@@ -8,7 +8,7 @@ NUM_OF_OBJECTIVE_FUNCTIONS = 1 #Multi-objective optimization is not covered. One
 
 def vizualize_toy(xs: NDArray[np.float64],
                   objs: NDArray[np.float64], #objective values
-                  eval_type: NDArray[np.bool8] | bool,
+                  eval_type: NDArray[np.bool8],
                   problem,
                   decoupled: bool = False):
     num_samples = 301

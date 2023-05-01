@@ -56,7 +56,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     gpr = gaussian_process.GaussianProcessRegressor(kernel=K1)
     
     K2 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
-        gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2)) #TODO: sjekk bound for corner behaviour
+        gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2))
     ### ---------------- ###
     
         
@@ -308,7 +308,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     if dim_num > 3:
         num_samples = 100
         mem_saving = grid_step
-        M = 50
+        M = 10
     xins = (np.linspace(bounds[i*2], bounds[1+i*2], num_samples//mem_saving) for i in range(dim_num))
     #print(*xins)
     xy = np.array(np.meshgrid(*xins, indexing='ij')).reshape(dim_num, -1).T
@@ -354,7 +354,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
                 x0 = x0[:(i+1)]
                 found = True
                 break
-        print("")
+        print("\n")
         if not found and not debugging: #Return the initialization points if failed
             print("ADMMBO monte carlo initialization did not find feasable strating point set")
             fs_failed = costf(x0).reshape((-1,1))
@@ -375,6 +375,8 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     #Running ADMMBO 
     options_in = {"K": K_in, "rho" : 1, "epsilon" : 1e-8,
                   "alpha": 2, "alpha0": 2, "beta": 2, "beta0": 2}
+    options_in = {"K": K_in, "rho" : 0.1, "epsilon" : 1e-8,
+                  "alpha": 20, "alpha0": 20, "beta": 4, "beta0": 4}
     xo,zo,gpr,gpc, gp_logger, rho_list, xs_out, obj_out, eval_type = admmbo(costf, constraintf, M, bounds_array, grid, x0, 
                                                                             options=options_in, format_return=True)
 
