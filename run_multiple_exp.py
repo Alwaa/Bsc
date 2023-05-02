@@ -21,7 +21,7 @@ warnings.filterwarnings('ignore')
 
 running_time = 16*60*60
 
-exp_name = "coil-testing"
+exp_name = "coil-tight"
 num_trials = 60
 problem = coil_pure #gardner1 #lamwillcox3 #gramacy
 name = "coil-test" #For PESC
@@ -36,11 +36,18 @@ alg_res = {
             "admmbo": []
 }
 
-ops1 = {"M": 10, "rho" : 1, "epsilon" : 1e-8, "alpha": 2, "alpha0": 2, "beta": 2, "beta0": 2}
-ops2 = {"M": 50, "rho" : 0.1, "epsilon" : 1e-8, "alpha": 2, "alpha0": 4, "beta": 2, "beta0": 8}
+ops1 = {"M": 10, 
+        "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":8}
+ops3 = {"adjust_rho": False, "M": 10, 
+        "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0": 8}
 
-admmbo_opts = {"":ops2,
+admmbo_opts = {
+    "":ops1,
+    "_rho-0.1":ops3,
                }
+if "admmbo" in alg_res.keys():
+    for name_addon in admmbo_opts.keys():
+        alg_res["admmbo" + name_addon] = []
 
 s_time = time()
 for e_num in range(num_trials):

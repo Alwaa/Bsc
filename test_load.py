@@ -10,7 +10,7 @@ from opt_problems.coil import coil
 from simhack.prob_coil import coil_pure
 
 exclude = ["plot_cache"] #["admmbo00","admmbo01"]
-e_folder = fol("coil-testing", 0)
+e_folder = fol("coil-tight", 0)
 problem = coil_pure
 
 
@@ -21,8 +21,9 @@ problem = lamwillcox3
 
 print(e_folder)
 
-name_from_to = {'admmbo':'ADMMBO', 'cma': 'CMA-ES', 'cobyla': 'COBYLA (Multiple)', 'pesc':'PESC',
-                '_M': ' M = '}
+name_from_to = {'admmbo':'ADMMBO','_': ' ', '-': "=", 'm':"M", 'rho': "Rho",
+                'cma': 'CMA-ES', 'cobyla': 'COBYLA (Multiple)', 'pesc':'PESC',
+                }
 
 alg_folders = os.listdir(e_folder)
 for excluded in exclude:
@@ -34,11 +35,11 @@ exps = {}
 for folder in alg_folders:
     exps[folder] = load_exp(folder,e_folder)
 
-first_alg = exps[alg_folders[0]]
-print(len(first_alg))
 expretiment_plot(exps,problem,e_folder,name_from_to=name_from_to)
 
-exploration_hist(first_alg)
+for name, exp_list in exps.items():
+    continue
+    exploration_hist(exp_list, name = name)
 
 plt.show()
 # a,b,c = exps["ADMMBO"][61]

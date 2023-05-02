@@ -67,7 +67,7 @@ def multi_cobyla(problem, x0s, obj_tol= 0.1, maxiter_per = None, maxiter_total =
         budget_left -= len(xs_out)
         xs_list.append(xs_out)
         objs_list.append(objs_out)
-        
+    print(" ")
     tot_xs = np.concatenate(xs_list, axis = 0)
     tot_objs = np.concatenate(objs_list, axis = 0)
     

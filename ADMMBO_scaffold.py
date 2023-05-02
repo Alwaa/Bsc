@@ -17,6 +17,7 @@ DEFAULT_OPTIONS = {
     "beta"      : 5,
     "alpha0"    : 10, #orig. 20
     "beta0"     : 10, #orig. 20
+    "adjust_rho" : True,
 }
 AVAILABLE_OPTIONS = list(DEFAULT_OPTIONS.keys())
 
@@ -36,6 +37,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
         _D[k] = v #New, unused value is assigned as of now if unvalid is inputted
     K, rho, epsilon = _D["K"], _D["rho"], _D["epsilon"]
     alpha, alpha0, beta, beta0 = _D["alpha"], _D["alpha0"],  _D["beta"], _D["beta0"]
+    adjust_rho = _D["adjust_rho"]
     ## -------------------------- ##
 
     ## For debugging
@@ -71,7 +73,6 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     gpcs = [gaussian_process.GaussianProcessClassifier(kernel=K2) for i in range(N)]
     
     ## rho adjusting parameters ## # TODO Investigate further into rho setting
-    adjust_rho = True
     #rho = 1 # IT WAS RHO #BUT still wierd that it hugs a bad corner
     tau = 2
     mup = 10
@@ -294,6 +295,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     return x,z,gpr,gpcs, gp_logger, rho_list
 
 def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False, start_all = True):
+    print("ADMMBO:")
     #################################
     # For setting the type of grid to use for solving the problem (discreticing space, and then 
     # selectin a less fine grid for less GP calculations)
@@ -307,7 +309,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     bounds = problem["Bounds"]
     dim_num = len(bounds)//2
     if dim_num > 3:
-        num_samples = 100
+        num_samples = 120
         mem_saving = grid_step
         M = 10
     xins = (np.linspace(bounds[i*2], bounds[1+i*2], num_samples//mem_saving) for i in range(dim_num))

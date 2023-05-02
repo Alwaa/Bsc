@@ -8,7 +8,8 @@ import subprocess
 import numpy as np
 boundtype_coil = "different"
 bounds_coil = (-25, 25, -25, 25, -25, 25, -20, 20, -50, 50, -50, 50)
-
+bounds_coil = (-25, 5, -25, 25, -25, 5, -10, 10, -50, -20, -10, 20) #tightened bounds
+#angl left || angl mid || angl righ || side || forward/back || up/down
 # Cost function
 def cost_coil(x):
     if len(np.shape(x)) == 1:

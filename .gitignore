@@ -7,6 +7,7 @@ simhack/*
 !**/H1_cost_fun.py
 !**/tcd_utils.py
 !**/prob_coil.py
+!**/viz.py
 #Spearmint/*
 outcmaes/
 plot_files/

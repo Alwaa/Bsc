@@ -154,7 +154,8 @@ def expretiment_plot(   exps,
                         e_folder,
                         title = "Comparisson plot",
                         override = False,
-                        name_from_to = {}):
+                        name_from_to = {},
+                        print_xs = False):
     ## Fetching problem info ##
     constraintf = problem["Constraint Functions (z)"]
     ## ---------------------- ##
@@ -260,11 +261,12 @@ def expretiment_plot(   exps,
             
             print(f"{alg_name} found {feas_prct:.1f}% feasible ({feasible}/{tot_runs})")
             ## ----------------------- ##
-            np.savez(file, pi = plot_iters, m = means, s = stds, f = feas_per_it, xi = np.array(candidate_points), x_o = np.array(candidate_objs))
-        
+            x_b, x_objs =  np.array(candidate_points),np.array(candidate_objs)
+            np.savez(file, pi = plot_iters, m = means, s = stds, f = feas_per_it, xi = x_b, x_o = x_objs)
         else:
             data = np.load(file)
             plot_iters, means, stds, feas_per_it = data["pi"], data["m"], data["s"], data["f"]
+            x_b, x_objs = data["xi"], data["x_o"]
         
         ## Prettyfying names ##
         for nfrom, nto in name_from_to.items():
@@ -282,6 +284,12 @@ def expretiment_plot(   exps,
         ## ----------------------- ##
         
         plot_num += 1
+        top10 = np.argsort(x_objs)[:10]
+        top10obj = x_objs[top10]
+        print("\n", alg_name, ":")
+        
+        for o_i, arr in enumerate(np.round(x_b[top10],decimals=2)):
+            print(list(arr), "\t"*2, top10obj[o_i])
     
     plt.figure(1) #Not best practice!
     plt.title(title)
@@ -297,17 +305,18 @@ def exploration_xs_plot(xx):
         plt.figure()
         plt.plot(xx[:,col], label = f"x{col}")
 
-def exploration_hist(exp_list):
+def exploration_hist(exp_list, name = "Algorithm"):
         all_xs = []
         for xs, _,_  in exp_list:
             all_xs.append(xs)
         xplored = np.concatenate(all_xs, axis = 0)
         col_number = xplored.shape[1]
-        plt.figure()
-
-        for col in range(col_number):
+        lables = [f"x{col}" for col in range(col_number)]
+        if col_number > 5:
+            start_end_list = [(i,min(i+3,col_number)) for i in range(0,col_number,3)]
+        for st, en in start_end_list:
             plt.figure()
-            plt.hist(xplored[:,col], bins = 40, label=f"x{col}")
-            plt.title(f"Distribution of sampling")
+            plt.hist(xplored[:,st:en], bins = 40, label=lables[st:en])
+            plt.title(f"Distribution of sampling of -{name}-")
             plt.legend()
            
