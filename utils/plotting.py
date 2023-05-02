@@ -120,16 +120,17 @@ def vizualize_toy_problem(problem, points_per_dim = 400):
                 axis = 0) #Boolean constraints
     ff = con*func
     
-    constr_i = np.argmin(ff)
+
+    constr_i = np.argmin(func[con])
     glbl_i = np.argmin(func)
-    constr_x, constr_obj = xy[constr_i], ff[constr_i]
+    constr_x, constr_obj = xy[con][constr_i], func[con][constr_i]
     glbl_x, glbl_obj = xy[glbl_i], func[glbl_i]
     
     plt.figure()
     plt.imshow(ff.reshape(len(xin),-1).T,extent=(bounds),origin='lower')
     plt.colorbar();plt.title('Constrained Cost Function')
     ## Aera lower than constrained optima
-    mask_better = np.logical_and(ff == 0, func <= constr_obj) 
+    mask_better = np.logical_and(np.logical_not(con), func <= constr_obj) 
     better_xs = xy[mask_better]
     plt.plot(better_xs[:,0],better_xs[:,1], 'mx', markersize = 50/points_per_dim)
     ## Optima
