@@ -103,20 +103,44 @@ def vizualize_toy(xs: NDArray[np.float64],
     # Needed for VScode
     plt.show()
 
-def vizualize_toy_problem(problem, points_per_dim = 300):
+def vizualize_toy_problem(problem, points_per_dim = 400):
+    costf = problem["Cost Function (x)"]
+    constraintf = problem["Constraint Functions (z)"]
+    bounds = problem["Bounds"]
+    
     xin = np.linspace(bounds[0], bounds[1], points_per_dim)
     if problem["Bound Type"] == "square":
         xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(2, -1).T
     else:
-        raise Exception("Not yet Implemented non-square bounds")
+        raise Exception("Not vizualizing Non-square or higher dim. problems")
+    #could make into per 2 axis plots
+
+    func = costf(xy)
+    con = np.all(np.array([constraintf[i](xy) <= 0  for i in range(len(constraintf))]),
+                axis = 0) #Boolean constraints
+    ff = con*func
     
-    bounds = problem["Bounds"]
-    ubs = bounds[1::2]
-    lbs = bounds[0::2]
+    constr_i = np.argmin(ff)
+    glbl_i = np.argmin(func)
+    constr_x, constr_obj = xy[constr_i], ff[constr_i]
+    glbl_x, glbl_obj = xy[glbl_i], func[glbl_i]
     
-    xins = [np.linspace(lbs[i],ubs[i],points_per_dim) for i in range(len(ubs))] #TODO: Make into per 2 axis plots
+    plt.figure()
+    plt.imshow(ff.reshape(len(xin),-1).T,extent=(bounds),origin='lower')
+    plt.colorbar();plt.title('Constrained Cost Function')
+    ## Aera lower than constrained optima
+    mask_better = np.logical_and(ff == 0, func <= constr_obj) 
+    better_xs = xy[mask_better]
+    plt.plot(better_xs[:,0],better_xs[:,1], 'mx', markersize = 50/points_per_dim)
+    ## Optima
+    plt.plot(glbl_x[0], glbl_x[1], 'b*')
+    plt.text(glbl_x[0], glbl_x[1], f"{glbl_obj:.1f}")
+    plt.plot(constr_x[0], constr_x[1], 'r*')
+    plt.text(constr_x[0], constr_x[1], f"{constr_obj:.1f}")
+
     
-    ##insert original code-ish here
+    # Needed for VScode
+    plt.show()
     
     #TODO: Add global and (maybe) local (maybe) optima to plot. Both constrained and unconstrained
 
