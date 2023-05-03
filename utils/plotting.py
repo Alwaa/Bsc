@@ -200,13 +200,14 @@ def expretiment_plot(   exps,
                 #Objfunction rolling min
                 sampl_it = np.arange(len(o1_vals))
                 total_it = np.arange(len(xs))
-                o1_valid =  o1_vals[check_validity(xs_obj)]
-                valid_it = sampl_it[check_validity(xs_obj)]
-                tot_valid_it = total_it[
-                    np.logical_and(check_validity(xs), o1mask)
-                                        ]
+                valid_objxs_mask = check_validity(xs_obj)
+                o1_valid =  o1_vals[valid_objxs_mask]
+                xs_obj_valid = xs_obj[valid_objxs_mask]
+                #valid_it = sampl_it[check_validity(xs_obj)]
+                valid_totxs_mask = check_validity(xs)
+                tot_valid_it = total_it[o1mask][valid_objxs_mask] #total_it[np.logical_and(check_validity(xs), o1mask)]
                 tot_roll_min = np.full(len(total_it), np.nan)
-                smpl_roll_min = np.full(len(sampl_it), np.nan)
+                #smpl_roll_min = np.full(len(sampl_it), np.nan)
                 # print(tot_valid_it,exp_list[0][2])
 
                 for it in range(len(o1_valid)):
@@ -214,13 +215,17 @@ def expretiment_plot(   exps,
 
                 #Rolling min
                 roll_min_len = len(tot_roll_min)
-                a_m = np.argmax(o1_vals)
-                curr_min, cand_x = o1_vals[a_m], xs_obj[a_m]
+                if len(o1_valid) > 0:
+                    a_m = np.argmax(o1_valid)
+                    curr_min, cand_x = o1_valid[a_m], xs_obj_valid[a_m]
+                assert np.all(check_validity(xs_obj_valid)), "fuck"
                 for i in range(1,roll_min_len):
                     if tot_roll_min[i-1] < tot_roll_min[i] or np.isnan(tot_roll_min[i]):
                         tot_roll_min[i] = tot_roll_min[i-1]
-                    if tot_roll_min[i] < curr_min and not np.isnan(tot_roll_min[i]):
-                        cand_x, curr_min = xs[i], tot_roll_min[i]
+                    if tot_roll_min[i-1] < curr_min and not np.isnan(tot_roll_min[i-1]):
+                        cand_x, curr_min = xs[i-1], tot_roll_min[i-1]
+                        if not cand_x in xs_obj_valid:
+                            print("|", end = "-", flush = True)
 
                 candidate_points.append(cand_x);candidate_objs.append(curr_min)
                 roll_min_list.append(tot_roll_min)
@@ -289,7 +294,7 @@ def expretiment_plot(   exps,
         print("\n", alg_name, ":")
         
         for o_i, arr in enumerate(np.round(x_b[top10],decimals=2)):
-            print(list(arr), "\t"*2, top10obj[o_i])
+            print(list(arr), "\t"*2, top10obj[o_i], "\t"*2, check_validity(arr))
     
     plt.figure(1) #Not best practice!
     plt.title(title)

@@ -35,7 +35,7 @@ exps = {}
 for folder in alg_folders:
     exps[folder] = load_exp(folder,e_folder)
 
-expretiment_plot(exps,problem,e_folder,name_from_to=name_from_to)
+expretiment_plot(exps,problem,e_folder,name_from_to=name_from_to, override=True)
 
 for name, exp_list in exps.items():
     continue
