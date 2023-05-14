@@ -21,10 +21,10 @@ warnings.filterwarnings('ignore')
 
 running_time = 13*60*60
 
-exp_name = "rho-gard1"
+exp_name = "rho-gard2"
 num_trials = 60
-problem = gardner1 #gardner1 #lamwillcox3 #gramacy
-name = "gard1" #"coil-test" #For PESC
+problem = gardner2 #gardner1 #lamwillcox3 #gramacy
+name = "gard2" #"coil-test" #For PESC
 
 max_iter = 120 #PESC and ADMMBO 
 divisor_iter = 2 #Half for cma and cobyla since they are coupled

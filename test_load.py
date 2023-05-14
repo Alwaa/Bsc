@@ -33,12 +33,12 @@ for excluded in exclude:
 exps = {}
 
 ## Selecting algs by indx (optional) ##
-alg_folders = alg_folders[5:10] + alg_folders[-3:]
+alg_folders = alg_folders[6:10] + alg_folders[-3:]
 ## -------------------------------   ##
 for folder in alg_folders:
     exps[folder] = load_exp(folder,e_folder)
 
-expretiment_plot(exps,problem,e_folder,name_from_to=name_from_to, override=False)
+expretiment_plot(exps,problem,e_folder,name_from_to=name_from_to, override=True)
 
 for name, exp_list in exps.items():
     continue

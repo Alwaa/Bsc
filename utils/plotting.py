@@ -140,11 +140,11 @@ def vizualize_toy_problem(problem, points_per_dim = 400):
     plt.plot(constr_x[0], constr_x[1], 'r*')
     plt.text(constr_x[0], constr_x[1], f"{constr_obj:.1f}")
 
-    
+    print(f"Best Value: {constr_obj}")
     # Needed for VScode
     plt.show()
     
-    #TODO: Add global and (maybe) local (maybe) optima to plot. Both constrained and unconstrained
+    #Coould (maybe) add local (maybe) optima to plot. Both constrained and unconstrained
 
     
     pass
@@ -159,6 +159,7 @@ def expretiment_plot(   exps,
                         print_xs = False):
     ## Fetching problem info ##
     constraintf = problem["Constraint Functions (z)"]
+    best_value = problem.get("Best Value", None)
     ## ---------------------- ##
     def check_validity(xx):
         cons_list = [constraintf[i](xx) <= 0 for i in range(len(constraintf))]
@@ -261,6 +262,9 @@ def expretiment_plot(   exps,
             stds = np.nanstd(arr_roll_mins, axis=0)
             means = np.nanmean(arr_roll_mins, axis=0)
             
+            uq = np.nanquantile(arr_roll_mins, 0.9, axis=0)
+            lq = np.nanquantile(arr_roll_mins, 0.1, axis=0)
+            
 
             ## How many found feasbale ##
             non_feasible = np.isnan(arr_roll_mins[:,-1])
@@ -275,11 +279,13 @@ def expretiment_plot(   exps,
             print(f"{alg_name} found {feas_prct:.1f}% feasible ({feasible}/{tot_runs})")
             ## ----------------------- ##
             x_b, x_objs =  np.array(candidate_points),np.array(candidate_objs)
-            np.savez(file, pi = plot_iters, m = means, s = stds, f = feas_per_it, xi = x_b, x_o = x_objs)
+            np.savez(file, pi = plot_iters, m = means, s = stds, uq = uq, lq = lq,
+                     f = feas_per_it, xi = x_b, x_o = x_objs)
         else:
             data = np.load(file)
             plot_iters, means, stds, feas_per_it = data["pi"], data["m"], data["s"], data["f"]
             x_b, x_objs = data["xi"], data["x_o"]
+            uq, lq, = data.get("uq", None), data.get("ul", None)
         
         ## Prettyfying names ##
         for nfrom, nto in name_from_to.items():
@@ -294,8 +300,12 @@ def expretiment_plot(   exps,
         else:
             curr_color  = colors[plot_num]
         plt.plot(plot_iters,means, color = curr_color, label = alg_name)
-        plt.fill_between(plot_iters, means - stds, means + stds,
-                    color= curr_color, alpha=0.2)
+        if lq is None:
+            plt.fill_between(plot_iters, means - stds, means + stds,
+                        color= curr_color, alpha=0.2)
+        else:
+            plt.fill_between(plot_iters, lq, uq,
+                        color= curr_color, alpha=0.2)
         plt.figure(2) #Not best practice!
         plt.plot(plot_iters,feas_per_it, color = curr_color, label = alg_name)
         ## ----------------------- ##
@@ -320,16 +330,22 @@ def expretiment_plot(   exps,
     dfd = {}
     l = alg_run_lengs_min
     for name,mean in point_comps.items():
-        dfd[name] = [mean[int(l*0.4)],mean[l-1]]
+        dfd[name] = [mean[int(l*0.4)],mean[l-1]] #Could also add feasability...
     col_names = [f"40% ({int(l*0.4)})", f"100% ({int(l-1)})"]
     df = pd.DataFrame(data=dfd).T
     df.columns = col_names
-    print(df.sort_values(col_names[0]), "\n\n")
-    print(df.sort_values(col_names[1]))
+    print("40% Sort\n",df.sort_values(col_names[0]), "\n\n")
+    print("100% Sort\n",df.sort_values(col_names[1]))
+    
+    if lq is None:
+        title += " (st.d)"
     
     plt.figure(1) #Not best practice!
     plt.title(title)
     plt.legend()
+    if not best_value is None:
+        plt.axhline(y = best_value, color = 'k', linestyle = '--')
+    
     plt.figure(2) #Not best practice!
     plt.title("Feasability Rercentage")
     plt.legend()

@@ -41,7 +41,8 @@ def constraint_gardner1(x):
 gardner1 = {"Bound Type" : boundtype_gardner,
             "Bounds" : bounds_gardner,
             "Cost Function (x)":  lambda x: cost_gardner1(x),
-            "Constraint Functions (z)": [lambda z: 1-constraint_gardner1(z)]}
+            "Constraint Functions (z)": [lambda z: 1-constraint_gardner1(z)],
+            "Best Value" : -1.8876149660277597} #2000 samples
 
 #################################
 # Simulation 2 (gardner2)
@@ -56,8 +57,9 @@ def cost_gardner2(x):
     return f
 
 def constraint_gardner2(x):
-    xs = x[:,0]
-    ys = x[:,1]
+    xx = x[None] if x.ndim == 1 else x # In case of single value input
+    xs = xx[:,0]
+    ys = xx[:,1]
 
     c = np.sin(xs)*np.sin(ys) + 0.95
 
@@ -66,7 +68,8 @@ def constraint_gardner2(x):
 gardner2 = {"Bound Type" : boundtype_gardner,
             "Bounds" : bounds_gardner,
             "Cost Function (x)":  lambda x: cost_gardner2(x),
-            "Constraint Functions (z)": [lambda z: 1 - constraint_gardner2(z)]}
+            "Constraint Functions (z)": [lambda z: 1 - constraint_gardner2(z)],
+            "Best Value" : 0.25462731419482376} #2000 samples
 
 
 if __name__ == "__main__":
@@ -115,7 +118,8 @@ constraint_list_gramacy = [
 gramacy = {"Bound Type" : boundtype_gramacy,
             "Bounds" : bounds_gramacy,
             "Cost Function (x)":  lambda x: cost_gramacy(x),
-            "Constraint Functions (z)": constraint_list_gramacy}
+            "Constraint Functions (z)": constraint_list_gramacy,
+            "Best Value" : 0.599799899949975} #2000 samples
 
 
 

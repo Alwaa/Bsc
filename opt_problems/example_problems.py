@@ -42,7 +42,8 @@ r = (1 + np.sin(6*phi-.1))*0.3+0.2
 example0 = {"Bound Type" : boundtype,
             "Bounds" : bounds,
             "Cost Function (x)":  lambda x: costf(x,w,Mu,Sigma),
-            "Constraint Functions (z)": [lambda z: constraintf(z,phi,r)]} #[lambda z: 1-constraintf(z,phi,r)]}
+            "Constraint Functions (z)": [lambda z: constraintf(z,phi,r)], #[lambda z: 1-constraintf(z,phi,r)]}
+            "Best Value": -27.818193788360123}
 
 #################################
 # XXXXXX problem
