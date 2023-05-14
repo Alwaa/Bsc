@@ -177,10 +177,10 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
             gpr.fit(np.concatenate((gpr.X_train_,x_eval),axis=0),
                     np.concatenate((gpr.y_train_,cost_eval),axis=0))
             
-            print(int(cost_eval),end = "|",flush=True)
+            print(np.round(cost_eval,decimals=1),end = "|",flush=True)
             ## Logging for unified outuput
             xs_out.append(x_eval)
-            arr_objs = np.full(N+1,0.)
+            arr_objs = np.full(N+1,0.0)
             arr_objs[0] = cost_eval[0]
             objs.append(arr_objs[None])
             arr_evls = np.full(N+1,False)
@@ -243,7 +243,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
                 print(const_eval,end = "|",flush=True)            
                 ## Logging for unified outuput
                 xs_out.append(z_eval)
-                arr_objs = np.full(N+1,0.)
+                arr_objs = np.full(N+1,0.0)
                 arr_objs[i+1] = const_eval[0]
                 objs.append(arr_objs[None])
                 arr_evls = np.full(N+1,False)
@@ -308,10 +308,14 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
 # Fetching problem info #
     bounds = problem["Bounds"]
     dim_num = len(bounds)//2
-    if dim_num > 3:
-        num_samples = 120
+    mem_saving = 1
+    if not debugging:
         mem_saving = grid_step
-        M = 10
+    if dim_num > 3:
+        num_samples = 140
+        mem_saving = grid_step
+        if M is None:
+            M = 10
     xins = (np.linspace(bounds[i*2], bounds[1+i*2], num_samples//mem_saving) for i in range(dim_num))
     xy = np.array(np.meshgrid(*xins, indexing='ij')).reshape(dim_num, -1).T
 
@@ -365,7 +369,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     K_in = int(1+(max_iter-a0-b0*num_constraints)/(a+b*num_constraints))
     print(K_in_old, K_in)
     K_in = max(K_in, 2) #At least 2 iterationis (Would be very unlucky for it to fire)
-    
+    options_in["K"] = K_in
     
     # Grid with evry grid_step-th point of space
     # Should now behave well with non square inputs

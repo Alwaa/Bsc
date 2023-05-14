@@ -6,12 +6,12 @@ from utils.plotting import * #expretiment_plot, vizualize_toy
 
 from opt_problems.paper_problems import gardner1, gardner2, gramacy, lamwillcox3
 from opt_problems.example_problems import example0
-from opt_problems.coil import coil
-from simhack.prob_coil import coil_pure
+#from opt_problems.coil import coil
+#from simhack.prob_coil import coil_pure
 
 exclude = ["plot_cache"] #["admmbo00","admmbo01"]
-e_folder = fol("coil-tight", 0)
-problem = coil_pure
+e_folder = fol("rho-gard1", 1)
+problem = gardner1#coil_pure
 
 
 """
@@ -21,7 +21,7 @@ problem = lamwillcox3
 
 print(e_folder)
 
-name_from_to = {'admmbo':'ADMMBO','_': ' ', '-': "=", 'm':"M", 'rho': "Rho",
+name_from_to = {'admmbo':'ADMMBO','_': ' ', '-': " = ", ' =  = ': " = -",
                 'cma': 'CMA-ES', 'cobyla': 'COBYLA (Multiple)', 'pesc':'PESC',
                 }
 
@@ -30,12 +30,15 @@ for excluded in exclude:
     if not excluded in alg_folders:
         continue
     alg_folders.remove(excluded)
-
 exps = {}
+
+## Selecting algs by indx (optional) ##
+alg_folders = alg_folders[5:10] + alg_folders[-3:]
+## -------------------------------   ##
 for folder in alg_folders:
     exps[folder] = load_exp(folder,e_folder)
 
-expretiment_plot(exps,problem,e_folder,name_from_to=name_from_to, override=True)
+expretiment_plot(exps,problem,e_folder,name_from_to=name_from_to, override=False)
 
 for name, exp_list in exps.items():
     continue

@@ -4,6 +4,7 @@ import numpy as np
 from numpy.typing import NDArray
 import copy
 import os
+import pandas as pd
 
 NUM_OF_OBJECTIVE_FUNCTIONS = 1 #Multi-objective optimization is not covered. One should conbine and weigh the multiple objectives into one in thoscases
 
@@ -169,11 +170,18 @@ def expretiment_plot(   exps,
         os.makedirs(p_fol)
     
     comps = exps
-    colors = list(mcolors.TABLEAU_COLORS)
+    colors = list(mcolors.TABLEAU_COLORS) + list(mcolors.XKCD_COLORS)
+    # Reserving colors for main comparisson algs CMA-ES, COBYLA (Multiple), PESC
+    reserved = ["blue", "orange", "green"];res_counter = 0#copy(colors[:3])
+    colors = colors[3:]
+    
+    point_comps = {};alg_run_lengs_min = 1e10
     
     plot_num = 0
     for alg_name, exp_list in comps.items():
         num_exp = len(exp_list)
+        if num_exp < 3: 
+            continue
         
         file = p_fol + f"/{alg_name}.npz" #For saving and loading
         if override or not os.path.exists(file):
@@ -281,11 +289,15 @@ def expretiment_plot(   exps,
         #print(feas_per_it)
         plt.figure(1) #Not best practice!
         #plt.errorbar(plot_iters, means,yerr=stds)
-        plt.plot(plot_iters,means, color = colors[plot_num], label = alg_name)
+        if alg_name in ['CMA-ES','COBYLA (Multiple)', 'PESC']:
+            curr_color = reserved[res_counter];res_counter += 1
+        else:
+            curr_color  = colors[plot_num]
+        plt.plot(plot_iters,means, color = curr_color, label = alg_name)
         plt.fill_between(plot_iters, means - stds, means + stds,
-                    color=colors[plot_num], alpha=0.2)
+                    color= curr_color, alpha=0.2)
         plt.figure(2) #Not best practice!
-        plt.plot(plot_iters,feas_per_it, color = colors[plot_num], label = alg_name)
+        plt.plot(plot_iters,feas_per_it, color = curr_color, label = alg_name)
         ## ----------------------- ##
         
         plot_num += 1
@@ -293,8 +305,27 @@ def expretiment_plot(   exps,
         top10obj = x_objs[top10]
         print("\n", alg_name, ":")
         
-        for o_i, arr in enumerate(np.round(x_b[top10],decimals=2)):
+        for o_i, arr in enumerate(np.round(x_b[top10[:5]],decimals=2)):
             print(list(arr), "\t"*2, top10obj[o_i], "\t"*2, check_validity(arr))
+
+        means_out = np.empty(plot_iters[-1])
+        prev = 0
+        for en, plot_it in enumerate(plot_iters):
+            means_out[prev:plot_it] = means[en]
+            prev = plot_it
+        point_comps[alg_name] = means_out
+        alg_run_lengs_min = min(len(means_out),alg_run_lengs_min)
+    
+    print("\n\n", "-"*40)
+    dfd = {}
+    l = alg_run_lengs_min
+    for name,mean in point_comps.items():
+        dfd[name] = [mean[int(l*0.4)],mean[l-1]]
+    col_names = [f"40% ({int(l*0.4)})", f"100% ({int(l-1)})"]
+    df = pd.DataFrame(data=dfd).T
+    df.columns = col_names
+    print(df.sort_values(col_names[0]), "\n\n")
+    print(df.sort_values(col_names[1]))
     
     plt.figure(1) #Not best practice!
     plt.title(title)
