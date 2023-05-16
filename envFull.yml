@@ -25,6 +25,7 @@ dependencies:
   - mkl=2021.4.0
   - scikit-learn #Windows version alt?
   - matplotlib
+  - pandas #This should not collide
   - pip:
     - fmm3dpy==1.0.0
     - charm_gems==1.3
