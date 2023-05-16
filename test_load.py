@@ -6,12 +6,15 @@ from utils.plotting import * #expretiment_plot, vizualize_toy
 
 from opt_problems.paper_problems import gardner1, gardner2, gramacy, lamwillcox3
 from opt_problems.example_problems import example0
-#from opt_problems.coil import coil
-#from simhack.prob_coil import coil_pure
+try:  
+    from opt_problems.coil import coil
+    from simhack.prob_coil import coil_pure
+except:
+    pass
 
 exclude = ["plot_cache"] #["admmbo00","admmbo01"]
-e_folder = fol("rho-gram", 0)
-problem = gramacy#coil_pure
+e_folder = fol("rho-ex0")#fol("coil-test", 2)
+problem = example0 #coil_pure
 
 
 """
@@ -38,7 +41,7 @@ exps = {}
 for folder in alg_folders:
     exps[folder] = load_exp(folder,e_folder)
 
-expretiment_plot(exps,problem,e_folder,name_from_to=name_from_to, override=True)
+expretiment_plot(exps,problem,e_folder,name_from_to=name_from_to, override=False)
 
 for name, exp_list in exps.items():
     continue

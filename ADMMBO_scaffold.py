@@ -403,7 +403,12 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
         return xs_out, obj_out, eval_type
     
     ### Debugging ###
-    #TODO: FIx debugging now that it isnt xin but xins eh xin = xins[0] for sq bounds or smth
+    #TODO: FIx debugging now that it isnt xin but xins ex xin = xins[0] for sq bounds or smth
+    if problem["Bound Type"] == "square":
+        xin = xins[0]
+        xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(2, -1).T
+    else:
+        raise Exception("Debugging Not Yet Implemented with non-square bounds")
     import matplotlib.pyplot as plt
     
     #print(xsc.shape, cc.shape)

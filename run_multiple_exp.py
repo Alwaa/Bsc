@@ -14,21 +14,22 @@ from utils.storing import create_exp_folder, save_exps
 
 from opt_problems.paper_problems import gardner1, gardner2, gramacy, lamwillcox3
 from opt_problems.example_problems import example0
-#from opt_problems.coil import coil
-#from simhack.prob_coil import coil_pure
+try:  
+    from opt_problems.coil import coil
+    from simhack.prob_coil import coil_pure
+except:
+    pass
 
 warnings.filterwarnings('ignore')
 
 running_time = 12*60*60
 
-exp_name = "rho-ex0"
+exp_name = "coil-rho"
 num_trials = 60
-problem = example0 #gardner2 #gardner1 #lamwillcox3 #gramacy
-name = "example0" #"coil-test" #For PESC
+problem = coil_pure
+name = None #For PESC
 
-max_iter = 120 #PESC and ADMMBO 
-divisor_iter = len(problem["Constraint Functions (z)"]) #Half for cma and cobyla since they are coupled
-pesc_create_problem(problem, name, decoupled=True, max_iter = max_iter)
+max_iter = 1400
 
 alg_res = { 
             #"cobyla":[],
@@ -36,6 +37,13 @@ alg_res = {
             "pesc":[],
             #"admmbo": []
 }
+
+
+divisor_iter = len(problem["Constraint Functions (z)"]) #Half for cma and cobyla since they are coupled
+if not name is None:
+    pesc_create_problem(problem, name, decoupled=True, max_iter = max_iter)
+else:
+    _ = alg_res.pop("pesc", None)
 
 #ops00 = {"M": 20, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":8}
 # ops0 = {"M": 10, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4}
@@ -54,8 +62,20 @@ rho_testing = {
     "(Locked)_Rho-1" : {"M": 10, "adjust_rho" : False, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
 }
 
-admmbo_opts = rho_testing #{}
+B_mult = 2 #Double the constraints test could be good??
 
+coil_testing = {
+    "Rho-1" : {"M": 20, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
+    "(Locked)_Rho-0.1_M-20" : {"M": 20, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
+    "(Locked)_Rho-0.2_M-10" : {"M": 10, "adjust_rho" : False, "rho" : 0.2, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
+    "(Locked)_Rho-1" : {"M": 20, "adjust_rho" : False, "rho" : 0.5, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult}
+}
+
+coil_budget_testing = {
+    #Put smth here to see if budgeting differently helps
+}
+
+admmbo_opts = coil_testing#rho_testing
 
 if "admmbo" in alg_res.keys():
     for name_addon in admmbo_opts.keys():
@@ -68,12 +88,13 @@ for e_num in range(num_trials):
 
     if "admmbo" in alg_res.keys():
         for name_addon, opt_dict in admmbo_opts.items():
-            alg_res["admmbo" + name_addon].append(admmbo_run(problem, x0s, start_all = False,                                                              max_iter=max_iter, admmbo_pars=opt_dict))    
+            alg_res["admmbo" + name_addon].append(admmbo_run(problem, x0s, start_all = False,                                                              
+                                                             max_iter=max_iter, admmbo_pars=opt_dict))    
     if "pesc" in alg_res.keys():
         pesc_run_experiment(name, max_iter=120)
         alg_res["pesc"].append(pesc_main(name))
     if "cma" in alg_res.keys():
-        alg_res["cma"].append(cma_es(problem, x0, max_iter = max_iter//divisor_iter))
+        alg_res["cma"].append(cma_es(problem, x0, max_iter = 0.9*max_iter//divisor_iter)) #I give it some extra to get feasable (should be done the other way around)
     if "cobyla" in alg_res.keys():
         alg_res["cobyla"].append(multi_cobyla(problem, x0s, maxiter_total=max_iter//divisor_iter))
 
@@ -82,7 +103,7 @@ for e_num in range(num_trials):
     hours, mins = divmod(mins, 60)
     print("\n", "-"*40,"\n", f"Finished running iteration {e_num + 1} after {int(hours):02d}h {int(mins):02d}m")
     if time() - s_time > running_time:
-        print("\n", "-"*40,"\nTerminating runs after set running time\n", "-"*40,"\n",)
+        print("\n", "-"*40,f"\nTerminating at it {e_num + 1} after set running time\n", "-"*40,"\n",)
         break
 
 if len(admmbo_opts) > 0:
