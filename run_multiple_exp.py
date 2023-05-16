@@ -19,22 +19,22 @@ from opt_problems.example_problems import example0
 
 warnings.filterwarnings('ignore')
 
-running_time = 13*60*60
+running_time = 12*60*60
 
-exp_name = "rho-gard2"
+exp_name = "rho-ex0"
 num_trials = 60
-problem = gardner2 #gardner1 #lamwillcox3 #gramacy
-name = "gard2" #"coil-test" #For PESC
+problem = example0 #gardner2 #gardner1 #lamwillcox3 #gramacy
+name = "example0" #"coil-test" #For PESC
 
 max_iter = 120 #PESC and ADMMBO 
-divisor_iter = 2 #Half for cma and cobyla since they are coupled
-#pesc_create_problem(problem, name, decoupled=True, max_iter = max_iter)
+divisor_iter = len(problem["Constraint Functions (z)"]) #Half for cma and cobyla since they are coupled
+pesc_create_problem(problem, name, decoupled=True, max_iter = max_iter)
 
 alg_res = { 
-            "cobyla":[],
-            "cma":[],
+            #"cobyla":[],
+            #"cma":[],
             "pesc":[],
-            "admmbo": []
+            #"admmbo": []
 }
 
 #ops00 = {"M": 20, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":8}

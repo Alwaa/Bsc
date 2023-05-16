@@ -104,7 +104,7 @@ def vizualize_toy(xs: NDArray[np.float64],
     # Needed for VScode
     plt.show()
 
-def vizualize_toy_problem(problem, points_per_dim = 400):
+def vizualize_toy_problem(problem, points_per_dim = 400, name = " "):
     costf = problem["Cost Function (x)"]
     constraintf = problem["Constraint Functions (z)"]
     bounds = problem["Bounds"]
@@ -141,6 +141,7 @@ def vizualize_toy_problem(problem, points_per_dim = 400):
     plt.text(constr_x[0], constr_x[1], f"{constr_obj:.1f}")
 
     print(f"Best Value: {constr_obj}")
+    plt.title(name)
     # Needed for VScode
     plt.show()
     
@@ -156,7 +157,8 @@ def expretiment_plot(   exps,
                         title = "Comparisson plot",
                         override = False,
                         name_from_to = {},
-                        print_xs = False):
+                        print_xs = False,
+                        quantile = 0.1):
     ## Fetching problem info ##
     constraintf = problem["Constraint Functions (z)"]
     best_value = problem.get("Best Value", None)
@@ -193,7 +195,7 @@ def expretiment_plot(   exps,
             candidate_points, candidate_objs = [], []
             for xs, objs, eval_type in exp_list:
                 if decoupled: 
-                    assert eval_type.shape == objs.shape, "Eval type mask should batch one to one the obj"
+                    #assert eval_type.shape == objs.shape, "Eval type mask should batch one to one the obj"
                     assert NUM_OF_OBJECTIVE_FUNCTIONS == 1, "Not implemented"
 
                     o1mask = eval_type[:,0]
@@ -262,9 +264,12 @@ def expretiment_plot(   exps,
             stds = np.nanstd(arr_roll_mins, axis=0)
             means = np.nanmean(arr_roll_mins, axis=0)
             
-            uq = np.nanquantile(arr_roll_mins, 0.9, axis=0)
-            lq = np.nanquantile(arr_roll_mins, 0.1, axis=0)
-            
+            if quantile < 0:
+                uq,lq = None,None
+            else:
+                uq = np.nanquantile(arr_roll_mins, max(quantile,1-quantile), axis=0)
+                lq = np.nanquantile(arr_roll_mins, min(quantile,1-quantile), axis=0)
+                
 
             ## How many found feasbale ##
             non_feasible = np.isnan(arr_roll_mins[:,-1])
@@ -286,6 +291,8 @@ def expretiment_plot(   exps,
             plot_iters, means, stds, feas_per_it = data["pi"], data["m"], data["s"], data["f"]
             x_b, x_objs = data["xi"], data["x_o"]
             uq, lq, = data.get("uq", None), data.get("ul", None)
+            if quantile < 0:
+                uq,lq = None,None
         
         ## Prettyfying names ##
         for nfrom, nto in name_from_to.items():

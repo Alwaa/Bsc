@@ -6,6 +6,7 @@ from comparisson_algs.cobyla_pilot import cobyla_run, multi_cobyla
 from comparisson_algs.pesc_script import pesc_main, pesc_run_experiment, pesc_create_problem
 from utils.plotting import vizualize_toy
 from opt_problems.paper_problems import gardner1, gardner2, gramacy
+from opt_problems.example_problems import example0
 from utils.sampling import monte_carlo_sampling, grid_sampling
 from utils.storing import create_exp_folder, save_exps
 
@@ -16,9 +17,9 @@ xs, objs, indiv_evals = None, None, None
 #xs, objs, indiv_evals = cobyla_run(problem, x0)
 
 
-problem = gardner1
+problem = example0 #gardner1
 name = "gard1-testing"
-pesc_create_problem(problem, name, decoupled=True)
+#pesc_create_problem(problem, name, decoupled=True)
 #pesc_run_experiment(name, max_iter=100)
 #
 x0s = monte_carlo_sampling(problem, num = 100, seed = 12) #np.array([[1.5,4.5],[1,2]])
