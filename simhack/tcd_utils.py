@@ -302,26 +302,33 @@ def optimize_position(coil, skin, affine, M=None):
     for deform in coil['deformationList']:
         bounds.append(deform['range'])
 
+ 
     if M is None:
         p = np.array([d['initial'] for d in coil['deformationList']])
-
+        print("Size of p: ", len(p))
+        
     constr, best_f = cost(p)
+    total_tests_run = 1   
     while constr:
         p[-1] -= 2
         constr, best_f = cost(p)
+        total_tests_run += 1  
 
     while not constr:
         p[-1] += 1
         constr, best_f = cost(p)
+        total_tests_run += 1  
         if constr:
             p[-1] -= 2
             break
 
     M = np.abs(cost(p)[1])
-    print(M)
+    print("M = ",M, "Total pre-runs = ", total_tests_run)
     best_x = p
 
     def costf_x0(x, x0):
+        nonlocal total_tests_run 
+        total_tests_run += 1
         fm = cost(x0 + x)
         f = M * fm[0] + fm[1]
         if not fm[0]:
@@ -346,14 +353,16 @@ def optimize_position(coil, skin, affine, M=None):
     xi = best_x.copy()
     xi[-1] -= 1
     print(best_x)
+    print("Runs After DIRECT = ", total_tests_run)
+    
     costf = lambda x: costf_x0(x, 0)
     res2 = opt.minimize(costf, x0=xi, callback=printsol,
                         method='L-BFGS-B',
                         options={'eps': 0.001, 'maxls': 100}, bounds=bounds)
-
+    
+    print("Runs After L-BFGS-B = ", total_tests_run)
     print(cost(res2.x))
     print(cost(best_x))
-
     res2.x = best_x
     res2.fun = best_f
     print(res2)
@@ -368,6 +377,7 @@ def optimize_position(coil, skin, affine, M=None):
         print(best_x)
     print(cost(best_x))
     res2.x = best_x
+    print("Total Runs (maybe) = ", total_tests_run)
     return res2
 
 
