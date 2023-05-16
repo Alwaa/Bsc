@@ -89,6 +89,7 @@ boundtype_gramacy = "square"
 bounds_gramacy = (0,1,0,1)
 
 def cost_gramacy(x):
+    x = x[None] if x.ndim == 1 else x # In case of single value input
     xs = x[:,0]
     ys = x[:,1]
 
@@ -97,12 +98,14 @@ def cost_gramacy(x):
     return f
 
 def constraint1_gramacy(x):
+    x = x[None] if x.ndim == 1 else x # In case of single value input
     xs = x[:,0]
     ys = x[:,1]
     c = 0.5*np.sin(2*np.pi*(2*ys - xs**2)) - xs - 2*ys + 1.5
     return c <= 0
 
 def constraint2_gramacy(x):
+    x = x[None] if x.ndim == 1 else x # In case of single value input
     xs = x[:,0]
     ys = x[:,1]
     

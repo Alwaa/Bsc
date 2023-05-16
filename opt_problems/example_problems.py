@@ -25,7 +25,7 @@ def constraintf(x,phi,r):
 
     phie = np.arctan2(xx[...,1],xx[...,0])
     re = np.sqrt(np.sum(xx**2, axis=-1))
-    return re - np.interp(phie,phi,r) #<= 0
+    return -re + np.interp(phie,phi,r) <= 0
 
 rnd = np.random.RandomState(42)
 K = 42
