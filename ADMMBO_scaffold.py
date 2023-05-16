@@ -358,15 +358,15 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
         if not found and not debugging: #Return the initialization points if failed
             print("ADMMBO initialization did not find feasable strating point set")
             fs_failed = costf(x0).reshape((-1,1))
-            cons_failed = np.array([constraintf[c](x0)  for c in range(num_constraints)]).reshape((-1,1))
+            cons_failed = np.array([constraintf[c](x0)  for c in range(num_constraints)]).reshape((-1,num_constraints))
             obj_failed = np.concatenate((fs_failed,cons_failed),axis=1)
-            return x0, obj_failed, np.full(x0.shape, True)
+            return x0, obj_failed, np.full((x0.shape[0],num_constraints+1), True)
     
     K_in_old = (max_iter-len(x0))//4 #50 #example0 K = 30
     ## Calculating ADMMBO budget based on alpha and beta values pluss max_iter
     a0, a = admmbo_pars.get("alpha0", DEFAULT_OPTIONS["alpha0"]), admmbo_pars.get("alpha", DEFAULT_OPTIONS["alpha"])
     b0, b = admmbo_pars.get("beta0", DEFAULT_OPTIONS["beta0"]), admmbo_pars.get("beta", DEFAULT_OPTIONS["beta"])
-    K_in = int(1+(max_iter-a0-b0*num_constraints)/(a+b*num_constraints))
+    K_in = int(1+(max_iter-a0-b0*num_constraints-(len(x0)))/(a+b*num_constraints)) #Prev. forgot to subtract the number of x0s tested
     print(K_in_old, K_in)
     K_in = max(K_in, 2) #At least 2 iterationis (Would be very unlucky for it to fire)
     options_in["K"] = K_in
