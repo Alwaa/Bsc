@@ -290,7 +290,7 @@ def expretiment_plot(   exps,
             data = np.load(file)
             plot_iters, means, stds, feas_per_it = data["pi"], data["m"], data["s"], data["f"]
             x_b, x_objs = data["xi"], data["x_o"]
-            uq, lq, = data.get("uq", None), data.get("ul", None)
+            uq, lq, = data.get("uq", None), data.get("lq", None)
             if quantile < 0:
                 uq,lq = None,None
         
@@ -308,9 +308,11 @@ def expretiment_plot(   exps,
             curr_color  = colors[plot_num]
         plt.plot(plot_iters,means, color = curr_color, label = alg_name)
         if lq is None:
+            no_quantile = True
             plt.fill_between(plot_iters, means - stds, means + stds,
                         color= curr_color, alpha=0.2)
         else:
+            no_quantile = False
             plt.fill_between(plot_iters, lq, uq,
                         color= curr_color, alpha=0.2)
         plt.figure(2) #Not best practice!
@@ -333,19 +335,20 @@ def expretiment_plot(   exps,
         point_comps[alg_name] = means_out
         alg_run_lengs_min = min(len(means_out),alg_run_lengs_min)
     
-    print("\n\n", "-"*40)
-    dfd = {}
-    l = alg_run_lengs_min
-    for name,mean in point_comps.items():
-        dfd[name] = [mean[int(l*0.4)],mean[l-1]] #Could also add feasability...
-    col_names = [f"40% ({int(l*0.4)})", f"100% ({int(l-1)})"]
-    df = pd.DataFrame(data=dfd).T
-    df.columns = col_names
-    print("40% Sort\n",df.sort_values(col_names[0]), "\n\n")
-    print("100% Sort\n",df.sort_values(col_names[1]))
+    if True:
+        print("\n\n", "-"*40)
+        dfd = {}
+        l = alg_run_lengs_min
+        for name,mean in point_comps.items():
+            dfd[name] = [mean[int(l*0.4)],mean[l-1]] #Could also add feasability...
+        col_names = [f"40% ({int(l*0.4)})", f"100% ({int(l-1)})"]
+        df = pd.DataFrame(data=dfd).T
+        df.columns = col_names
+        print("40% Sort\n",df.sort_values(col_names[0]), "\n\n")
+        print("100% Sort\n",df.sort_values(col_names[1]))
     
-    if lq is None:
-        title += " (st.d)"
+        if no_quantile:
+            title += " (st.d)"
     
     plt.figure(1) #Not best practice!
     plt.title(title)
