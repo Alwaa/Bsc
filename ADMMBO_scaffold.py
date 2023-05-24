@@ -53,8 +53,11 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     
     ### Defining Kernels ###
     K1 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
-             gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2)) #+\
-                # gaussian_process.kernels.WhiteKernel()
+            gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2))
+    # K1 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
+    #         gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2)) +\
+    #             gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
+    #             gaussian_process.kernels.DotProduct(sigma_0=0) #TODO: REMOVE
     gpr = gaussian_process.GaussianProcessRegressor(kernel=K1)
     
     K2 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
@@ -67,13 +70,9 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     N = len(constraints) # As in paper
 
     #Initialicing GP classifiers
-    #? Should have individual kernels based on bounds dimenstion?
-    #TODO: Follow up on Kernel investigation
-    #    TODO: OPT; Method where only one class can be present
     gpcs = [gaussian_process.GaussianProcessClassifier(kernel=K2) for i in range(N)]
     
-    ## rho adjusting parameters ## # TODO Investigate further into rho setting
-    #rho = 1 # IT WAS RHO #BUT still wierd that it hugs a bad corner
+    ## rho adjusting parameters ## 
     tau = 2
     mup = 10
     rho_list.append(rho)
@@ -84,6 +83,9 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     # TODO: Check initialization of zs and ys
     bounds=bounds.astype('float')
     zs = np.array([bounds[:,1].copy() for i in range(N)])
+    ys = np.array([bounds[:,1].copy() for i in range(N)])
+    
+    zs = np.array([bounds[:,0].copy() for i in range(N)])
     ys = np.array([bounds[:,1].copy() for i in range(N)])
     zolds = [zs[i].copy() for i in range(N)]
     ## ---------------- ##
@@ -312,7 +314,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     if not debugging:
         mem_saving = grid_step
     if dim_num > 3:
-        num_samples = 140
+        num_samples = 100
         mem_saving = grid_step
         if M is None:
             M = 10

@@ -12,7 +12,7 @@ from utils.sampling import monte_carlo_sampling, grid_sampling
 from utils.storing import create_exp_folder, save_exps
 
 
-from opt_problems.paper_problems import gardner1, gardner2, gramacy, lamwillcox3
+from opt_problems.paper_problems import gardner1, gardner2, gramacy, lamwillcox3, gramsingle, lwwrong
 from opt_problems.example_problems import example0
 try:  
     from opt_problems.coil import coil
@@ -22,20 +22,20 @@ except:
 
 warnings.filterwarnings('ignore')
 
-running_time = 12*60*60
+running_time = 13*60*60
 
-exp_name = "coil-rho"
-num_trials = 60
-problem = coil_pure
-name = None #For PESC
+exp_name = "yz-gard1" #"PESC-LW"
+num_trials = 60 #60 #36 #60
+problem = gardner1 #gramsingle #lamwillcox3 #coil_pure
+name = None#"example0" #"lw3" #For PESC
 
-max_iter = 1400
+max_iter = 120
 
 alg_res = { 
             #"cobyla":[],
             #"cma":[],
-            "pesc":[],
-            #"admmbo": []
+            #"pesc":[],
+            "admmbo": []
 }
 
 
@@ -62,20 +62,27 @@ rho_testing = {
     "(Locked)_Rho-1" : {"M": 10, "adjust_rho" : False, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
 }
 
+rho_sub = {
+    "Rho-1" : {"M": 10, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
+    "(Locked)_Rho-0.1" : {"M": 10, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
+}
+
 B_mult = 2 #Double the constraints test could be good??
 
 coil_testing = {
     "Rho-1" : {"M": 20, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
     "(Locked)_Rho-0.1_M-20" : {"M": 20, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
-    "(Locked)_Rho-0.2_M-10" : {"M": 10, "adjust_rho" : False, "rho" : 0.2, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
+    "Rho-0.1" : {"M": 20, "adjust_rho" : True, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
     "(Locked)_Rho-1" : {"M": 20, "adjust_rho" : False, "rho" : 0.5, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult}
 }
 
-coil_budget_testing = {
-    #Put smth here to see if budgeting differently helps
+B_mult = 1
+coil_testing2 = {
+    "(Locked)_Rho-0.2_M-10" : {"M": 10, "adjust_rho" : False, "rho" : 0.2, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
+    "(Locked)_Rho-0.2_M-1" : {"M": 1, "adjust_rho" : False, "rho" : 0.2, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
 }
 
-admmbo_opts = coil_testing#rho_testing
+admmbo_opts = rho_sub#rho_testing #coil_testing#
 
 if "admmbo" in alg_res.keys():
     for name_addon in admmbo_opts.keys():
@@ -107,7 +114,7 @@ for e_num in range(num_trials):
         break
 
 if len(admmbo_opts) > 0:
-    _ = alg_res.pop("admmbo")
+    _ = alg_res.pop("admmbo", None)
 
 e_folder = create_exp_folder(exp_name)
 for alg_name, res_list in alg_res.items():

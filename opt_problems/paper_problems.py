@@ -143,9 +143,10 @@ def cost_lw3(x):
 
 # Constraint function
 def constraint1_lw3(x):
+    x = x[None] if x.ndim == 1 else x # In case of single value input
     
-    c = -0.5 + np.sin(x[:,0] + 2*x[:,1]) -np.cos(x[:,2]*np.cos(x[:,3]))
-    
+    #c = -0.5 + np.sin(x[:,0] + 2*x[:,1]) -np.cos(x[:,2]*np.cos(x[:,3]))
+    c = -0.5 + np.sin(x[:,0] + 2*x[:,1]) - np.cos(x[:,2])*np.cos(2*x[:,3])
     return c <= 0
 
     
@@ -157,7 +158,27 @@ constraint_list_lw3 = [
 lamwillcox3 = {"Bound Type" : boundtype_lw3,
             "Bounds" : bounds_lw3,
             "Cost Function (x)":  lambda x: cost_lw3(x),
-            "Constraint Functions (z)": constraint_list_lw3}
+            "Constraint Functions (z)": constraint_list_lw3,
+            "Best Value" : -39.17*4} #GLOBAL MINIMUM!}
+
+def constraint1_lwwrong(x):
+    x = x[None] if x.ndim == 1 else x # In case of single value input
+    
+    c = -0.5 + np.sin(x[:,0] + 2*x[:,1]) -np.cos(x[:,2]*np.cos(x[:,3]))
+    return c <= 0
+
+    
+    
+constraint_list_lwwrong = [
+    lambda z: 1 - constraint1_lwwrong(z)
+    ]
+
+lwwrong = {"Bound Type" : boundtype_lw3,
+            "Bounds" : bounds_lw3,
+            "Cost Function (x)":  lambda x: cost_lw3(x),
+            "Constraint Functions (z)": constraint_list_lwwrong,
+            "Best Value" : -39.17*4} #GLOBAL MINIMUM!}
+
 #################################
 # EXAMPLE FORMAT
 #################################
@@ -188,3 +209,40 @@ NAME = {"Bound Type" : boundtype_XXXX,
             "Cost Function (x)":  lambda x: cost_XXXX(x),
             "Constraint Functions (z)": constraint_list_XXXX}
 """
+
+#################################
+# (gramacy)
+#################################
+# P2 in Lam Willcox Appendix
+
+# Bounds and such
+boundtype_gramacy = "square"
+bounds_gramacy = (0,1,0,1)
+
+def cost_gramacy(x):
+    x = x[None] if x.ndim == 1 else x # In case of single value input
+    xs = x[:,0]
+    ys = x[:,1]
+
+    f = xs + ys
+
+    return f
+
+def constraint1_gramsingle(x):
+    x = x[None] if x.ndim == 1 else x # In case of single value input
+    xs = x[:,0]
+    ys = x[:,1]
+    c = 0.5*np.sin(2*np.pi*(2*ys - xs**2)) - xs - 2*ys + 1.5
+    
+    c2 = xs**2 + ys**2 -1.5
+    return np.logical_and(c <= 0, c2 <= 0)
+
+constraint_list_gramsingle = [
+    lambda z: 1 - constraint1_gramsingle(z),
+    ]
+
+gramsingle = {"Bound Type" : boundtype_gramacy,
+            "Bounds" : bounds_gramacy,
+            "Cost Function (x)":  lambda x: cost_gramacy(x),
+            "Constraint Functions (z)": constraint_list_gramsingle,
+            "Best Value" : 0.599799899949975} #2000 samples

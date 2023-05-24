@@ -158,7 +158,8 @@ def expretiment_plot(   exps,
                         override = False,
                         name_from_to = {},
                         print_xs = False,
-                        quantile = 0.1):
+                        quantile = 0.1,
+                        just_mean = False):
     ## Fetching problem info ##
     constraintf = problem["Constraint Functions (z)"]
     best_value = problem.get("Best Value", None)
@@ -175,8 +176,13 @@ def expretiment_plot(   exps,
     comps = exps
     colors = list(mcolors.TABLEAU_COLORS) + list(mcolors.XKCD_COLORS)
     # Reserving colors for main comparisson algs CMA-ES, COBYLA (Multiple), PESC
-    reserved = ["blue", "orange", "green"];res_counter = 0#copy(colors[:3])
-    colors = colors[3:]
+    reserved_num = 0
+    for alg_name in exps.keys():
+        if alg_name in ['CMA-ES','COBYLA (Multiple)', 'PESC']:
+            reserved_num +=1
+    reserved = ["blue", "orange", "green"][:reserved_num];res_counter = 0#copy(colors[:3])
+    colors = colors[reserved_num:]
+    admmbo_plotted = False #For only plotting one ADMMBO in feasible
     
     point_comps = {};alg_run_lengs_min = 1e10
     
@@ -229,16 +235,16 @@ def expretiment_plot(   exps,
                 if len(o1_valid) > 0:
                     a_m = np.argmax(o1_valid)
                     curr_min, cand_x = o1_valid[a_m], xs_obj_valid[a_m]
-                assert np.all(check_validity(xs_obj_valid)), "fuck"
-                for i in range(1,roll_min_len):
-                    if tot_roll_min[i-1] < tot_roll_min[i] or np.isnan(tot_roll_min[i]):
-                        tot_roll_min[i] = tot_roll_min[i-1]
-                    if tot_roll_min[i-1] < curr_min and not np.isnan(tot_roll_min[i-1]):
-                        cand_x, curr_min = xs[i-1], tot_roll_min[i-1]
-                        if not cand_x in xs_obj_valid:
-                            print("|", end = "-", flush = True)
+                    assert np.all(check_validity(xs_obj_valid)), "something wrong"
+                    for i in range(1,roll_min_len):
+                        if tot_roll_min[i-1] < tot_roll_min[i] or np.isnan(tot_roll_min[i]):
+                            tot_roll_min[i] = tot_roll_min[i-1]
+                        if tot_roll_min[i-1] < curr_min and not np.isnan(tot_roll_min[i-1]):
+                            cand_x, curr_min = xs[i-1], tot_roll_min[i-1]
+                            if not cand_x in xs_obj_valid:
+                                print("|", end = "-", flush = True)
 
-                candidate_points.append(cand_x);candidate_objs.append(curr_min)
+                    candidate_points.append(cand_x);candidate_objs.append(curr_min)
                 roll_min_list.append(tot_roll_min)
                 if max_roll_min_len < roll_min_len:
                     max_roll_min_len = roll_min_len
@@ -307,16 +313,21 @@ def expretiment_plot(   exps,
         else:
             curr_color  = colors[plot_num]
         plt.plot(plot_iters,means, color = curr_color, label = alg_name)
-        if lq is None:
-            no_quantile = True
-            plt.fill_between(plot_iters, means - stds, means + stds,
-                        color= curr_color, alpha=0.2)
-        else:
+        if just_mean:
             no_quantile = False
-            plt.fill_between(plot_iters, lq, uq,
-                        color= curr_color, alpha=0.2)
+        else:
+            if lq is None:
+                no_quantile = True
+                #plt.fill_between(plot_iters, means - stds, means + stds, color= curr_color, alpha=0.2)
+            else:
+                no_quantile = False
+                plt.fill_between(plot_iters, lq, uq, color= curr_color, alpha=0.2)
         plt.figure(2) #Not best practice!
-        plt.plot(plot_iters,feas_per_it, color = curr_color, label = alg_name)
+        admmbo_in = alg_name.lower().find("admmbo") != -1
+        if not admmbo_plotted or not admmbo_in:
+            label = "All ADMMBO" if admmbo_in else alg_name
+            plt.plot(plot_iters,feas_per_it, color = curr_color, label = label)
+        admmbo_plotted = admmbo_in
         ## ----------------------- ##
         
         plot_num += 1
