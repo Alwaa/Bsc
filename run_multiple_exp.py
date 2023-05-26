@@ -22,11 +22,11 @@ except:
 
 warnings.filterwarnings('ignore')
 
-running_time = 13*60*60
+running_time = 4*60*60
 
-exp_name = "yz-gard1" #"PESC-LW"
+exp_name = "rho-gramsingle" #"PESC-LW"
 num_trials = 60 #60 #36 #60
-problem = gardner1 #gramsingle #lamwillcox3 #coil_pure
+problem = gramsingle # lamwillcox3 #gramsingle #lamwillcox3 #coil_pure
 name = None#"example0" #"lw3" #For PESC
 
 max_iter = 120
@@ -63,8 +63,23 @@ rho_testing = {
 }
 
 rho_sub = {
-    "Rho-1" : {"M": 10, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
+    "Rho-1" :            {"M": 10, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
     "(Locked)_Rho-0.1" : {"M": 10, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
+}
+
+M_testing = {
+    "M-0.1_Rho-1" :            {"M": 0.1, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
+    "M-0.1_(Locked)_Rho-0.1" : {"M": 0.1, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
+    "M-1_Rho-1" :            {"M": 1, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
+    "M-1_(Locked)_Rho-0.1" : {"M": 1, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
+    "M-10_Rho-1" :            {"M": 10, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
+    "M-10_(Locked)_Rho-0.1" : {"M": 10, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
+    "M-20_Rho-1" :            {"M": 30, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
+    "M-20_(Locked)_Rho-0.1" : {"M": 30, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
+    "M-100_Rho-1" :            {"M": 100, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
+    "M-100_(Locked)_Rho-0.1" : {"M": 100, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
+    "M-1000_Rho-1" :            {"M": 1000, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
+    "M-1000_(Locked)_Rho-0.1" : {"M": 1000, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
 }
 
 B_mult = 2 #Double the constraints test could be good??
@@ -82,7 +97,7 @@ coil_testing2 = {
     "(Locked)_Rho-0.2_M-1" : {"M": 1, "adjust_rho" : False, "rho" : 0.2, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
 }
 
-admmbo_opts = rho_sub#rho_testing #coil_testing#
+admmbo_opts = rho_testing #coil_testing#
 
 if "admmbo" in alg_res.keys():
     for name_addon in admmbo_opts.keys():

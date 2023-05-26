@@ -9,6 +9,23 @@ from scipy.stats import norm
 import copy
 import warnings #For the non converging lnsrch
 
+from time import time
+from scipy.optimize import direct, Bounds
+start_time = time()
+time_log = [0 for i in range(10)]
+def start_t():
+    global start_time
+    start_time = time()
+def end_tp(n):
+    global start_time
+    time_log[n] += time()-start_time
+    start_time = time()
+
+def prntt():
+    for n in range(10):
+        print(f"¤{n}¤({time_log[n]:.2f})")
+
+
 DEFAULT_OPTIONS = {
     "K"         : 15,
     "rho"       : 1, #orig. 0.1
@@ -85,8 +102,8 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     zs = np.array([bounds[:,1].copy() for i in range(N)])
     ys = np.array([bounds[:,1].copy() for i in range(N)])
     
-    zs = np.array([bounds[:,0].copy() for i in range(N)])
-    ys = np.array([bounds[:,1].copy() for i in range(N)])
+    # zs = np.array([bounds[:,0].copy() for i in range(N)])
+    # ys = np.array([bounds[:,0].copy() for i in range(N)])
     zolds = [zs[i].copy() for i in range(N)]
     ## ---------------- ##
 
@@ -148,17 +165,29 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     ## First iteration has higher bidget as per discussion
     alphac=alpha0
     betac=beta0
+    
+    tot_ei_diff = 0.0 #TODO REMOVE
+    bounds_direct = Bounds(bounds[:,0],bounds[:,1])
+    all_fxs = np.concatenate((gpr.y_train_, np.empty((K*alpha+alpha))),axis=0)
+    all_Xs = np.concatenate((gpr.X_train_, np.empty((K*alpha+alpha0,len(bounds)))),axis=0)
+    opt_cache = len(gpr.y_train_)
     while k < K and not S:
         ### OPT ###
         for t in range(alphac):
+            #start_t() #TODO:REMOVE
             fx = gpr.y_train_ # f(x) for each value untill now
             X = gpr.X_train_ # xs until now
 
             ubest = np.min(fx + u_post_pluss(X,zs,ys,rho)) # Eq. (10)
-
+            eif = lambda x_in: -gpr_ei(x_in,zs,ys,rho,gpr,ubest) #EI function to minimize
+            #####
+            #opt_d = direct(eif, bounds_direct, maxiter=10)#, options = minimize_opts)
+            #xd = opt_d.x
+            #end_tp(0) #TODO:REMOVE
+            #####
+            #end_tp(1) #TODO:REMOVE
             ei = gpr_ei(grid,zs,ys,rho,gpr,ubest)
             x = grid[np.argmax(ei)]
-            eif = lambda x_in: -gpr_ei(x_in,zs,ys,rho,gpr,ubest)
             with warnings.catch_warnings(record=True) as caught_warnings:
                 warnings.simplefilter("always")
                 opt = minimize(eif, x, bounds=bounds, options = minimize_opts) # Minize negative expected improvement
@@ -169,15 +198,24 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
                         print(str(warn))
             old_x = copy.copy(x)
             x = opt.x
+            #end_tp(2) #TODO:REMOVE
+            #tot_ei_diff += eif(xd)- eif(x) #TODO:REMOVE
             # print(f'eix:{ei.max()}')
             gp_logger.append([grid,0,0,x,-eif(x),old_x,-eif(old_x),
                               copy.deepcopy(ei),copy.deepcopy(gpr.X_train_),copy.deepcopy(gpr.y_train_)])
 
-
+            #end_tp(3) #TODO:REMOVE
             x = np.nan_to_num(x, nan= bounds[0][1]) #TODO: Is there also problem with lamwillcox3?
             x_eval,cost_eval = x[None],cost(x[None])
+            
+            # all_Xs[opt_cache,:] = x_eval
+            # all_fxs[opt_cache] = cost_eval
+            # opt_cache += 1
+            # gpr.fit(all_Xs[:opt_cache,:], all_fxs[:opt_cache])    
             gpr.fit(np.concatenate((gpr.X_train_,x_eval),axis=0),
                     np.concatenate((gpr.y_train_,cost_eval),axis=0))
+            #end_tp(4) #TODO:REMOVE
+
             
             print(np.round(cost_eval,decimals=1),end = "|",flush=True)
             ## Logging for unified outuput
@@ -237,11 +275,11 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
                 # ei[idx2] += temp
                 # print(ei.max())
                 z = grid[np.argmax(ei)]
-                
+
                 z_eval, const_eval = z[None], constraint(z[None])
                 gpc.fit(np.concatenate((gpc.base_estimator_.X_train_,z_eval), axis=0),
                         np.concatenate((gpc.base_estimator_.y_train_,const_eval),axis=0))
-                
+
                 print(const_eval,end = "|",flush=True)            
                 ## Logging for unified outuput
                 xs_out.append(z_eval)
@@ -287,7 +325,10 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
             break
         alphac=alpha
         betac=beta
-        
+    
+    #TODO:REMOVE
+    #prntt() #for profiling #TODO:REMOVE
+    #print(f"\nEIF-diff: {tot_ei_diff}") #Checking which solver is on average "better" #TODO:REMOVE
     if format_return:
         xs_out = np.concatenate(xs_out,axis = 0)
         objs = np.concatenate(objs,axis = 0)

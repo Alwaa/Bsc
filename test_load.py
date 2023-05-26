@@ -13,7 +13,7 @@ except:
     pass
 
 exclude = ["plot_cache"] #["admmbo00","admmbo01"]
-e_folder = fol("yz-gard1",2)#fol("rho-lw-wrong",0) #fol("coil-more",0)#fol("coil-test", 2)
+e_folder = fol("tsts",3)#fol("rho-lw-wrong",0) #fol("coil-more",0)#fol("coil-test", 2)
 problem = gardner1#gramsingle#lwwrong#lamwillcox3#example0# coil_pure
 title = "Comparison Gardner 1"#"Comparison Gramacy Single"
 error_bars = True
