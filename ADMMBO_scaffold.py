@@ -379,8 +379,8 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
         ff = con*func
         M = np.max(ff) - np.min(ff) # They set it as the unconstrained range of f, while this is the constrained range
                             # ADMMBO is (claimed) not sensitive to M in a wide range of values ref. sec. 5.7 (only to smaller values)
-    
-    if not start_all: #Go through all points untill you have one of each constraint both upheld and violated...
+    x0_in = copy.deepcopy(x0)
+    if True: #not start_all: #Go through all points untill you have one of each constraint both upheld and violated...
         found = False
         cons_start = np.array([constraintf[c](x0[:1]) <= 0  for c in range(num_constraints)])
         for i in range(1,(len(x0)-1)):
@@ -404,6 +404,8 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
             cons_failed = np.array([constraintf[c](x0)  for c in range(num_constraints)]).reshape((-1,num_constraints))
             obj_failed = np.concatenate((fs_failed,cons_failed),axis=1)
             return x0, obj_failed, np.full((x0.shape[0],num_constraints+1), True)
+    if start_all:
+        x0 = x0_in
     
     K_in_old = (max_iter-len(x0))//4 #50 #example0 K = 30
     ## Calculating ADMMBO budget based on alpha and beta values pluss max_iter

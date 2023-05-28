@@ -108,12 +108,10 @@ def vizualize_toy_problem(problem, points_per_dim = 400, name = " "):
     costf = problem["Cost Function (x)"]
     constraintf = problem["Constraint Functions (z)"]
     bounds = problem["Bounds"]
-    
-    xin = np.linspace(bounds[0], bounds[1], points_per_dim)
-    if problem["Bound Type"] == "square":
-        xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(2, -1).T
-    else:
-        raise Exception("Not vizualizing Non-square or higher dim. problems")
+
+    num_samples, dim_num = points_per_dim, len(bounds)//2
+    xins = (np.linspace(bounds[i*2], bounds[1+i*2], num_samples) for i in range(dim_num))
+    xy = np.array(np.meshgrid(*xins, indexing='ij')).reshape(dim_num, -1).T
     #could make into per 2 axis plots
 
     func = costf(xy)
@@ -125,22 +123,38 @@ def vizualize_toy_problem(problem, points_per_dim = 400, name = " "):
     constr_i = np.argmin(func[con])
     glbl_i = np.argmin(func)
     constr_x, constr_obj = xy[con][constr_i], func[con][constr_i]
-    glbl_x, glbl_obj = xy[glbl_i], func[glbl_i]
+    glbl_obj = func[glbl_i]
+    glbl_x = xy[glbl_i]
+    glbl_xs = [] # xy[np.argwhere(func<= glbl_obj + 0.001)]
     
-    plt.figure()
-    plt.imshow(ff.reshape(len(xin),-1).T,extent=(bounds),origin='lower')
-    plt.colorbar();plt.title('Constrained Cost Function')
-    ## Aera lower than constrained optima
-    mask_better = np.logical_and(np.logical_not(con), func <= constr_obj) 
-    better_xs = xy[mask_better]
-    plt.plot(better_xs[:,0],better_xs[:,1], 'mx', markersize = 50/points_per_dim)
-    ## Optima
-    plt.plot(glbl_x[0], glbl_x[1], 'b*')
-    plt.text(glbl_x[0], glbl_x[1], f"{glbl_obj:.1f}")
-    plt.plot(constr_x[0], constr_x[1], 'r*')
-    plt.text(constr_x[0], constr_x[1], f"{constr_obj:.1f}")
+    prct_feasible = 100*np.sum(con)/(points_per_dim**dim_num)
+    
+    if dim_num == 2:
+        if problem["Bound Type"] == "square":
+            xin = np.linspace(bounds[0], bounds[1], num_samples)
+        else:
+            raise Exception("Not yet Implemented non-square bounds")
+        plt.figure()
+        plt.imshow(ff.reshape(len(xin),-1).T,extent=(bounds),origin='lower')
+        plt.colorbar();plt.title('Constrained Cost Function')
+        ## Aera lower than constrained optima
+        mask_better = np.logical_and(np.logical_not(con), func <= constr_obj) 
+        better_xs = xy[mask_better]
+        plt.plot(better_xs[:,0],better_xs[:,1], 'mx', markersize = 50/points_per_dim)
+        ## Optima
+        plt.plot(glbl_x[0], glbl_x[1], 'b*')
+        plt.text(glbl_x[0], glbl_x[1], f"{glbl_obj:.1f}")
+        for glbl_x in glbl_xs:
+            plt.plot(glbl_x[0][0], glbl_x[0][1], 'b*')
+            plt.text(glbl_x[0][0], glbl_x[0][1], f"{glbl_obj:.1f}")
+        
+        
+        plt.plot(constr_x[0], constr_x[1], 'r*')
+        plt.text(constr_x[0], constr_x[1], f"{constr_obj:.1f}")
+    
 
     print(f"Best Value: {constr_obj}")
+    print(f"Prct Feasible: {prct_feasible}\%")
     plt.title(name)
     # Needed for VScode
     plt.show()
