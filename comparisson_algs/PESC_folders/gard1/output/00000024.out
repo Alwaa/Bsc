@@ -1,0 +1,7 @@
+Job launching after 0.42 seconds in submission.
+Running python job.
+Changed into dir C:\Users\Alexander\wgit\Bsc\comparisson_algs\PESC_folders\gard1
+Importing f.py
+Running f.main()
+Got result {'f': array([-0.86381478])}
+Completed successfully in 0.00 seconds. [{'f': array([-0.86381478])}]

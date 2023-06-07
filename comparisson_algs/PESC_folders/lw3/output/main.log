@@ -1,0 +1,2996 @@
+
+Getting suggestion for c0, f...
+
+
+Suggestion:     
+Current time: 2023-05-21 20:55:26
+Status: 1 pending, 0 complete.
+ID(s) of pending job(s) for f: 1
+
+
+Fitting GP to 0 data for c0 task...
+Fitting GP to 1 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-21 20:55:30
+Status: 1 pending, 1 complete.
+ID(s) of pending job(s) for c0: 2
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 1 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 400.000000
+
+At location:    
+
+Best observed values satisfying constraints is 400.000000, at location:
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:55:35
+Status: 1 pending, 2 complete.
+ID(s) of pending job(s) for f: 3
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 2 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:0.99995): 146.455343
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:55:40
+Status: 1 pending, 3 complete.
+ID(s) of pending job(s) for f: 4
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 3 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 137.720993
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:55:45
+Status: 1 pending, 4 complete.
+ID(s) of pending job(s) for f: 5
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 4 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:0.99999): 128.357198
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:55:50
+Status: 1 pending, 5 complete.
+ID(s) of pending job(s) for f: 6
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 5 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 110.868535
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:55:55
+Status: 1 pending, 6 complete.
+ID(s) of pending job(s) for f: 7
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 6 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 122.767309
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:56:01
+Status: 1 pending, 7 complete.
+ID(s) of pending job(s) for f: 8
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 7 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 116.560435
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:56:07
+Status: 1 pending, 8 complete.
+ID(s) of pending job(s) for f: 9
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 8 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 113.263888
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:56:13
+Status: 1 pending, 9 complete.
+ID(s) of pending job(s) for f: 10
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 9 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 120.958274
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:56:19
+Status: 1 pending, 10 complete.
+ID(s) of pending job(s) for f: 11
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 10 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 116.136914
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:56:25
+Status: 1 pending, 11 complete.
+ID(s) of pending job(s) for f: 12
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 11 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 123.890148
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:56:32
+Status: 1 pending, 12 complete.
+ID(s) of pending job(s) for f: 13
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 126.691569
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:56:39
+Status: 1 pending, 13 complete.
+ID(s) of pending job(s) for f: 14
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 127.438450
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:56:46
+Status: 1 pending, 14 complete.
+ID(s) of pending job(s) for f: 15
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 129.924713
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:56:54
+Status: 1 pending, 15 complete.
+ID(s) of pending job(s) for f: 16
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 15 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 119.185666
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:57:03
+Status: 1 pending, 16 complete.
+ID(s) of pending job(s) for f: 17
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 16 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 118.312299
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:57:11
+Status: 1 pending, 17 complete.
+ID(s) of pending job(s) for f: 18
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 17 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 109.717617
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:57:20
+Status: 1 pending, 18 complete.
+ID(s) of pending job(s) for f: 19
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 18 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 101.654562
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:57:29
+Status: 1 pending, 19 complete.
+ID(s) of pending job(s) for f: 20
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 19 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 120.556932
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:57:38
+Status: 1 pending, 20 complete.
+ID(s) of pending job(s) for f: 21
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 20 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 125.684781
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:57:48
+Status: 1 pending, 21 complete.
+ID(s) of pending job(s) for f: 22
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 21 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 124.111006
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:58:01
+Status: 1 pending, 22 complete.
+ID(s) of pending job(s) for f: 23
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 22 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 129.567769
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:58:12
+Status: 1 pending, 23 complete.
+ID(s) of pending job(s) for f: 24
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 23 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 124.038573
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:58:24
+Status: 1 pending, 24 complete.
+ID(s) of pending job(s) for f: 25
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 24 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 105.811145
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:58:39
+Status: 1 pending, 25 complete.
+ID(s) of pending job(s) for f: 26
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 25 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:0.99996): 124.841957
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:58:52
+Status: 1 pending, 26 complete.
+ID(s) of pending job(s) for f: 27
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 26 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:0.99999): 125.776501
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:59:06
+Status: 1 pending, 27 complete.
+ID(s) of pending job(s) for f: 28
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 27 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 89.455816
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:59:21
+Status: 1 pending, 28 complete.
+ID(s) of pending job(s) for f: 29
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 28 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 113.272084
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:59:33
+Status: 1 pending, 29 complete.
+ID(s) of pending job(s) for f: 30
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 29 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 125.186070
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 20:59:46
+Status: 1 pending, 30 complete.
+ID(s) of pending job(s) for f: 31
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 30 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 124.332613
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:00:00
+Status: 1 pending, 31 complete.
+ID(s) of pending job(s) for f: 32
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 31 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 117.988517
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:00:15
+Status: 1 pending, 32 complete.
+ID(s) of pending job(s) for f: 33
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 32 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 127.426981
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:00:32
+Status: 1 pending, 33 complete.
+ID(s) of pending job(s) for f: 34
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 33 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 113.201147
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:00:47
+Status: 1 pending, 34 complete.
+ID(s) of pending job(s) for f: 35
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 34 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 127.810689
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:01:03
+Status: 1 pending, 35 complete.
+ID(s) of pending job(s) for f: 36
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 35 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 118.116614
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:01:23
+Status: 1 pending, 36 complete.
+ID(s) of pending job(s) for f: 37
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 36 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 123.707704
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:01:43
+Status: 1 pending, 37 complete.
+ID(s) of pending job(s) for f: 38
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 37 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 128.882124
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:02:01
+Status: 1 pending, 38 complete.
+ID(s) of pending job(s) for f: 39
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 38 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 120.181309
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:02:20
+Status: 1 pending, 39 complete.
+ID(s) of pending job(s) for f: 40
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 39 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 120.440906
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:02:43
+Status: 1 pending, 40 complete.
+ID(s) of pending job(s) for f: 41
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 40 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 128.849936
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:03:08
+Status: 1 pending, 41 complete.
+ID(s) of pending job(s) for f: 42
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 41 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 128.865816
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:03:33
+Status: 1 pending, 42 complete.
+ID(s) of pending job(s) for f: 43
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 42 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 127.935753
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:04:00
+Status: 1 pending, 43 complete.
+ID(s) of pending job(s) for f: 44
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 43 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 127.672816
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:04:24
+Status: 1 pending, 44 complete.
+ID(s) of pending job(s) for f: 45
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 44 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 124.961019
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:04:52
+Status: 1 pending, 45 complete.
+ID(s) of pending job(s) for f: 46
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 45 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 122.510158
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:05:15
+Status: 1 pending, 46 complete.
+ID(s) of pending job(s) for f: 47
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 46 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 107.646162
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:05:42
+Status: 1 pending, 47 complete.
+ID(s) of pending job(s) for f: 48
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 47 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 126.623394
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:06:10
+Status: 1 pending, 48 complete.
+ID(s) of pending job(s) for f: 49
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 48 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 123.378874
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:06:39
+Status: 1 pending, 49 complete.
+ID(s) of pending job(s) for f: 50
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 49 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 120.408362
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:07:04
+Status: 1 pending, 50 complete.
+ID(s) of pending job(s) for f: 51
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 50 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 124.349177
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:07:31
+Status: 1 pending, 51 complete.
+ID(s) of pending job(s) for f: 52
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 51 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 120.713554
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:08:01
+Status: 1 pending, 52 complete.
+ID(s) of pending job(s) for f: 53
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 52 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 113.453760
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:08:28
+Status: 1 pending, 53 complete.
+ID(s) of pending job(s) for f: 54
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 53 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 121.986754
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:08:54
+Status: 1 pending, 54 complete.
+ID(s) of pending job(s) for f: 55
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 54 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 120.011677
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:09:24
+Status: 1 pending, 55 complete.
+ID(s) of pending job(s) for f: 56
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 55 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 118.158669
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:09:53
+Status: 1 pending, 56 complete.
+ID(s) of pending job(s) for f: 57
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 56 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 120.857026
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:10:24
+Status: 1 pending, 57 complete.
+ID(s) of pending job(s) for f: 58
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 57 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 120.679843
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:10:58
+Status: 1 pending, 58 complete.
+ID(s) of pending job(s) for f: 59
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 58 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 119.106440
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:11:29
+Status: 1 pending, 59 complete.
+ID(s) of pending job(s) for f: 60
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 59 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 121.860104
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:12:02
+Status: 1 pending, 60 complete.
+ID(s) of pending job(s) for f: 61
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 60 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:0.99992): 113.967508
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:12:32
+Status: 1 pending, 61 complete.
+ID(s) of pending job(s) for f: 62
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 61 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 123.823051
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:13:02
+Status: 1 pending, 62 complete.
+ID(s) of pending job(s) for f: 63
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 62 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 125.117174
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:13:33
+Status: 1 pending, 63 complete.
+ID(s) of pending job(s) for f: 64
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 63 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 123.537469
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:14:18
+Status: 1 pending, 64 complete.
+ID(s) of pending job(s) for f: 65
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 64 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 124.270942
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:14:53
+Status: 1 pending, 65 complete.
+ID(s) of pending job(s) for f: 66
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 65 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 124.509152
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:15:38
+Status: 1 pending, 66 complete.
+ID(s) of pending job(s) for f: 67
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 66 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 126.796865
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:16:15
+Status: 1 pending, 67 complete.
+ID(s) of pending job(s) for f: 68
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 67 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 125.237359
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:16:48
+Status: 1 pending, 68 complete.
+ID(s) of pending job(s) for f: 69
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 68 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 124.099983
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:17:26
+Status: 1 pending, 69 complete.
+ID(s) of pending job(s) for f: 70
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 69 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 125.745826
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:18:03
+Status: 1 pending, 70 complete.
+ID(s) of pending job(s) for f: 71
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 70 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 119.805071
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:18:42
+Status: 1 pending, 71 complete.
+ID(s) of pending job(s) for f: 72
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 71 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 122.480298
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:19:24
+Status: 1 pending, 72 complete.
+ID(s) of pending job(s) for f: 73
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 72 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 118.888467
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:20:14
+Status: 1 pending, 73 complete.
+ID(s) of pending job(s) for f: 74
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 73 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 119.744935
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:21:26
+Status: 1 pending, 74 complete.
+ID(s) of pending job(s) for f: 75
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 74 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 121.836442
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:22:15
+Status: 1 pending, 75 complete.
+ID(s) of pending job(s) for f: 76
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 75 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 122.507943
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:23:14
+Status: 1 pending, 76 complete.
+ID(s) of pending job(s) for f: 77
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 76 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 119.513312
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:24:03
+Status: 1 pending, 77 complete.
+ID(s) of pending job(s) for f: 78
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 77 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 117.069347
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:24:31
+Status: 1 pending, 78 complete.
+ID(s) of pending job(s) for f: 79
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 78 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): 119.112318
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-21 21:25:05
+Status: 1 pending, 79 complete.
+ID(s) of pending job(s) for c0: 80
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 78 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -49.079538
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:25:38
+Status: 1 pending, 80 complete.
+ID(s) of pending job(s) for f: 81
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 79 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -50.665490
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:26:27
+Status: 1 pending, 81 complete.
+ID(s) of pending job(s) for f: 82
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 80 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -45.293827
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:27:10
+Status: 1 pending, 82 complete.
+ID(s) of pending job(s) for f: 83
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 81 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -46.912444
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:28:07
+Status: 1 pending, 83 complete.
+ID(s) of pending job(s) for f: 84
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 82 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -41.770548
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:28:45
+Status: 1 pending, 84 complete.
+ID(s) of pending job(s) for f: 85
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 83 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -45.112515
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:29:19
+Status: 1 pending, 85 complete.
+ID(s) of pending job(s) for f: 86
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 84 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -42.040329
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:30:03
+Status: 1 pending, 86 complete.
+ID(s) of pending job(s) for f: 87
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 85 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -41.745233
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:30:56
+Status: 1 pending, 87 complete.
+ID(s) of pending job(s) for f: 88
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 86 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -45.540601
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:31:43
+Status: 1 pending, 88 complete.
+ID(s) of pending job(s) for f: 89
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 87 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -41.613123
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:32:35
+Status: 1 pending, 89 complete.
+ID(s) of pending job(s) for f: 90
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 88 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -43.677456
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:33:24
+Status: 1 pending, 90 complete.
+ID(s) of pending job(s) for f: 91
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 89 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -47.392034
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:34:24
+Status: 1 pending, 91 complete.
+ID(s) of pending job(s) for f: 92
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 90 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -44.575281
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:35:12
+Status: 1 pending, 92 complete.
+ID(s) of pending job(s) for f: 93
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 91 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -43.480681
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:36:07
+Status: 1 pending, 93 complete.
+ID(s) of pending job(s) for f: 94
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 92 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -49.926119
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:37:21
+Status: 1 pending, 94 complete.
+ID(s) of pending job(s) for f: 95
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 93 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -53.018784
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:38:37
+Status: 1 pending, 95 complete.
+ID(s) of pending job(s) for f: 96
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 94 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -41.882025
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:39:41
+Status: 1 pending, 96 complete.
+ID(s) of pending job(s) for f: 97
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 95 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -42.438715
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:40:34
+Status: 1 pending, 97 complete.
+ID(s) of pending job(s) for f: 98
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 96 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:0.99990): -58.004467
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:41:21
+Status: 1 pending, 98 complete.
+ID(s) of pending job(s) for f: 99
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 97 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -38.492914
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:42:12
+Status: 1 pending, 99 complete.
+ID(s) of pending job(s) for f: 100
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 98 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -36.128260
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:43:42
+Status: 1 pending, 100 complete.
+ID(s) of pending job(s) for f: 101
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 99 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -49.934257
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:44:29
+Status: 1 pending, 101 complete.
+ID(s) of pending job(s) for f: 102
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 100 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -44.761340
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:45:33
+Status: 1 pending, 102 complete.
+ID(s) of pending job(s) for f: 103
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 101 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -50.835207
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:46:33
+Status: 1 pending, 103 complete.
+ID(s) of pending job(s) for f: 104
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 102 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -51.584521
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:47:43
+Status: 1 pending, 104 complete.
+ID(s) of pending job(s) for f: 105
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 103 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -54.180124
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:48:45
+Status: 1 pending, 105 complete.
+ID(s) of pending job(s) for f: 106
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 104 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -59.635147
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:50:03
+Status: 1 pending, 106 complete.
+ID(s) of pending job(s) for f: 107
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 105 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -48.515089
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:51:17
+Status: 1 pending, 107 complete.
+ID(s) of pending job(s) for f: 108
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 106 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -47.752495
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:52:53
+Status: 1 pending, 108 complete.
+ID(s) of pending job(s) for f: 109
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 107 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -49.568279
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:54:53
+Status: 1 pending, 109 complete.
+ID(s) of pending job(s) for f: 110
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 108 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -40.632022
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:56:12
+Status: 1 pending, 110 complete.
+ID(s) of pending job(s) for f: 111
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 109 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -45.118328
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:56:57
+Status: 1 pending, 111 complete.
+ID(s) of pending job(s) for f: 112
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 110 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -32.353487
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:58:08
+Status: 1 pending, 112 complete.
+ID(s) of pending job(s) for f: 113
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 111 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -34.281784
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 21:59:37
+Status: 1 pending, 113 complete.
+ID(s) of pending job(s) for f: 114
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 112 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -53.296892
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 22:00:45
+Status: 1 pending, 114 complete.
+ID(s) of pending job(s) for f: 115
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 113 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -46.343634
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 22:02:30
+Status: 1 pending, 115 complete.
+ID(s) of pending job(s) for f: 116
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 114 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -48.870955
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 22:04:11
+Status: 1 pending, 116 complete.
+ID(s) of pending job(s) for f: 117
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 115 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -55.999123
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 22:05:42
+Status: 1 pending, 117 complete.
+ID(s) of pending job(s) for f: 118
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 116 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -41.926491
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 22:07:31
+Status: 1 pending, 118 complete.
+ID(s) of pending job(s) for f: 119
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 117 data for f task...
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -58.703875
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-21 22:09:03
+Status: 1 pending, 119 complete.
+ID(s) of pending job(s) for f: 120
+Maximum number of jobs completed on all resources.
+Making final recommendation:
+Computing current best...
+Feasible solution found.
+
+Optimizing current best with scipy SLSQP
+
+Minimum expected objective value satisfying constraints w/ high prob (c0:1.00000): -59.377861
+
+At location:    
+Have a nice day.

@@ -1,0 +1,39 @@
+{
+    "language": "PYTHON",
+    "main_file": "problem",
+    "experiment-name": "PESC-example0",
+    "acquisition": "PES",
+    "max_finished_jobs": 120,
+    "fit_mean": "False",
+    "constraint_delta": 0.0001,
+    "stability_jitter": 1e-06,
+    "use_multi_delta": "False",
+    "recommendations": "during",
+    "likelihood": "noiseless",
+    "variables": {
+        "x0": {
+            "type": "FLOAT",
+            "size": 1,
+            "min": -1,
+            "max": 1
+        },
+        "x1": {
+            "type": "FLOAT",
+            "size": 1,
+            "min": -1,
+            "max": 1
+        }
+    },
+    "tasks": {
+        "f": {
+            "type": "objective",
+            "group": 1,
+            "main_file": "f"
+        },
+        "c0": {
+            "type": "constraint",
+            "group": 2,
+            "main_file": "c0"
+        }
+    }
+}

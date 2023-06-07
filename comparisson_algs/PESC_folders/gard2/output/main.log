@@ -1,0 +1,3000 @@
+
+Getting suggestion for c0, f...
+
+
+Suggestion:     
+Current time: 2023-05-14 19:24:54
+Status: 1 pending, 0 complete.
+ID(s) of pending job(s) for f: 1
+
+
+Fitting GP to 0 data for c0 task...
+Fitting GP to 1 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:24:57
+Status: 1 pending, 1 complete.
+ID(s) of pending job(s) for c0: 2
+
+
+Fitting GP to 1 data for c0 task...
+Fitting GP to 1 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Best observed values satisfying constraints is 0.000000, at location:
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:25:01
+Status: 1 pending, 2 complete.
+ID(s) of pending job(s) for c0: 3
+
+
+Fitting GP to 2 data for c0 task...
+Fitting GP to 1 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:25:04
+Status: 1 pending, 3 complete.
+ID(s) of pending job(s) for c0: 4
+
+
+Fitting GP to 3 data for c0 task...
+Fitting GP to 1 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:25:08
+Status: 1 pending, 4 complete.
+ID(s) of pending job(s) for c0: 5
+
+
+Fitting GP to 4 data for c0 task...
+Fitting GP to 1 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-14 19:25:11
+Status: 1 pending, 5 complete.
+ID(s) of pending job(s) for f: 6
+
+
+Fitting GP to 4 data for c0 task...
+Fitting GP to 2 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:25:15
+Status: 1 pending, 6 complete.
+ID(s) of pending job(s) for c0: 7
+
+
+Fitting GP to 5 data for c0 task...
+Fitting GP to 2 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:25:18
+Status: 1 pending, 7 complete.
+ID(s) of pending job(s) for c0: 8
+
+
+Fitting GP to 6 data for c0 task...
+Fitting GP to 2 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-14 19:25:22
+Status: 1 pending, 8 complete.
+ID(s) of pending job(s) for f: 9
+
+
+Fitting GP to 6 data for c0 task...
+Fitting GP to 3 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-14 19:25:26
+Status: 1 pending, 9 complete.
+ID(s) of pending job(s) for f: 10
+
+
+Fitting GP to 6 data for c0 task...
+Fitting GP to 4 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-14 19:25:29
+Status: 1 pending, 10 complete.
+ID(s) of pending job(s) for f: 11
+
+
+Fitting GP to 6 data for c0 task...
+Fitting GP to 5 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-14 19:25:34
+Status: 1 pending, 11 complete.
+ID(s) of pending job(s) for f: 12
+
+
+Fitting GP to 6 data for c0 task...
+Fitting GP to 6 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Best observed values satisfying constraints is -0.598653, at location:
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-14 19:25:38
+Status: 1 pending, 12 complete.
+ID(s) of pending job(s) for f: 13
+
+
+Fitting GP to 6 data for c0 task...
+Fitting GP to 7 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-14 19:25:42
+Status: 1 pending, 13 complete.
+ID(s) of pending job(s) for f: 14
+
+
+Fitting GP to 6 data for c0 task...
+Fitting GP to 8 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-14 19:25:47
+Status: 1 pending, 14 complete.
+ID(s) of pending job(s) for f: 15
+
+
+Fitting GP to 6 data for c0 task...
+Fitting GP to 9 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:25:51
+Status: 1 pending, 15 complete.
+ID(s) of pending job(s) for c0: 16
+
+
+Fitting GP to 7 data for c0 task...
+Fitting GP to 9 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:25:55
+Status: 1 pending, 16 complete.
+ID(s) of pending job(s) for c0: 17
+
+
+Fitting GP to 8 data for c0 task...
+Fitting GP to 9 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:25:59
+Status: 1 pending, 17 complete.
+ID(s) of pending job(s) for c0: 18
+
+
+Fitting GP to 9 data for c0 task...
+Fitting GP to 9 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Best observed values satisfying constraints is -0.844717, at location:
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:26:04
+Status: 1 pending, 18 complete.
+ID(s) of pending job(s) for c0: 19
+
+
+Fitting GP to 10 data for c0 task...
+Fitting GP to 9 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:26:08
+Status: 1 pending, 19 complete.
+ID(s) of pending job(s) for c0: 20
+
+
+Fitting GP to 11 data for c0 task...
+Fitting GP to 9 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-14 19:26:13
+Status: 1 pending, 20 complete.
+ID(s) of pending job(s) for f: 21
+
+
+Fitting GP to 11 data for c0 task...
+Fitting GP to 10 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:26:17
+Status: 1 pending, 21 complete.
+ID(s) of pending job(s) for c0: 22
+
+
+Fitting GP to 12 data for c0 task...
+Fitting GP to 10 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:26:21
+Status: 1 pending, 22 complete.
+ID(s) of pending job(s) for c0: 23
+
+
+Fitting GP to 13 data for c0 task...
+Fitting GP to 10 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:26:25
+Status: 1 pending, 23 complete.
+ID(s) of pending job(s) for c0: 24
+
+
+Fitting GP to 14 data for c0 task...
+Fitting GP to 10 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-14 19:26:30
+Status: 1 pending, 24 complete.
+ID(s) of pending job(s) for f: 25
+
+
+Fitting GP to 14 data for c0 task...
+Fitting GP to 11 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:26:34
+Status: 1 pending, 25 complete.
+ID(s) of pending job(s) for c0: 26
+
+
+Fitting GP to 15 data for c0 task...
+Fitting GP to 11 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-14 19:26:39
+Status: 1 pending, 26 complete.
+ID(s) of pending job(s) for f: 27
+
+
+Fitting GP to 15 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:26:44
+Status: 1 pending, 27 complete.
+ID(s) of pending job(s) for c0: 28
+
+
+Fitting GP to 16 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:26:49
+Status: 1 pending, 28 complete.
+ID(s) of pending job(s) for c0: 29
+
+
+Fitting GP to 17 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:26:53
+Status: 1 pending, 29 complete.
+ID(s) of pending job(s) for c0: 30
+
+
+Fitting GP to 18 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:26:58
+Status: 1 pending, 30 complete.
+ID(s) of pending job(s) for c0: 31
+
+
+Fitting GP to 19 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:27:02
+Status: 1 pending, 31 complete.
+ID(s) of pending job(s) for c0: 32
+
+
+Fitting GP to 20 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:27:06
+Status: 1 pending, 32 complete.
+ID(s) of pending job(s) for c0: 33
+
+
+Fitting GP to 21 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:27:11
+Status: 1 pending, 33 complete.
+ID(s) of pending job(s) for c0: 34
+
+
+Fitting GP to 22 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:27:16
+Status: 1 pending, 34 complete.
+ID(s) of pending job(s) for c0: 35
+
+
+Fitting GP to 23 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:27:20
+Status: 1 pending, 35 complete.
+ID(s) of pending job(s) for c0: 36
+
+
+Fitting GP to 24 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:27:25
+Status: 1 pending, 36 complete.
+ID(s) of pending job(s) for c0: 37
+
+
+Fitting GP to 25 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:27:29
+Status: 1 pending, 37 complete.
+ID(s) of pending job(s) for c0: 38
+
+
+Fitting GP to 26 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:27:33
+Status: 1 pending, 38 complete.
+ID(s) of pending job(s) for c0: 39
+
+
+Fitting GP to 27 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:27:38
+Status: 1 pending, 39 complete.
+ID(s) of pending job(s) for c0: 40
+
+
+Fitting GP to 28 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:27:42
+Status: 1 pending, 40 complete.
+ID(s) of pending job(s) for c0: 41
+
+
+Fitting GP to 29 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:27:47
+Status: 1 pending, 41 complete.
+ID(s) of pending job(s) for c0: 42
+
+
+Fitting GP to 30 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:27:51
+Status: 1 pending, 42 complete.
+ID(s) of pending job(s) for c0: 43
+
+
+Fitting GP to 31 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:27:56
+Status: 1 pending, 43 complete.
+ID(s) of pending job(s) for c0: 44
+
+
+Fitting GP to 32 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:28:00
+Status: 1 pending, 44 complete.
+ID(s) of pending job(s) for c0: 45
+
+
+Fitting GP to 33 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:28:05
+Status: 1 pending, 45 complete.
+ID(s) of pending job(s) for c0: 46
+
+
+Fitting GP to 34 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:28:09
+Status: 1 pending, 46 complete.
+ID(s) of pending job(s) for c0: 47
+
+
+Fitting GP to 35 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:28:14
+Status: 1 pending, 47 complete.
+ID(s) of pending job(s) for c0: 48
+
+
+Fitting GP to 36 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:28:19
+Status: 1 pending, 48 complete.
+ID(s) of pending job(s) for c0: 49
+
+
+Fitting GP to 37 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:28:23
+Status: 1 pending, 49 complete.
+ID(s) of pending job(s) for c0: 50
+
+
+Fitting GP to 38 data for c0 task...
+Fitting GP to 12 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-14 19:28:28
+Status: 1 pending, 50 complete.
+ID(s) of pending job(s) for f: 51
+
+
+Fitting GP to 38 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:28:33
+Status: 1 pending, 51 complete.
+ID(s) of pending job(s) for c0: 52
+
+
+Fitting GP to 39 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:28:38
+Status: 1 pending, 52 complete.
+ID(s) of pending job(s) for c0: 53
+
+
+Fitting GP to 40 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:28:42
+Status: 1 pending, 53 complete.
+ID(s) of pending job(s) for c0: 54
+
+
+Fitting GP to 41 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:28:47
+Status: 1 pending, 54 complete.
+ID(s) of pending job(s) for c0: 55
+
+
+Fitting GP to 42 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:28:52
+Status: 1 pending, 55 complete.
+ID(s) of pending job(s) for c0: 56
+
+
+Fitting GP to 43 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:28:57
+Status: 1 pending, 56 complete.
+ID(s) of pending job(s) for c0: 57
+
+
+Fitting GP to 44 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:29:02
+Status: 1 pending, 57 complete.
+ID(s) of pending job(s) for c0: 58
+
+
+Fitting GP to 45 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:29:07
+Status: 1 pending, 58 complete.
+ID(s) of pending job(s) for c0: 59
+
+
+Fitting GP to 46 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:29:11
+Status: 1 pending, 59 complete.
+ID(s) of pending job(s) for c0: 60
+
+
+Fitting GP to 47 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:29:16
+Status: 1 pending, 60 complete.
+ID(s) of pending job(s) for c0: 61
+
+
+Fitting GP to 48 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:29:21
+Status: 1 pending, 61 complete.
+ID(s) of pending job(s) for c0: 62
+
+
+Fitting GP to 49 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:29:26
+Status: 1 pending, 62 complete.
+ID(s) of pending job(s) for c0: 63
+
+
+Fitting GP to 50 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:29:31
+Status: 1 pending, 63 complete.
+ID(s) of pending job(s) for c0: 64
+
+
+Fitting GP to 51 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:29:36
+Status: 1 pending, 64 complete.
+ID(s) of pending job(s) for c0: 65
+
+
+Fitting GP to 52 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:29:41
+Status: 1 pending, 65 complete.
+ID(s) of pending job(s) for c0: 66
+
+
+Fitting GP to 53 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:29:45
+Status: 1 pending, 66 complete.
+ID(s) of pending job(s) for c0: 67
+
+
+Fitting GP to 54 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:29:50
+Status: 1 pending, 67 complete.
+ID(s) of pending job(s) for c0: 68
+
+
+Fitting GP to 55 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:29:55
+Status: 1 pending, 68 complete.
+ID(s) of pending job(s) for c0: 69
+
+
+Fitting GP to 56 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:30:00
+Status: 1 pending, 69 complete.
+ID(s) of pending job(s) for c0: 70
+
+
+Fitting GP to 57 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:30:05
+Status: 1 pending, 70 complete.
+ID(s) of pending job(s) for c0: 71
+
+
+Fitting GP to 58 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:30:10
+Status: 1 pending, 71 complete.
+ID(s) of pending job(s) for c0: 72
+
+
+Fitting GP to 59 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:30:15
+Status: 1 pending, 72 complete.
+ID(s) of pending job(s) for c0: 73
+
+
+Fitting GP to 60 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:30:20
+Status: 1 pending, 73 complete.
+ID(s) of pending job(s) for c0: 74
+
+
+Fitting GP to 61 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:30:26
+Status: 1 pending, 74 complete.
+ID(s) of pending job(s) for c0: 75
+
+
+Fitting GP to 62 data for c0 task...
+Fitting GP to 13 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) f at location
+Current time: 2023-05-14 19:30:31
+Status: 1 pending, 75 complete.
+ID(s) of pending job(s) for f: 76
+
+
+Fitting GP to 62 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:30:36
+Status: 1 pending, 76 complete.
+ID(s) of pending job(s) for c0: 77
+
+
+Fitting GP to 63 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:30:41
+Status: 1 pending, 77 complete.
+ID(s) of pending job(s) for c0: 78
+
+
+Fitting GP to 64 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:30:46
+Status: 1 pending, 78 complete.
+ID(s) of pending job(s) for c0: 79
+
+
+Fitting GP to 65 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:30:51
+Status: 1 pending, 79 complete.
+ID(s) of pending job(s) for c0: 80
+
+
+Fitting GP to 66 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:30:56
+Status: 1 pending, 80 complete.
+ID(s) of pending job(s) for c0: 81
+
+
+Fitting GP to 67 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:31:02
+Status: 1 pending, 81 complete.
+ID(s) of pending job(s) for c0: 82
+
+
+Fitting GP to 68 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:31:07
+Status: 1 pending, 82 complete.
+ID(s) of pending job(s) for c0: 83
+
+
+Fitting GP to 69 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:31:12
+Status: 1 pending, 83 complete.
+ID(s) of pending job(s) for c0: 84
+
+
+Fitting GP to 70 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:31:17
+Status: 1 pending, 84 complete.
+ID(s) of pending job(s) for c0: 85
+
+
+Fitting GP to 71 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:31:23
+Status: 1 pending, 85 complete.
+ID(s) of pending job(s) for c0: 86
+
+
+Fitting GP to 72 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:31:28
+Status: 1 pending, 86 complete.
+ID(s) of pending job(s) for c0: 87
+
+
+Fitting GP to 73 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:31:34
+Status: 1 pending, 87 complete.
+ID(s) of pending job(s) for c0: 88
+
+
+Fitting GP to 74 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:31:39
+Status: 1 pending, 88 complete.
+ID(s) of pending job(s) for c0: 89
+
+
+Fitting GP to 75 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:31:45
+Status: 1 pending, 89 complete.
+ID(s) of pending job(s) for c0: 90
+
+
+Fitting GP to 76 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:31:50
+Status: 1 pending, 90 complete.
+ID(s) of pending job(s) for c0: 91
+
+
+Fitting GP to 77 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:31:56
+Status: 1 pending, 91 complete.
+ID(s) of pending job(s) for c0: 92
+
+
+Fitting GP to 78 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:32:01
+Status: 1 pending, 92 complete.
+ID(s) of pending job(s) for c0: 93
+
+
+Fitting GP to 79 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:32:06
+Status: 1 pending, 93 complete.
+ID(s) of pending job(s) for c0: 94
+
+
+Fitting GP to 80 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:32:12
+Status: 1 pending, 94 complete.
+ID(s) of pending job(s) for c0: 95
+
+
+Fitting GP to 81 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:32:18
+Status: 1 pending, 95 complete.
+ID(s) of pending job(s) for c0: 96
+
+
+Fitting GP to 82 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:32:23
+Status: 1 pending, 96 complete.
+ID(s) of pending job(s) for c0: 97
+
+
+Fitting GP to 83 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:32:29
+Status: 1 pending, 97 complete.
+ID(s) of pending job(s) for c0: 98
+
+
+Fitting GP to 84 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:32:34
+Status: 1 pending, 98 complete.
+ID(s) of pending job(s) for c0: 99
+
+
+Fitting GP to 85 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:32:40
+Status: 1 pending, 99 complete.
+ID(s) of pending job(s) for c0: 100
+
+
+Fitting GP to 86 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:32:45
+Status: 1 pending, 100 complete.
+ID(s) of pending job(s) for c0: 101
+
+
+Fitting GP to 87 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:32:51
+Status: 1 pending, 101 complete.
+ID(s) of pending job(s) for c0: 102
+
+
+Fitting GP to 88 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:32:57
+Status: 1 pending, 102 complete.
+ID(s) of pending job(s) for c0: 103
+
+
+Fitting GP to 89 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:33:02
+Status: 1 pending, 103 complete.
+ID(s) of pending job(s) for c0: 104
+
+
+Fitting GP to 90 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:33:08
+Status: 1 pending, 104 complete.
+ID(s) of pending job(s) for c0: 105
+
+
+Fitting GP to 91 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:33:13
+Status: 1 pending, 105 complete.
+ID(s) of pending job(s) for c0: 106
+
+
+Fitting GP to 92 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:33:19
+Status: 1 pending, 106 complete.
+ID(s) of pending job(s) for c0: 107
+
+
+Fitting GP to 93 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:33:25
+Status: 1 pending, 107 complete.
+ID(s) of pending job(s) for c0: 108
+
+
+Fitting GP to 94 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:33:31
+Status: 1 pending, 108 complete.
+ID(s) of pending job(s) for c0: 109
+
+
+Fitting GP to 95 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:33:37
+Status: 1 pending, 109 complete.
+ID(s) of pending job(s) for c0: 110
+
+
+Fitting GP to 96 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:33:42
+Status: 1 pending, 110 complete.
+ID(s) of pending job(s) for c0: 111
+
+
+Fitting GP to 97 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:33:48
+Status: 1 pending, 111 complete.
+ID(s) of pending job(s) for c0: 112
+
+
+Fitting GP to 98 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:33:54
+Status: 1 pending, 112 complete.
+ID(s) of pending job(s) for c0: 113
+
+
+Fitting GP to 99 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:34:00
+Status: 1 pending, 113 complete.
+ID(s) of pending job(s) for c0: 114
+
+
+Fitting GP to 100 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:34:06
+Status: 1 pending, 114 complete.
+ID(s) of pending job(s) for c0: 115
+
+
+Fitting GP to 101 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:34:11
+Status: 1 pending, 115 complete.
+ID(s) of pending job(s) for c0: 116
+
+
+Fitting GP to 102 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:34:18
+Status: 1 pending, 116 complete.
+ID(s) of pending job(s) for c0: 117
+
+
+Fitting GP to 103 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:34:24
+Status: 1 pending, 117 complete.
+ID(s) of pending job(s) for c0: 118
+
+
+Fitting GP to 104 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:34:29
+Status: 1 pending, 118 complete.
+ID(s) of pending job(s) for c0: 119
+
+
+Fitting GP to 105 data for c0 task...
+Fitting GP to 14 data for f task...
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+
+Getting suggestion for c0, f...
+
+Initializing PES
+Computing PES on grid for f.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+Computing PES on grid for c0.
+Optimizing PES with L-BFGS (numerically estimating gradients)
+
+Suggestion: task(s) c0 at location
+Current time: 2023-05-14 19:34:35
+Status: 1 pending, 119 complete.
+ID(s) of pending job(s) for c0: 120
+Maximum number of jobs completed on all resources.
+Making final recommendation:
+Computing current best...
+
+No feasible solution found (yet).
+
+Maximum total probability of satisfying constraints = 0.50000
+  Probability of satisfying                 c0 constraint: 0.50000
+
+At location:    
+Have a nice day.

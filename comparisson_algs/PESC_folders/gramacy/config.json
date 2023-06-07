@@ -1,0 +1,44 @@
+{
+    "language": "PYTHON",
+    "main_file": "problem",
+    "experiment-name": "PESC-gramacy-dectest1",
+    "acquisition": "PES",
+    "max_finished_jobs": 120,
+    "fit_mean"             : "False",
+    "constraint_delta"     : 1e-4,
+    "stability_jitter"     : 1e-6,
+    "use_multi_delta"      : "False",
+    "recommendations"      : "during",
+    "likelihood"           : "noiseless",
+    "variables": {
+        "x0": {
+            "type": "FLOAT",
+            "size": 1,
+            "min": 0,
+            "max": 1
+        },
+        "x1": {
+            "type": "FLOAT",
+            "size": 1,
+            "min": 0,
+            "max": 1
+        }
+    },
+    "tasks": {
+        "c0": {
+            "type": "constraint",
+            "group": 2,
+            "main_file": "c0"
+        },
+        "c1": {
+            "type": "constraint",
+            "group": 3,
+            "main_file": "c1"
+        },
+        "f": {
+            "type": "objective",
+            "group": 1,
+            "main_file": "f"
+        }
+    }
+}
