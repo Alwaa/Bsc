@@ -135,11 +135,11 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     ## EI for the optimality sub-problem
     def gpr_ei(x_in,zs,ys,rho,gpr,ubest):
         x=np.atleast_2d(x_in)
-        x = np.nan_to_num(x, nan= bounds[0][1]) #TODO: Is there a problem with example0?
-        mu,std = gpr.predict(x, return_std=True) #TODO:std returns 0? Causes divide by zero
+        x = np.nan_to_num(x, nan= bounds[0][1])
+        mu,std = gpr.predict(x, return_std=True)
         muu = mu + u_post_pluss(x,zs,ys,rho)
         #xx = (ubest-muu)/std #Original formulation
-        xx = -(muu-ubest)/(std+1e-10) #?Why negative here?? #Added small value 
+        xx = -(muu-ubest)/(std+1e-10) #Added small value to divisor to avoid problems
         ei = std * (xx * ndtr(xx) + norm.pdf(xx))
         return ei
     
@@ -306,9 +306,26 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
         return x,z,gpr,gpcs, gp_logger, rho_list, xs_out, objs, ind_evals
     
     if not S:
-        raise NotImplementedError("Returning delta variable not implemented for tests")
+        raise NotImplementedError("Returning with delta setting not tested")
+        sampled_points = [gpc.base_estimator_.X_train_ for gpc in gpcs] + [gpr.X_train]
+        data = np.concatenate(sampled_points, axis=0)#collected points
+        best_candidate, best_expected_value = None, np.inf #minimization problem
+        for x_candidate in data:
+            feasible = True
+            for gpc in gpcs:
+                if gpc.predict_proba(x_candidate)[:,1] > delta #probability of breaking a constraint
+                    feasible = False
+                    break
+            if feasible:
+                expected = gpr.predict(x_candidate)
+                if expected < best_expected_value:
+                    best_candidate = x_candidate
+                    best_expected_value = expected
+        
+        return best_candidate, best_expected_value
+            
 
-    return x,z,gpr,gpcs, gp_logger, rho_list
+    return x,z,gpr,gpcs, gp_logger
 
 def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False, start_all = True):
     print("ADMMBO:")
@@ -358,10 +375,8 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
         cons_start = np.array([constraintf[c](x0[:1]) <= 0  for c in range(num_constraints)])
         for i in range(1,(len(x0)-1)):
             print(i,end = "|", flush = True)
-            #OLDcons_start = np.array([constraintf[c](x0[:i]) <= 0  for c in range(num_constraints)])
             cons_add = np.array([constraintf[c](x0[i]) <= 0  for c in range(num_constraints)]) #Saving on evaluations...
             cons_start = np.concatenate((cons_start,cons_add), axis = 1)
-            #print(cons_start)
             cons_per = np.sum(cons_start, axis = 1)
             more_than_none = np.all((0 < cons_per))
             less_than_all = np.all((i > cons_per))
@@ -381,6 +396,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
         x0 = x0_in
     
     K_in_old = (max_iter-len(x0))//4 #50 #example0 K = 30
+    
     ## Calculating ADMMBO budget based on alpha and beta values pluss max_iter
     a0, a = admmbo_pars.get("alpha0", DEFAULT_OPTIONS["alpha0"]), admmbo_pars.get("alpha", DEFAULT_OPTIONS["alpha"])
     b0, b = admmbo_pars.get("beta0", DEFAULT_OPTIONS["beta0"]), admmbo_pars.get("beta", DEFAULT_OPTIONS["beta"])
@@ -392,50 +408,24 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     # Grid with evry grid_step-th point of space
     # Should now behave well with non square inputs
     xins = (np.linspace(bounds[i*2], bounds[1+i*2], num_samples)[::grid_step] for i in range(dim_num))
-    #TODO: Check if it is same as //grid_step
     grid = np.array(np.meshgrid(*xins,indexing='ij')).reshape(dim_num,-1).T
 
     #Running ADMMBO 
     xo,zo,gpr,gpc, gp_logger, rho_list, xs_out, obj_out, eval_type = admmbo(costf, constraintf, M, bounds_array, grid, x0, 
                                                                             options=options_in, format_return=True)
 
-    ## Formatting output ## #DONE: Format so order of queries is correct
-    # xsr = gpr.X_train_
-    # obj = gpr.y_train_
-    # xsc = gpc.base_estimator_.X_train_
-    # cc = gpc.base_estimator_.y_train_
-
-    # new_obj = np.concatenate((obj,np.zeros(len(cc)))).reshape(-1,1)
-    # new_cc = np.concatenate((np.ones(len(obj)),cc)).reshape(-1,1)
-    # obj_out = np.concatenate((new_obj,new_cc),axis = 1) ## SImple combined obj and constraied after eachother
-
-    # objmaks = np.concatenate((np.full(len(obj),True),np.full(len(cc),False))).reshape(-1,1)
-    # constmaks = np.concatenate((np.full(len(obj),False),np.full(len(cc),True))).reshape(-1,1)
-    # eval_type = np.concatenate((objmaks,constmaks),axis = 1)
-
-    # xs_out = np.concatenate((xsr,xsc))
-    ## ------------------ ##
-
+    # Debugging not updated after first iterations, so it would likely need some adjustments
     if not debugging:
-        #print(xs_out, obj_out, eval_type)
         return xs_out, obj_out, eval_type
     
     ### Debugging ###
-    #TODO: FIx debugging now that it isnt xin but xins ex xin = xins[0] for sq bounds or smth
     if problem["Bound Type"] == "square":
         xin = xins[0]
         xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(2, -1).T
     else:
         raise Exception("Debugging Not Yet Implemented with non-square bounds")
     import matplotlib.pyplot as plt
-    
-    #print(xsc.shape, cc.shape)
-    #print(xsr,obj)
-    
-    # if xsr.shape == xsc.shape:
-    #     print("Diff of xs")
-    #     print(xsr-xsc)
-    
+
     K1 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
             gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2)) #+\
     fig_list = []
@@ -447,17 +437,6 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
             axs = gs.subplots();flat_axs = axs.flat
             fig.suptitle(f"EI for [{i}-{i+10}]")
 
-        # print(sample_n)
-        # print(f"x sampled: {round[3]}")
-        # print(f"{round[5]}: {round[6]}")
-        # print(f"{round[3]}: {round[4]}")
-
-        # gpr_cop = gaussian_process.GaussianProcessRegressor(kernel=K1)
-        # gpr_cop.fit(round[-2],round[-1])
-        # plt.figure();plt.imshow(gpr_cop.predict(xy).reshape(len(xin),-1),
-        #                         extent=(extent_tuple),origin='lower')
-        # ;plt.title(f'Objective Function Estimate [{i}] {round[3]}')
-        # plt.show(block = True)
         ei = round[-3]
         mp = flat_axs[i%10].imshow(ei.reshape(int(np.sqrt(len(ei))),int(np.sqrt(len(ei)))).T,
                                 extent=(extent_tuple),origin='lower')
@@ -469,7 +448,6 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     plt.figure();plt.plot(rho_list);plt.title('Rho')
     print(f"M = {M}")
     plt.show(block = True)
-        
     ### Plots ###
     ## Cost/Objective Function Estimate ##
     plt.figure();plt.imshow(gpr.predict(xy).reshape(len(xin),-1).T,
@@ -490,6 +468,7 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     
     return xs_out, obj_out, eval_type
 
+# Simple implementaion test
 if __name__ == "__main__":
     from opt_problems.example_problems import example0
     from opt_problems.paper_problems import gardner1, gardner2
