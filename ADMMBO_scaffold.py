@@ -313,7 +313,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
         for x_candidate in data:
             feasible = True
             for gpc in gpcs:
-                if gpc.predict_proba(x_candidate)[:,1] > delta #probability of breaking a constraint
+                if gpc.predict_proba(x_candidate)[:,1] > delta: #probability of breaking a constraint
                     feasible = False
                     break
             if feasible:
