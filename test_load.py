@@ -12,11 +12,12 @@ try:
 except:
     pass
 
-exclude = ["plot_cache"] #["admmbo00","admmbo01"]
-e_folder = fol("tsts",3)#fol("rho-lw-wrong",0) #fol("coil-more",0)#fol("coil-test", 2)
-problem = gardner1#gramsingle#lwwrong#lamwillcox3#example0# coil_pure
-title = "Comparison Gardner 1"#"Comparison Gramacy Single"
-error_bars = True
+exclude = ["plot_cache"] #["admmbo00","admmbo01"] , "cma","cobyla"
+e_folder = fol("grid-coil-360",1)#fol("grid-coil-MM", 0)###fol("tsts",3)#fol("rho-lw-wrong",0) #fol("coil-more",0)#fol("coil-test", 2)
+problem = coil_pure #lwwrong# coil_pure
+name_title = "Coil"
+title = "Comparison " + name_title #"Comparison Gardner 1"
+
 
 """
 e_folder = fol("lw3-all", 0)
@@ -37,23 +38,34 @@ for excluded in exclude:
 exps = {}
 
 ## Selecting algs by indx (optional) ##
+error_bars = True
 #alg_folders = alg_folders[1::8] + alg_folders[-3:]
-#alg_folders = list(np.array(alg_folders)[np.array([1,3,7])])
+#alg_folders = alg_folders[1:2] + alg_folders[-3:]
+#alg_folders = alg_folders[:-3]
+#alg_folders = list(np.array(alg_folders)[np.array([0,2])])
+show_indxs = []
 ## -------------------------------   ##
 for folder in alg_folders:
     exps[folder] = load_exp(folder,e_folder)
 
 expretiment_plot(exps,problem,e_folder,name_from_to=name_from_to, 
-                 override=True, title=title, just_mean=not error_bars)
+                 override=False, title=title, just_mean=not error_bars,
+                 xlim= 360, split_starting = True)
 
 for name, exp_list in exps.items():
     continue
     exploration_hist(exp_list, name = name)
 
 plt.show()
-a,b,c = exps[alg_folders[0]][2]
-vizualize_toy(a,b,c, problem)
+for i in show_indxs:
+    a,b,c = exps[alg_folders[i]][2]
+    name = alg_folders[i]
+    for nfrom, nto in name_from_to.items():
+        name = name.replace(nfrom,nto)
+    vizualize_toy(a,b,c, problem
+    ,title = f"{name_title} Path :{name}")
 
-a,b,c = exps[alg_folders[1]][2]
-vizualize_toy(a,b,c, problem)
+    # a,b,c = exps[alg_folders[3]][2]
+    # vizualize_toy(a,b,c, problem
+    # ,title = "Flower PESC Path")
 # expretiment_plot({"test" : exps["ADMMBO"][60:62]},problem)

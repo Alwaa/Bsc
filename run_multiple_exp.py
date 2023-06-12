@@ -8,7 +8,7 @@ from comparisson_algs.cobyla_pilot import cobyla_run, multi_cobyla
 
 from comparisson_algs.pesc_script import pesc_main, pesc_run_experiment, pesc_create_problem
 from utils.plotting import vizualize_toy
-from utils.sampling import monte_carlo_sampling, grid_sampling
+from utils.sampling import monte_carlo_sampling, grid_sampling, noisy_grid, latin_grid
 from utils.storing import create_exp_folder, save_exps
 
 
@@ -22,14 +22,14 @@ except:
 
 warnings.filterwarnings('ignore')
 
-running_time = 4*60*60
+running_time = 6*60*60
 
-exp_name = "rho-gramsingle" #"PESC-LW"
-num_trials = 60 #60 #36 #60
-problem = gramsingle # lamwillcox3 #gramsingle #lamwillcox3 #coil_pure
+exp_name = "grid-coil-360" #"PESC-LW"
+num_trials = 10 #60 
+problem = coil_pure #coil_pure
 name = None#"example0" #"lw3" #For PESC
 
-max_iter = 120
+max_iter = 360#120
 
 alg_res = { 
             #"cobyla":[],
@@ -39,7 +39,7 @@ alg_res = {
 }
 
 
-divisor_iter = len(problem["Constraint Functions (z)"]) #Half for cma and cobyla since they are coupled
+divisor_iter = 1 + len(problem["Constraint Functions (z)"]) #Half for cma and cobyla since they are coupled
 if not name is None:
     pesc_create_problem(problem, name, decoupled=True, max_iter = max_iter)
 else:
@@ -47,7 +47,6 @@ else:
 
 #ops00 = {"M": 20, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":8}
 # ops0 = {"M": 10, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4}
-#TODO: Run big M coil test again since i didnt configure correctly...
 
 rho_testing = {
     "Rho-0.05" : {"M": 10, "rho" : 0.05, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
@@ -93,24 +92,41 @@ coil_testing = {
 
 B_mult = 1
 coil_testing2 = {
-    "(Locked)_Rho-0.2_M-10" : {"M": 10, "adjust_rho" : False, "rho" : 0.2, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
-    "(Locked)_Rho-0.2_M-1" : {"M": 1, "adjust_rho" : False, "rho" : 0.2, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
+    #"_M-1e5_Rho-1" : {"M": 1e5, "adjust_rho" : True, "rho" :1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
+    "_M-1e5(Locked)_Rho-1" : {"M": 1e5, "adjust_rho" : False, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
+    "_M-1e5(Locked)_Rho-2" : {"M": 1e5, "adjust_rho" : False, "rho" : 2, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
+    "_M-1e7(Locked)_Rho-1" : {"M": 1e7, "adjust_rho" : False, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
+    "_M-1e8(Locked)_Rho-0.1" : {"M": 1e8, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
+    #"Budget_M-1e5(Locked)_Rho-1" : {"M": 1e5, "adjust_rho" : False, "rho" : 1, "epsilon" : 0, "alpha": 4, "alpha0": 8, "beta": 4*B_mult, "beta0":8*B_mult},
 }
 
-admmbo_opts = rho_testing #coil_testing#
+admmbo_opts = coil_testing2
+grid = True
+prop_grid = 0.6/divisor_iter #Doubly sampled points at start...
+pre = "LATIN_" #"GRID_"# "Grid_"#""
 
 if "admmbo" in alg_res.keys():
     for name_addon in admmbo_opts.keys():
-        alg_res["admmbo" + name_addon] = []
+        alg_res[pre +"admmbo" + name_addon] = []
 
 s_time = time()
 for e_num in range(num_trials):
     x0s = monte_carlo_sampling(problem, num = max_iter, seed = 14 + e_num)
+    if grid:
+        bounds = problem["Bounds"]
+        dim_num = len(bounds)//2
+        if pre[0].lower() == "g":
+            x0s = noisy_grid(problem, num_per_dim = int((prop_grid*max_iter)**(1/dim_num)), seed = 14 + e_num)
+        if pre[0].lower() == "l":
+            x0s = latin_grid(problem, num = int(prop_grid*max_iter), seed = 14 + e_num)
+        else:
+            raise NotImplementedError("Not correct pre formatting")
+        
     x0 = x0s[0]
 
     if "admmbo" in alg_res.keys():
         for name_addon, opt_dict in admmbo_opts.items():
-            alg_res["admmbo" + name_addon].append(admmbo_run(problem, x0s, start_all = False,                                                              
+            alg_res[pre + "admmbo" + name_addon].append(admmbo_run(problem, x0s, start_all = grid,                                                              
                                                              max_iter=max_iter, admmbo_pars=opt_dict))    
     if "pesc" in alg_res.keys():
         pesc_run_experiment(name, max_iter=120)

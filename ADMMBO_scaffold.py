@@ -2,8 +2,6 @@
 import numpy as np
 from scipy.optimize import minimize
 from sklearn import gaussian_process
-# import GPyOpt
-# from GPyOpt import BayesianOptimization
 from scipy.special import ndtr
 from scipy.stats import norm
 import copy
@@ -135,11 +133,11 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     
     def gpr_ei(x_in,zs,ys,rho,gpr,ubest):
         x=np.atleast_2d(x_in)
-        x = np.nan_to_num(x, nan= bounds[0][1]) #TODO: Is there a problem with example0?
-        mu,std = gpr.predict(x, return_std=True) #TODO:std returns 0? Causes divide by zero
+        x = np.nan_to_num(x, nan= bounds[0][1]) #Is there a problem with example0?
+        mu,std = gpr.predict(x, return_std=True)
         muu = mu + u_post_pluss(x,zs,ys,rho)
         #xx = (ubest-muu)/std #Original formulation
-        xx = -(muu-ubest)/(std+1e-10) #?Why negative here?? #Added small value 
+        xx = -(muu-ubest)/(std+1e-10) #Added small value for divide by 0
         ei = std * (xx * ndtr(xx) + norm.pdf(xx))
         return ei
     
@@ -218,6 +216,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
 
             
             print(np.round(cost_eval,decimals=1),end = "|",flush=True)
+            #print("RR ", gpr.kernel_, list(x.round(decimals = 2)))
             ## Logging for unified outuput
             xs_out.append(x_eval)
             arr_objs = np.full(N+1,0.0)
@@ -280,7 +279,8 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
                 gpc.fit(np.concatenate((gpc.base_estimator_.X_train_,z_eval), axis=0),
                         np.concatenate((gpc.base_estimator_.y_train_,const_eval),axis=0))
 
-                print(const_eval,end = "|",flush=True)            
+                print(const_eval,end = "|",flush=True)   
+                #print("CC ", gpc.kernel_, list(z.round(decimals = 2)))         
                 ## Logging for unified outuput
                 xs_out.append(z_eval)
                 arr_objs = np.full(N+1,0.0)
@@ -407,6 +407,9 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     if start_all:
         x0 = x0_in
     
+    #Correction of start samples
+    max_iter = max_iter - len(x0)*len(constraintf)
+    
     K_in_old = (max_iter-len(x0))//4 #50 #example0 K = 30
     ## Calculating ADMMBO budget based on alpha and beta values pluss max_iter
     a0, a = admmbo_pars.get("alpha0", DEFAULT_OPTIONS["alpha0"]), admmbo_pars.get("alpha", DEFAULT_OPTIONS["alpha"])
@@ -426,29 +429,12 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     xo,zo,gpr,gpc, gp_logger, rho_list, xs_out, obj_out, eval_type = admmbo(costf, constraintf, M, bounds_array, grid, x0, 
                                                                             options=options_in, format_return=True)
 
-    ## Formatting output ## #DONE: Format so order of queries is correct
-    # xsr = gpr.X_train_
-    # obj = gpr.y_train_
-    # xsc = gpc.base_estimator_.X_train_
-    # cc = gpc.base_estimator_.y_train_
-
-    # new_obj = np.concatenate((obj,np.zeros(len(cc)))).reshape(-1,1)
-    # new_cc = np.concatenate((np.ones(len(obj)),cc)).reshape(-1,1)
-    # obj_out = np.concatenate((new_obj,new_cc),axis = 1) ## SImple combined obj and constraied after eachother
-
-    # objmaks = np.concatenate((np.full(len(obj),True),np.full(len(cc),False))).reshape(-1,1)
-    # constmaks = np.concatenate((np.full(len(obj),False),np.full(len(cc),True))).reshape(-1,1)
-    # eval_type = np.concatenate((objmaks,constmaks),axis = 1)
-
-    # xs_out = np.concatenate((xsr,xsc))
-    ## ------------------ ##
-
     if not debugging:
         #print(xs_out, obj_out, eval_type)
         return xs_out, obj_out, eval_type
     
     ### Debugging ###
-    #TODO: FIx debugging now that it isnt xin but xins ex xin = xins[0] for sq bounds or smth
+    #TODO: Fix debugging now that it isnt xin but xins ex xin = xins[0] for sq bounds or smth
     if problem["Bound Type"] == "square":
         xin = xins[0]
         xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(2, -1).T

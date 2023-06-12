@@ -12,7 +12,8 @@ def vizualize_toy(xs: NDArray[np.float64],
                   objs: NDArray[np.float64], #objective values
                   eval_type: NDArray[np.bool8],
                   problem,
-                  decoupled: bool = False):
+                  decoupled: bool = False,
+                  title = ""):
     num_samples = 301
     ## Fetching problem info ##
     bounds = problem["Bounds"]
@@ -27,12 +28,7 @@ def vizualize_toy(xs: NDArray[np.float64],
     ## ---------------------- ##
     cc = np.all(
         objs[:,1:],
-        axis=1)#axis 1 since it is per point not per constraint as is it below 
-    
-    #print(objs[:,1:],cc)
-    #########'
-    ######### All or any???? Check for ADMMBO part also
-    #########
+        axis=1) #axis 1 since it is per point not per constraint as is it below 
 
     extent_tuple = (bounds[0],bounds[1],bounds[0],bounds[1])
 
@@ -43,7 +39,7 @@ def vizualize_toy(xs: NDArray[np.float64],
             axis=0) #Boolean constraints
     ff = con*func
 
-    #TODO: Merge both decoupled and not into same flow by creating a full eval_type mask?
+    #Maybe merge both decoupled and not into same flow by creating a full eval_type mask?
     decoupled = not len(eval_type) == 0
 
     print("DECOUPLED = ", decoupled)
@@ -74,6 +70,7 @@ def vizualize_toy(xs: NDArray[np.float64],
     
     ### Main Plot ###
     plt.figure()
+    plt.title(title)
     plt.imshow(ff.reshape(len(xin),-1).T,extent=(extent_tuple),origin='lower')
     plt.colorbar()
     plt.plot(xs_obj[:,0],xs_obj[:,1],'kx') #WWhere objective function was evaluated
@@ -86,6 +83,7 @@ def vizualize_toy(xs: NDArray[np.float64],
 
     #Objfunction plot
     plt.figure()
+    plt.title(title)
     sampl_it = np.arange(len(o1_vals))
     valid_it, o1_valid = sampl_it[check_validity(xs_obj)], o1_vals[check_validity(xs_obj)]
     plt.plot(sampl_it, o1_vals,"kx")
@@ -99,8 +97,6 @@ def vizualize_toy(xs: NDArray[np.float64],
             rolling_min[i] = curr_min
         plt.plot(valid_it,rolling_min,"r--") #TODO: Fix indexing of valid line to drop off abruplty (per it.)
 
-
-    
     # Needed for VScode
     plt.show()
 
@@ -127,7 +123,7 @@ def vizualize_toy_problem(problem, points_per_dim = 400, name = " "):
     glbl_x = xy[glbl_i]
     glbl_xs = [] # xy[np.argwhere(func<= glbl_obj + 0.001)]
     
-    prct_feasible = 100*np.sum(con)/(points_per_dim**dim_num)
+    prct_feasible = 100*(np.sum(con)/(points_per_dim**dim_num))
     
     if dim_num == 2:
         if problem["Bound Type"] == "square":
@@ -158,22 +154,18 @@ def vizualize_toy_problem(problem, points_per_dim = 400, name = " "):
     plt.title(name)
     # Needed for VScode
     plt.show()
-    
     #Coould (maybe) add local (maybe) optima to plot. Both constrained and unconstrained
-
-    
     pass
 
 
-def expretiment_plot(   exps,
-                        problem,
-                        e_folder,
+def expretiment_plot(   exps, problem, e_folder,
                         title = "Comparisson plot",
                         override = False,
                         name_from_to = {},
-                        print_xs = False,
                         quantile = 0.1,
-                        just_mean = False):
+                        just_mean = False, 
+                        xlim = 124, 
+                        split_starting = False):
     ## Fetching problem info ##
     constraintf = problem["Constraint Functions (z)"]
     best_value = problem.get("Best Value", None)
@@ -183,28 +175,35 @@ def expretiment_plot(   exps,
         cons = np.array(cons_list)#Boolean constraint #Upheld if over 0 ??
         return np.all(cons,axis=0)
     
+    # Making cache folder
     p_fol = e_folder + "\plot_cache"
     if not "plot_cache" in os.listdir(e_folder):
         os.makedirs(p_fol)
+        
+    point_comps = {};alg_run_lengs_min = 1e10
+    comps = exps #"legacy" name
     
-    comps = exps
-    colors = list(mcolors.TABLEAU_COLORS) + list(mcolors.XKCD_COLORS)
+    ##-- Hacked together plotting adjustment --##
     # Reserving colors for main comparisson algs CMA-ES, COBYLA (Multiple), PESC
+    colors = list(mcolors.TABLEAU_COLORS) + list(mcolors.XKCD_COLORS)
     reserved_num = 0
     for alg_name in exps.keys():
-        if alg_name in ['CMA-ES','COBYLA (Multiple)', 'PESC']:
+        if alg_name in ['cma','cobyla', 'pesc']:
             reserved_num +=1
     reserved = ["blue", "orange", "green"][:reserved_num];res_counter = 0#copy(colors[:3])
     colors = colors[reserved_num:]
     admmbo_plotted = False #For only plotting one ADMMBO in feasible
     
-    point_comps = {};alg_run_lengs_min = 1e10
-    
+    plt.rcParams['figure.figsize'] = [10, 6]
+    plt.xlim(left=-2)
+    plt.xlim(right=xlim)
     plot_num = 0
+    ##-----------------------------------------##
+    
     for alg_name, exp_list in comps.items():
         num_exp = len(exp_list)
         if num_exp < 3: 
-            continue
+            continue #Not worth plotting if too few
         
         file = p_fol + f"/{alg_name}.npz" #For saving and loading
         if override or not os.path.exists(file):
@@ -216,8 +215,32 @@ def expretiment_plot(   exps,
             for xs, objs, eval_type in exp_list:
                 if decoupled: 
                     #assert eval_type.shape == objs.shape, "Eval type mask should batch one to one the obj"
-                    assert NUM_OF_OBJECTIVE_FUNCTIONS == 1, "Not implemented"
-
+                    if split_starting: #Correctly displaying the initial samples being fully sampled on value and constraints
+                        starting_mask = np.sum(eval_type,axis=1) > 1
+                        try:
+                            sampl_start = np.where(np.logical_not(starting_mask))[0][0] #Last +1 or starting bunch
+                            starting_mask[sampl_start:] = False
+                            start_xs = xs[starting_mask,:]
+                            start_objs = objs[starting_mask,:]
+                            start_et = eval_type[starting_mask,:]
+                            
+                            xs_empty = np.empty((sampl_start*2,xs.shape[1]), dtype=xs.dtype)
+                            objs_empty = np.empty((sampl_start*2,objs.shape[1]), dtype=objs.dtype)
+                            et_empty = np.empty((sampl_start*2,eval_type.shape[1]), dtype=eval_type.dtype)
+                            
+                            xs_empty[0::2] = start_xs
+                            xs_empty[1::2] = start_xs
+                            objs_empty[0::2] = start_objs
+                            objs_empty[1::2] = start_objs
+                            et_empty[0::2] = start_et
+                            et_empty[1::2] = start_et                        
+                            
+                            objs = np.concatenate((objs_empty, objs[sampl_start:]), axis = 0)
+                            xs = np.concatenate((xs_empty ,xs[sampl_start:]), axis = 0)
+                            eval_type = np.concatenate((et_empty, eval_type[sampl_start:]), axis = 0)
+                        except:
+                            print("hmm")
+                        
                     o1mask = eval_type[:,0]
                     class_mask = np.any(eval_type[:,1:],axis=1)
                     xs_class = xs[class_mask]
@@ -275,8 +298,6 @@ def expretiment_plot(   exps,
                     roll_min_list[i] = copy.deepcopy(roll_min_list[i][:max_roll_min_len])
             ## ------------------------------------  ##
             
-            #TODO: Investigate ficing last part of plot ticking up...
-            
             if not decoupled:
                 plot_iters *= (1 + len(constraintf))
             
@@ -284,12 +305,12 @@ def expretiment_plot(   exps,
             stds = np.nanstd(arr_roll_mins, axis=0)
             means = np.nanmean(arr_roll_mins, axis=0)
             
-            if quantile < 0:
+            if quantile <= 0:
                 uq,lq = None,None
             else:
                 uq = np.nanquantile(arr_roll_mins, max(quantile,1-quantile), axis=0)
                 lq = np.nanquantile(arr_roll_mins, min(quantile,1-quantile), axis=0)
-                
+
 
             ## How many found feasbale ##
             non_feasible = np.isnan(arr_roll_mins[:,-1])
@@ -377,6 +398,8 @@ def expretiment_plot(   exps,
     
     plt.figure(1) #Not best practice!
     plt.title(title)
+    plt.xlabel("Function Evaluations")
+    plt.ylabel("Objective Value")
     plt.legend()
     if not best_value is None:
         plt.axhline(y = best_value, color = 'k', linestyle = '--')
@@ -384,6 +407,7 @@ def expretiment_plot(   exps,
     plt.figure(2) #Not best practice!
     plt.title("Feasability Rercentage")
     plt.legend()
+    plt.rcParams['figure.figsize'] = [6, 6]  #Not best practice! #Not best practice!
 
 def exploration_xs_plot(xx):
     col_number = xx.shape[0]
