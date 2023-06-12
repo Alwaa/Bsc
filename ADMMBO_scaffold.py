@@ -8,7 +8,10 @@ import copy
 import warnings #For the non converging lnsrch
 
 from time import time
-from scipy.optimize import direct, Bounds
+from scipy.optimize import Bounds
+
+
+## -Below function were for simple benchmarking- ##
 start_time = time()
 time_log = [0 for i in range(10)]
 def start_t():
@@ -22,6 +25,7 @@ def end_tp(n):
 def prntt():
     for n in range(10):
         print(f"¤{n}¤({time_log[n]:.2f})")
+## -------------------------------------------- ##
 
 
 DEFAULT_OPTIONS = {
@@ -33,6 +37,7 @@ DEFAULT_OPTIONS = {
     "alpha0"    : 10, #orig. 20
     "beta0"     : 10, #orig. 20
     "adjust_rho" : True,
+    "delta"     : 0.05 
 }
 AVAILABLE_OPTIONS = list(DEFAULT_OPTIONS.keys())
 
@@ -40,7 +45,7 @@ AVAILABLE_OPTIONS = list(DEFAULT_OPTIONS.keys())
 # M = penalty of infeasability
 # K = max number of it; rho = penalty parm
 # epsilon = tolerance parameter for stopping rule
-# delta missing, 1 - delta is acceptance for prob that final solution is infeasable, for parameter to use if it does not converge
+# delta,  acceptance prob that final solution is infeasable, for parameter to use if it does not converge
 def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
            format_return = False, options = {}):
     
@@ -50,7 +55,7 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
         if not k in AVAILABLE_OPTIONS:
             print(f"{k} not applicabple option in ADMMBO")
         _D[k] = v #New, unused value is assigned as of now if unvalid is inputted
-    K, rho, epsilon = _D["K"], _D["rho"], _D["epsilon"]
+    K, rho, epsilon, delta = _D["K"], _D["rho"], _D["epsilon"], _D["delta"]
     alpha, alpha0, beta, beta0 = _D["alpha"], _D["alpha0"],  _D["beta"], _D["beta0"]
     adjust_rho = _D["adjust_rho"]
     ## -------------------------- ##
@@ -67,25 +72,21 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     ## -------------------------------
     
     ### Defining Kernels ###
-    K1 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
+    K1 =gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
             gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2))
-    # K1 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
-    #         gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2)) +\
-    #             gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
-    #             gaussian_process.kernels.DotProduct(sigma_0=0) #TODO: REMOVE
-    gpr = gaussian_process.GaussianProcessRegressor(kernel=K1)
+    #Initializing GP
+    gpr = gaussian_process.GaussianProcessRegressor(kernel=K1,normalize_y=True)
     
     K2 = gaussian_process.kernels.ConstantKernel(constant_value_bounds=(1e-10,1e10)) * \
         gaussian_process.kernels.Matern(nu=1.5,length_scale_bounds=(1e-2, 1e2))
+    #Initializing GP classifiers
+    gpcs = [gaussian_process.GaussianProcessClassifier(kernel=K2) for i in range(N)]
     ### ---------------- ###
     minimize_opts = {'eps': 0.001, 'maxls': 100} #Can't find documentation for maxls
         
     S = False
     k = 0 # "k=1 (0 as first index)"
     N = len(constraints) # As in paper
-
-    #Initialicing GP classifiers
-    gpcs = [gaussian_process.GaussianProcessClassifier(kernel=K2) for i in range(N)]
     
     ## rho adjusting parameters ## 
     tau = 2
@@ -94,17 +95,18 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
     ## ------------------------ ##
 
     ## Initializing z,y ## 
-    # in the top corner, per meeting notes
-    # TODO: Check initialization of zs and ys
+    # In the top corner
     bounds=bounds.astype('float')
     zs = np.array([bounds[:,1].copy() for i in range(N)])
     ys = np.array([bounds[:,1].copy() for i in range(N)])
     
+    #optionally in the bottom corner
     # zs = np.array([bounds[:,0].copy() for i in range(N)])
     # ys = np.array([bounds[:,0].copy() for i in range(N)])
     zolds = [zs[i].copy() for i in range(N)]
     ## ---------------- ##
 
+    ## Getting initial samples if they are not passed in ##
     if f0 is None:
         f0 = cost(x0)
     if c0 is None:
@@ -112,41 +114,43 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
         for i in range(N):
             constraint = lambda inp: 1 - ( constraints[i](inp) <= 0 )#Boolean constraint
             c0s[i] = constraint(x0)
+    ## -------------------------------------------------- ##
 
-    #print(x0,f0)
     gpr.fit(x0,f0) #Initializing the GP regression
     for i in range(N): #Initializing the GP classifiers
-        #print(x0,c0s[i])
         gpcs[i].fit(x0,c0s[i]) 
     
-    #Logging first variables
+    #Logging first variables for complete comparissons
     xs_out.append(x0)
     objs_arr =np.concatenate((f0.reshape(-1,1),np.array(c0s).T),axis=1)
     objs.append(objs_arr)
     ind_evals.append(np.full(objs_arr.shape,True))
 
-
+    ## Last part of optimality problem equation
     def u_post_pluss(x_in,zs_in,ys_in,rho_in): ## Eq. (10) after the f(x) + .....
         sq_norm = np.sum((x_in[:,None,:]-zs_in+ys_in/rho_in)**2,axis = 2) # Squared 2 norm for each xs/ys dimension
         u_post = 0.5*rho_in*np.mean(sq_norm,axis=1) #?DONE?: Check the sum funciton works propperly with new zs and ys
         return u_post
     
+    ## EI for the optimality sub-problem
     def gpr_ei(x_in,zs,ys,rho,gpr,ubest):
         x=np.atleast_2d(x_in)
-        x = np.nan_to_num(x, nan= bounds[0][1]) #Is there a problem with example0?
-        mu,std = gpr.predict(x, return_std=True)
+        x = np.nan_to_num(x, nan= bounds[0][1]) #TODO: Is there a problem with example0?
+        mu,std = gpr.predict(x, return_std=True) #TODO:std returns 0? Causes divide by zero
         muu = mu + u_post_pluss(x,zs,ys,rho)
         #xx = (ubest-muu)/std #Original formulation
-        xx = -(muu-ubest)/(std+1e-10) #Added small value for divide by 0
+        xx = -(muu-ubest)/(std+1e-10) #?Why negative here?? #Added small value 
         ei = std * (xx * ndtr(xx) + norm.pdf(xx))
         return ei
     
+    ## Last part of fesibility sub-problem equation
     def h_post_minus(x_in,z_in,y_in,rho_in,M_in):
         x,z,y = np.atleast_2d(x_in),np.atleast_2d(z_in),np.atleast_2d(y_in)
         sq_norm = np.sum((x-z+y/rho_in)**2,axis = 1)
         h_post = 0.5*rho_in/M_in * sq_norm
         return h_post
-
+    
+    ## EI for the feasibility sub-problem(s)
     def gpc_ei(x,z,y,rho,M,gpc,hbest):
         z=np.atleast_2d(z)
         hh2 = hbest - h_post_minus(x,z,y,rho,M)
@@ -159,31 +163,21 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
         ei[idx2] = hh[idx2] - theta[idx2]
         return ei
     
-    # z=np.mean(gpc.base_estimator_.X_train_[gpc.base_estimator_.y_train_==0],0)
-    ## First iteration has higher bidget as per discussion
+    
+    ## First iteration has usually has a higher budget
     alphac=alpha0
     betac=beta0
     
-    tot_ei_diff = 0.0 #TODO REMOVE
-    bounds_direct = Bounds(bounds[:,0],bounds[:,1])
-    all_fxs = np.concatenate((gpr.y_train_, np.empty((K*alpha+alpha))),axis=0)
-    all_Xs = np.concatenate((gpr.X_train_, np.empty((K*alpha+alpha0,len(bounds)))),axis=0)
-    opt_cache = len(gpr.y_train_)
+    #### MAIN LOOP ####
     while k < K and not S:
         ### OPT ###
         for t in range(alphac):
-            #start_t() #TODO:REMOVE
             fx = gpr.y_train_ # f(x) for each value untill now
             X = gpr.X_train_ # xs until now
 
             ubest = np.min(fx + u_post_pluss(X,zs,ys,rho)) # Eq. (10)
             eif = lambda x_in: -gpr_ei(x_in,zs,ys,rho,gpr,ubest) #EI function to minimize
-            #####
-            #opt_d = direct(eif, bounds_direct, maxiter=10)#, options = minimize_opts)
-            #xd = opt_d.x
-            #end_tp(0) #TODO:REMOVE
-            #####
-            #end_tp(1) #TODO:REMOVE
+
             ei = gpr_ei(grid,zs,ys,rho,gpr,ubest)
             x = grid[np.argmax(ei)]
             with warnings.catch_warnings(record=True) as caught_warnings:
@@ -191,33 +185,22 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
                 opt = minimize(eif, x, bounds=bounds, options = minimize_opts) # Minize negative expected improvement
                 if not caught_warnings is None:
                     for warn in caught_warnings:
-                        print(f"++++\nwarn: {warn.message}")
-                        print(warn.category)
-                        print(str(warn))
+                        print(f"++++\nwarn: {warn.message}", warn.category, str(warn))
             old_x = copy.copy(x)
             x = opt.x
-            #end_tp(2) #TODO:REMOVE
-            #tot_ei_diff += eif(xd)- eif(x) #TODO:REMOVE
-            # print(f'eix:{ei.max()}')
+            
             gp_logger.append([grid,0,0,x,-eif(x),old_x,-eif(old_x),
                               copy.deepcopy(ei),copy.deepcopy(gpr.X_train_),copy.deepcopy(gpr.y_train_)])
 
-            #end_tp(3) #TODO:REMOVE
             x = np.nan_to_num(x, nan= bounds[0][1]) #TODO: Is there also problem with lamwillcox3?
             x_eval,cost_eval = x[None],cost(x[None])
-            
-            # all_Xs[opt_cache,:] = x_eval
-            # all_fxs[opt_cache] = cost_eval
-            # opt_cache += 1
-            # gpr.fit(all_Xs[:opt_cache,:], all_fxs[:opt_cache])    
+               
             gpr.fit(np.concatenate((gpr.X_train_,x_eval),axis=0),
                     np.concatenate((gpr.y_train_,cost_eval),axis=0))
-            #end_tp(4) #TODO:REMOVE
-
             
             print(np.round(cost_eval,decimals=1),end = "|",flush=True)
-            #print("RR ", gpr.kernel_, list(x.round(decimals = 2)))
-            ## Logging for unified outuput
+            
+            ## Logging for unified comparisson outuput
             xs_out.append(x_eval)
             arr_objs = np.full(N+1,0.0)
             arr_objs[0] = cost_eval[0]
@@ -228,8 +211,6 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
             
         ### --- ###
 
-        #original_u = gpr.y_train_ + 0.5*rho*np.sum((gpr.X_train_-zs+ys/rho)**2,axis=1)
-        # TODO: check and mark part of algorithm 
         u = gpr.y_train_ + u_post_pluss(gpr.X_train_,zs,ys,rho)
         x = gpr.X_train_[np.argmin(u)]
 
@@ -268,19 +249,14 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
                             print(warn.category)
                             print(str(warn))
                 z = opt.x
-                # ei[idx2][ei[idx2]<0.0] = 0.0
-                # temp = (hh[idx2]-1)*theta[idx2]
-                # temp[temp<0] = 0.0
-                # ei[idx2] += temp
-                # print(ei.max())
                 z = grid[np.argmax(ei)]
 
                 z_eval, const_eval = z[None], constraint(z[None])
                 gpc.fit(np.concatenate((gpc.base_estimator_.X_train_,z_eval), axis=0),
                         np.concatenate((gpc.base_estimator_.y_train_,const_eval),axis=0))
 
-                print(const_eval,end = "|",flush=True)   
-                #print("CC ", gpc.kernel_, list(z.round(decimals = 2)))         
+                print(const_eval,end = "|",flush=True)    
+                        
                 ## Logging for unified outuput
                 xs_out.append(z_eval)
                 arr_objs = np.full(N+1,0.0)
@@ -295,45 +271,42 @@ def admmbo(cost, constraints, M, bounds, grid, x0, f0=None, c0=None,
                                     +ys[i][None]/rho)**2,axis=1) #TODO: check correctness with ys
             z = gpc.base_estimator_.X_train_[np.argmin(h)]
 
-            zs[i] = z #TODO: refactor when stable
+            zs[i] = z 
 
             ys[i] += rho * (x - z)
-            # print(f"{x}\n{zs[i]}\n{rho}")
-            # print(f'x: {x} \nz: {z} \ny: {ys[i]}')
             r = (x - zs[i])**2
             rl=np.sqrt(np.sum(r**2))
             s = - rho * (z - zolds[i])
             sl = np.sqrt(np.sum(s**2))
-            # print(r)
-            # print(s)
 
             zolds[i] = z.copy()
 
         if rl < epsilon and sl < epsilon:
             S = True
         k += 1
+        
         ## rho adjusting step ##
         if rl > (mup*sl) and adjust_rho:
             rho *= tau
         elif sl > (mup*rl) and adjust_rho:
             rho /= tau
         
-        #print(f' rho:{rho} \n r:{rl} \n s:{sl}')
         rho_list.append(rho)
         ## ----------------- ##
         if S:
             break
         alphac=alpha
         betac=beta
+    #### -------- ####
     
-    #TODO:REMOVE
-    #prntt() #for profiling #TODO:REMOVE
-    #print(f"\nEIF-diff: {tot_ei_diff}") #Checking which solver is on average "better" #TODO:REMOVE
     if format_return:
         xs_out = np.concatenate(xs_out,axis = 0)
         objs = np.concatenate(objs,axis = 0)
         ind_evals = np.concatenate(ind_evals,axis = 0)
         return x,z,gpr,gpcs, gp_logger, rho_list, xs_out, objs, ind_evals
+    
+    if not S:
+        raise NotImplementedError("Returning delta variable not implemented for tests")
 
     return x,z,gpr,gpcs, gp_logger, rho_list
 
@@ -407,9 +380,6 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     if start_all:
         x0 = x0_in
     
-    #Correction of start samples
-    max_iter = max_iter - len(x0)*len(constraintf)
-    
     K_in_old = (max_iter-len(x0))//4 #50 #example0 K = 30
     ## Calculating ADMMBO budget based on alpha and beta values pluss max_iter
     a0, a = admmbo_pars.get("alpha0", DEFAULT_OPTIONS["alpha0"]), admmbo_pars.get("alpha", DEFAULT_OPTIONS["alpha"])
@@ -429,12 +399,29 @@ def admmbo_run(problem, x0, max_iter = 100, admmbo_pars = {}, debugging = False,
     xo,zo,gpr,gpc, gp_logger, rho_list, xs_out, obj_out, eval_type = admmbo(costf, constraintf, M, bounds_array, grid, x0, 
                                                                             options=options_in, format_return=True)
 
+    ## Formatting output ## #DONE: Format so order of queries is correct
+    # xsr = gpr.X_train_
+    # obj = gpr.y_train_
+    # xsc = gpc.base_estimator_.X_train_
+    # cc = gpc.base_estimator_.y_train_
+
+    # new_obj = np.concatenate((obj,np.zeros(len(cc)))).reshape(-1,1)
+    # new_cc = np.concatenate((np.ones(len(obj)),cc)).reshape(-1,1)
+    # obj_out = np.concatenate((new_obj,new_cc),axis = 1) ## SImple combined obj and constraied after eachother
+
+    # objmaks = np.concatenate((np.full(len(obj),True),np.full(len(cc),False))).reshape(-1,1)
+    # constmaks = np.concatenate((np.full(len(obj),False),np.full(len(cc),True))).reshape(-1,1)
+    # eval_type = np.concatenate((objmaks,constmaks),axis = 1)
+
+    # xs_out = np.concatenate((xsr,xsc))
+    ## ------------------ ##
+
     if not debugging:
         #print(xs_out, obj_out, eval_type)
         return xs_out, obj_out, eval_type
     
     ### Debugging ###
-    #TODO: Fix debugging now that it isnt xin but xins ex xin = xins[0] for sq bounds or smth
+    #TODO: FIx debugging now that it isnt xin but xins ex xin = xins[0] for sq bounds or smth
     if problem["Bound Type"] == "square":
         xin = xins[0]
         xy = np.array(np.meshgrid(xin, xin, indexing='ij')).reshape(2, -1).T

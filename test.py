@@ -5,7 +5,7 @@ from comparisson_algs.cma_pilot import cma_es
 from comparisson_algs.cobyla_pilot import cobyla_run, multi_cobyla
 from comparisson_algs.pesc_script import pesc_main, pesc_run_experiment, pesc_create_problem
 from utils.plotting import vizualize_toy
-from opt_problems.paper_problems import gardner1, gardner2, gramacy
+from opt_problems.paper_problems import gardner1, gardner2, gramacy, gramsingle
 from opt_problems.example_problems import example0
 from utils.sampling import monte_carlo_sampling, grid_sampling, noisy_grid, latin_grid
 from utils.storing import create_exp_folder, save_exps
@@ -17,12 +17,12 @@ xs, objs, indiv_evals = None, None, None
 #xs, objs, indiv_evals = cobyla_run(problem, x0)
 
 
-problem = example0 #gardner1
-name = "gard1-testing"
+problem = gramsingle
+#name = "gard1-testing"
 #pesc_create_problem(problem, name, decoupled=True)
 #pesc_run_experiment(name, max_iter=100)
 #
-x0s = monte_carlo_sampling(problem, num = 100, seed = 12) #np.array([[1.5,4.5],[1,2]])
+x0s = monte_carlo_sampling(problem, num = 100, seed = 13) #np.array([[1.5,4.5],[1,2]])
 x0 = x0s[0]
 
 x0s = grid_sampling(problem, num_per_dim=5)
@@ -36,6 +36,7 @@ x0s = latin_grid(problem, num= 40, seed = 12)
 print(x0s)
 
 alg_res = [
+    #multi_cobyla(problem, x0s),
     #multi_cobyla(problem, x0s),
     #pesc_main(name = name),
     #cma_es(problem, x0),

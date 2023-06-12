@@ -150,7 +150,7 @@ def vizualize_toy_problem(problem, points_per_dim = 400, name = " "):
     
 
     print(f"Best Value: {constr_obj}")
-    print(f"Prct Feasible: {prct_feasible}\%")
+    print(f"Prct Feasible: {prct_feasible}%")
     plt.title(name)
     # Needed for VScode
     plt.show()
