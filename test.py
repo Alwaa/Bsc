@@ -10,6 +10,13 @@ from opt_problems.example_problems import example0
 from utils.sampling import monte_carlo_sampling, grid_sampling, noisy_grid, latin_grid
 from utils.storing import create_exp_folder, save_exps
 
+"""
+Testing script,
+ not maintained
+"""
+
+
+
 # For testting
 xs, objs, indiv_evals = None, None, None
 

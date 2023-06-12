@@ -12,17 +12,17 @@ try:
 except:
     pass
 
+"""
+Script for loading and plotting resutls,
+ not a generally recomended format as there are several places to adjust the code when switching between experiments 
+"""
+
 exclude = ["plot_cache"] #["admmbo00","admmbo01"] , "cma","cobyla"
 e_folder = fol("grid-coil-360",1)#fol("grid-coil-MM", 0)###fol("tsts",3)#fol("rho-lw-wrong",0) #fol("coil-more",0)#fol("coil-test", 2)
 problem = coil_pure #lwwrong# coil_pure
 name_title = "Coil"
 title = "Comparison " + name_title #"Comparison Gardner 1"
 
-
-"""
-e_folder = fol("lw3-all", 0)
-problem = lamwillcox3   
-"""
 
 print(e_folder)
 

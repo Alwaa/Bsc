@@ -3,6 +3,10 @@ from opt_problems.example_problems import example0
 
 from utils.plotting import vizualize_toy_problem
 
+"""
+Visualizing the problems
+"""
+
 vizualize_toy_problem(example0, points_per_dim=1000, name= "Flower")
 vizualize_toy_problem(gardner1, points_per_dim=1000, name= "Gardner 1")
 vizualize_toy_problem(gardner2, points_per_dim=1000, name= "Gardner 2")

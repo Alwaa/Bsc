@@ -22,6 +22,11 @@ except:
 
 warnings.filterwarnings('ignore')
 
+"""
+Code for running multiple experiments at once
+-Not well commented, as it's for personal convinience
+"""
+
 running_time = 6*60*60
 
 exp_name = "grid-coil-360" #"PESC-LW"
@@ -45,8 +50,6 @@ if not name is None:
 else:
     _ = alg_res.pop("pesc", None)
 
-#ops00 = {"M": 20, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":8}
-# ops0 = {"M": 10, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4}
 
 rho_testing = {
     "Rho-0.05" : {"M": 10, "rho" : 0.05, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
@@ -66,43 +69,10 @@ rho_sub = {
     "(Locked)_Rho-0.1" : {"M": 10, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
 }
 
-M_testing = {
-    "M-0.1_Rho-1" :            {"M": 0.1, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
-    "M-0.1_(Locked)_Rho-0.1" : {"M": 0.1, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
-    "M-1_Rho-1" :            {"M": 1, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
-    "M-1_(Locked)_Rho-0.1" : {"M": 1, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
-    "M-10_Rho-1" :            {"M": 10, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
-    "M-10_(Locked)_Rho-0.1" : {"M": 10, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
-    "M-20_Rho-1" :            {"M": 30, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
-    "M-20_(Locked)_Rho-0.1" : {"M": 30, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
-    "M-100_Rho-1" :            {"M": 100, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
-    "M-100_(Locked)_Rho-0.1" : {"M": 100, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
-    "M-1000_Rho-1" :            {"M": 1000, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
-    "M-1000_(Locked)_Rho-0.1" : {"M": 1000, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2, "beta0":4},
-}
 
-B_mult = 2 #Double the constraints test could be good??
-
-coil_testing = {
-    "Rho-1" : {"M": 20, "adjust_rho" : True, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
-    "(Locked)_Rho-0.1_M-20" : {"M": 20, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
-    "Rho-0.1" : {"M": 20, "adjust_rho" : True, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
-    "(Locked)_Rho-1" : {"M": 20, "adjust_rho" : False, "rho" : 0.5, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult}
-}
-
-B_mult = 1
-coil_testing2 = {
-    #"_M-1e5_Rho-1" : {"M": 1e5, "adjust_rho" : True, "rho" :1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
-    "_M-1e5(Locked)_Rho-1" : {"M": 1e5, "adjust_rho" : False, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
-    "_M-1e5(Locked)_Rho-2" : {"M": 1e5, "adjust_rho" : False, "rho" : 2, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
-    "_M-1e7(Locked)_Rho-1" : {"M": 1e7, "adjust_rho" : False, "rho" : 1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
-    "_M-1e8(Locked)_Rho-0.1" : {"M": 1e8, "adjust_rho" : False, "rho" : 0.1, "epsilon" : 0, "alpha": 2, "alpha0": 4, "beta": 2*B_mult, "beta0":4*B_mult},
-    #"Budget_M-1e5(Locked)_Rho-1" : {"M": 1e5, "adjust_rho" : False, "rho" : 1, "epsilon" : 0, "alpha": 4, "alpha0": 8, "beta": 4*B_mult, "beta0":8*B_mult},
-}
-
-admmbo_opts = coil_testing2
+admmbo_opts = rho_sub
 grid = True
-prop_grid = 0.6/divisor_iter #Doubly sampled points at start...
+prop_grid = 0.6/divisor_iter #Doubly sampled points at start
 pre = "LATIN_" #"GRID_"# "Grid_"#""
 
 if "admmbo" in alg_res.keys():
