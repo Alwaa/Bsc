@@ -6,7 +6,16 @@ There are several files for running experiments and testing the algoritms. The `
 
 The main ADMMBO algorithm is accesible as an import from `\ADMMBO_scaffold`. 
 
-The Test-problems are contained in `\opt_problems`, with the problems defined as a dictionary of [...]
+The Test-problems are contained in `\opt_problems`, with the problems defined as a dictionary of:
+
+```
+"Bound Type" : <string> (not used exepct in early phase)
+"Bounds" : <Tuple of length d*2 with lower, upper bounds for all variables>
+"Cost Function (x)":  <amda funcions to evaluate objective>
+"Constraint Functions (z)": <List containing lamda funcions to evaluate contraints>
+"Best Value": <float> (optional for graphs)
+
+```
 
 ## For PESC
 When running PESC there are several steps to the setup. After the database is setup, make an anaconda enviroment with the name "pesc" using the file `envPESC.yml`. The automatic scripts for running PESC as a subproscess should then run. 
